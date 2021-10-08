@@ -11,17 +11,8 @@ namespace DeRoso.Core
 
 
     [Serializable, XmlRoot("DeviceProgram")]
-    public class DeviceProgram : INotifyPropertyChanged
-    {
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-
-
+    public class DeviceProgram : ViewModelBase
+    {     
 
         /// <summary>
         /// Название Раздела

@@ -11,16 +11,8 @@ using System.Xml.Serialization;
 
 namespace DeRoso.Core
 {
-    public class DevicePrograms : INotifyPropertyChanged
-    {
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-
+    public class DevicePrograms : ViewModelBase
+    {        
         public void Load(string path)
         {
             Programs.Clear();

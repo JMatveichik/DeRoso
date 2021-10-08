@@ -66,7 +66,40 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Content\PagePrograms.xaml">
+    <Compile Include="Controls\MainNavigationPanel.xaml.cs">
+      <DependentUpon>MainNavigationPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\CreatorViewArchive.cs" />
+    <Compile Include="Views\CreatorViewHelp.cs" />
+    <Compile Include="Views\CreatorViewHome.cs" />
+    <Compile Include="Views\CreatorViewTesting.cs" />
+    <Compile Include="Views\ViewArchive.xaml.cs">
+      <DependentUpon>ViewArchive.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewHelp.xaml.cs">
+      <DependentUpon>ViewHelp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewHome.xaml.cs">
+      <DependentUpon>ViewHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreatorViewProgramms.cs" />
+    <Compile Include="Views\ViewTesting.xaml.cs">
+      <DependentUpon>ViewTesting.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\MainNavigationPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewArchive.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewHelp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewProgramms.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -78,13 +111,21 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Content\PagePrograms.xaml.cs">
-      <DependentUpon>PagePrograms.xaml</DependentUpon>
+    <Compile Include="Views\ViewProgramms.xaml.cs">
+      <DependentUpon>ViewProgramms.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ViewHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewTesting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -121,8 +162,6 @@
       <Name>DeRoso.UI</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

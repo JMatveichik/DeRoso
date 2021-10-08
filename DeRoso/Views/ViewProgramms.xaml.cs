@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DeRoso.Content
+namespace DeRoso.Views
 {
     /// <summary>
     /// Interaction logic for PagePrograms.xaml
     /// </summary>
-    public partial class PagePrograms : Page
+    public partial class ViewProgramms : UserControl
     {
-        public PagePrograms()
+        public ViewProgramms()
         {
             InitializeComponent();
             App app = (App) Application.Current;
