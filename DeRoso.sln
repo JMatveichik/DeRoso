@@ -9,11 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeRoso.Core", "DeRoso.Core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeRoso.UI", "DeRoso.UI\DeRoso.UI.csproj", "{735588E2-1FDF-433B-8F66-B5A7C37599CA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5F53945A-51E1-4B4E-9A1C-A7D0530748EE}"
-	ProjectSection(SolutionItems) = preProject
-		..\db.xml = ..\db.xml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
