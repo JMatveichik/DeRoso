@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1022
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeRoso", "DeRoso\DeRoso.csproj", "{B088F02B-B591-4660-9F3C-68DAE6D5B603}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeRoso.Core", "DeRoso.Core\DeRoso.Core.csproj", "{35A7C21E-E8C5-4D3E-95AA-D259CB4F4256}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeRoso.UI", "DeRoso.UI\DeRoso.UI.csproj", "{735588E2-1FDF-433B-8F66-B5A7C37599CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B088F02B-B591-4660-9F3C-68DAE6D5B603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B088F02B-B591-4660-9F3C-68DAE6D5B603}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B088F02B-B591-4660-9F3C-68DAE6D5B603}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B088F02B-B591-4660-9F3C-68DAE6D5B603}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35A7C21E-E8C5-4D3E-95AA-D259CB4F4256}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35A7C21E-E8C5-4D3E-95AA-D259CB4F4256}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35A7C21E-E8C5-4D3E-95AA-D259CB4F4256}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35A7C21E-E8C5-4D3E-95AA-D259CB4F4256}.Release|Any CPU.Build.0 = Release|Any CPU
+		{735588E2-1FDF-433B-8F66-B5A7C37599CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{735588E2-1FDF-433B-8F66-B5A7C37599CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{735588E2-1FDF-433B-8F66-B5A7C37599CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{735588E2-1FDF-433B-8F66-B5A7C37599CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DED9F38D-C176-48B3-AB54-8F57C40CDFA8}
+	EndGlobalSection
+EndGlobal

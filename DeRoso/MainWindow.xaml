@@ -1,0 +1,135 @@
+﻿<mah:MetroWindow x:Class="DeRoso.MainWindow"
+                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                           xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                           xmlns:ctrl="clr-namespace:DeRoso.UI.Controls;assembly=DeRoso.UI"
+                           xmlns:local="clr-namespace:DeRoso"
+                           mc:Ignorable="d"
+                           Title="DeVita Diagnostic" Height="450" Width="800">
+
+    
+        
+        <Grid Margin="50" MaxWidth="600" MaxHeight="500">
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="10"></Setter>
+                <Setter Property="FontSize" Value="30"></Setter>
+                <Setter Property="FontFamily"
+                        Value="Roboto Condensed Light"></Setter>
+            </Style>
+
+            <Style TargetType="ContentPresenter">
+                <Setter Property="Margin"
+                        Value="10"></Setter> 
+            </Style>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Row="0" 
+                Grid.Column="0">
+            <StackPanel>
+                <ContentPresenter Width="48" Height="48"  
+                                  Content="{StaticResource IconLaunch}"/>
+                <TextBlock>ТЕСТИРОВАНИЕ</TextBlock>
+                <TextBlock FontSize="12">Выбор и запуск тестов</TextBlock>
+
+            </StackPanel>
+        </Button>
+
+        <Button Grid.Row="1"
+                Grid.Column="0"
+                >
+            <StackPanel>
+                <ContentPresenter Width="48"
+                                  Height="48"
+                                  Content="{StaticResource IconSettings}" />
+                <TextBlock>НАСТРОЙКА</TextBlock>
+                <TextBlock FontSize="12"></TextBlock>
+            </StackPanel>
+            
+        </Button>
+
+        <Button Grid.Row="0"
+                Grid.Column="1">
+            
+            <StackPanel>
+                <ContentPresenter Width="48"
+                                  Height="48"
+                                  Content="{StaticResource IconCalendar}" />
+                <TextBlock>АРХИВ</TextBlock>
+            </StackPanel>
+            
+        </Button>
+
+        <Button Grid.Row="1"
+                Grid.Column="1">
+
+            <StackPanel>
+                <ContentPresenter Width="48"
+                                  Height="48"
+                                  Content="{StaticResource IconHelp}" />
+                <TextBlock>ПОМОЩЬ</TextBlock>
+            </StackPanel>
+
+        </Button>
+    </Grid>
+
+    <!--          
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+           
+            <mah:MetroTabControl Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" >
+                <mah:MetroTabItem Header="ФЭС">
+                    <ListBox Margin="10"
+                         ItemsSource="{Binding Path=ProgramsFES}"
+                             ItemTemplate="{StaticResource ProgListBoxItemTemplate}"
+                             SelectedItem="{Binding Selected}">
+
+                    </ListBox>
+                </mah:MetroTabItem>
+                <mah:MetroTabItem Header="Стресс отягощения">
+                    <ListBox Margin="10"
+                         ItemsSource="{Binding Path=ProgramsStress}"
+                             ItemTemplate="{StaticResource ProgListBoxItemTemplate}"
+                             SelectedItem="{Binding Selected}">
+
+                    </ListBox>
+                </mah:MetroTabItem>
+                <mah:MetroTabItem Header="Энергосостояния">
+                    <ListBox Margin="10"
+                         ItemsSource="{Binding Path=ProgramsEnergo}"
+                             ItemTemplate="{StaticResource ProgListBoxItemTemplate}"
+                             SelectedItem="{Binding Selected}">
+
+                    </ListBox>
+                </mah:MetroTabItem>
+
+        </mah:MetroTabControl>
+
+                    <ctrl:ProgrammEditor DataContext="{Binding Selected}" Grid.Row="1" Grid.Column="1"></ctrl:ProgrammEditor>
+
+        </Grid>
+    
+    -->
+
+</mah:MetroWindow>
