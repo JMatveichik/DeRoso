@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeRoso.Core", "DeRoso.Core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeRoso.UI", "DeRoso.UI\DeRoso.UI.csproj", "{735588E2-1FDF-433B-8F66-B5A7C37599CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsbLibrary", "UsbLibrary\UsbLibrary.csproj", "{71E42A6D-C432-4C03-BF4F-ABFD2A3173E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{735588E2-1FDF-433B-8F66-B5A7C37599CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{735588E2-1FDF-433B-8F66-B5A7C37599CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{735588E2-1FDF-433B-8F66-B5A7C37599CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71E42A6D-C432-4C03-BF4F-ABFD2A3173E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71E42A6D-C432-4C03-BF4F-ABFD2A3173E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71E42A6D-C432-4C03-BF4F-ABFD2A3173E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71E42A6D-C432-4C03-BF4F-ABFD2A3173E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -25,10 +25,11 @@ namespace DeRoso.Core
                 Programs = ( List<DeviceProgram>) formatter.Deserialize(fs);
             }
 
-            foreach (DeviceProgram p in Programs)
+            /*foreach (DeviceProgram p in Programs)
             {
                 Debug.WriteLine($"Раздел: {p.SectionTitle} --- Секция: {p.SubsectionTitle} --- Название: {p.Title}");
             }
+            */
 
             ProgramsFES = Programs.Where(p => p.SectionTitle == "Результаты ФЭС").Select(p=>p).ToList();
             ProgramsStress = Programs.Where(p => p.SectionTitle == "Результаты стресс отягощений").Select(p => p).ToList();

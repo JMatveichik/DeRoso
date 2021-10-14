@@ -46,7 +46,7 @@ namespace DeRoso.Core
                 return content;
             }
             else {
-                throw new NullReferenceException("Не найдено подходящего контента подходящего создателя контента...");
+                throw new NullReferenceException("Не найдено подходящего эккземпляра контента или подходящего издателя контента.");
             }
         }       
 
