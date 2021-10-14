@@ -7,14 +7,10 @@
                            xmlns:ctrl="clr-namespace:DeRoso.UI.Controls;assembly=DeRoso.UI"
                            xmlns:local="clr-namespace:DeRoso"
                            mc:Ignorable="d"
-                           Title="DeVita Diagnostic" Height="450" Width="800" Loaded="OnMainWindowLoaded" SourceInitialized="OnMainWindowSourceInitialized">
+                           Title="DeVita Diagnostic" Height="450" Width="800" >
 
     <mah:TransitioningContentControl Content="{Binding CurrentContent}" Transition="RightReplace">
         
-    </mah:TransitioningContentControl>
-        
-        
-
-    
+    </mah:TransitioningContentControl>    
 
 </mah:MetroWindow>

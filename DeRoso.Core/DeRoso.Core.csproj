@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentManager.cs" />
+    <Compile Include="Data\DeRossoDBTools.cs" />
     <Compile Include="Data\DeRosoContext.cs" />
     <Compile Include="DeviceProgram.cs" />
     <Compile Include="DevicePrograms.cs" />

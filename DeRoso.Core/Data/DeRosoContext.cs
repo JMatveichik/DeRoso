@@ -1,5 +1,6 @@
 ﻿using DeRoso.Core.Health;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace DeRoso.Core.Data
    
     public class DeRosoContext : DbContext
     {
+        
         /// <summary>
         /// Таблица разделов тестов
         /// </summary>
@@ -25,7 +27,7 @@ namespace DeRoso.Core.Data
         /// Таблица препаратов
         /// </summary>
         public DbSet<HealthTestDrug> Drugs { get; set; }
-
+        
         /// <summary>
         /// Таблица тестов
         /// </summary>
@@ -34,14 +36,25 @@ namespace DeRoso.Core.Data
 
         public DeRosoContext()
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();            
+            //Database.EnsureDeleted();
+            Database.EnsureCreated();  
+           
+        }
+
+        public void Load()
+        {
+            Drugs.Load();
+            Tests.Load();
+            Groups.Load();
+            Sections.Load();
         }
 
         public DeRosoContext(DbContextOptions<DeRosoContext> options)
             : base(options)
         {
+            
         }
+       
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

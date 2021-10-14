@@ -94,6 +94,8 @@ namespace DeRoso
             e.CanExecute = false;
         }
 
+        /*
+
         private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
         {
             HwndSource src = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
@@ -117,7 +119,8 @@ namespace DeRoso
             base.OnSourceInitialized(e);
             var handle = new WindowInteropHelper(this).Handle;
 
-            //usb.RegisterHandle(handle);
+           usb.RegisterHandle(handle);
         }
+        */
     }
 }
