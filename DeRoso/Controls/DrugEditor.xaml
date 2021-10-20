@@ -1,21 +1,22 @@
-﻿<UserControl x:Class="DeRoso.UI.Controls.ProgrammEditor"
+﻿<UserControl x:Class="DeRoso.Controls.DrugEditor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DeRoso.UI.Controls"
-             xmlns:conv="clr-namespace:DeRoso.UI.Converters"
+             xmlns:local="clr-namespace:DeRoso.Controls"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:conv="clr-namespace:DeRoso.Core.Converters;assembly=DeRoso.Core"
+             
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800">
 
     <UserControl.Resources>
         <conv:TimeSpanToDoubleConverter x:Key="ToSecondsConverter" ConvertBase="Seconds"/>
     </UserControl.Resources>
-    
-    <Border BorderThickness="1" Margin="5" BorderBrush="BlueViolet">
-    <Grid>
-        <Grid  Margin="5"  Background="Azure">
+
+    <Border 
+            Style="{StaticResource BorderBox}">
+        <Grid  Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -29,126 +30,77 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
+            </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0"
-                       Grid.Row="0"
-                       Style="{StaticResource SectionTitleStyle}"
-                       Text="{Binding SectionTitle}" />
-            <TextBlock Grid.Column="1"
-                       Grid.Row="0"
-                       Style="{StaticResource SubSectionTitleStyle}"
-                       Text="{Binding SubsectionTitle}" />
-            <TextBlock Grid.Column="0"
-                       Grid.Row="1"
-                       Grid.ColumnSpan="2"
-                       Style="{StaticResource ProgTitleStyle}"
-                       Text="{Binding Title}" />
-
-
+            <local:DescribedItemEditor Grid.ColumnSpan="2" DataContext="{Binding}"/>
+            
             <Border Grid.Column="0"
-                       Grid.Row="2"
-                       Grid.ColumnSpan="2"
-                       Margin="0,10, 0, 0"
-                       Style="{StaticResource BorderUnderline}">
-                <TextBlock 
-                       Style="{StaticResource ProgTitleStyle}"
-                           Text="ПАРАМЕТРЫ HV" />
-            </Border>
-
-
-                <CheckBox Grid.Column="0" Grid.Row="3" 
-                      Content="HV"
-                      
-                      IsChecked="{Binding UseHV}"
-                      Style="{StaticResource CheckInputStyle}">
-            </CheckBox>
-                <TextBlock Grid.Column="0"
-                           Grid.Row="4"
-                           VerticalAlignment="Center"
-                           Style="{StaticResource ValueTitleStyle}"
-                           Text="Частота"></TextBlock>
-
-                <mah:NumericUpDown Grid.Column="1"
-                         Grid.Row="4" Value="{Binding FrequencyHV}"
-                                   Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
-
-            <TextBlock Grid.Column="0"
-                       Grid.Row="5"
-                       Style="{StaticResource ValueTitleStyle}"
-                           Text="Задержка"></TextBlock>
-
-            <mah:NumericUpDown Grid.Column="1"
-                               Grid.Row="5"
-                                   Value="{Binding PauseBeforeHV, Converter={StaticResource ToSecondsConverter}}"
-                               Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
-
-
-            <Border Grid.Column="0"
-                    Grid.Row="6"
+                    Grid.Row="1"
                     Grid.ColumnSpan="2"
                     Margin="0,10, 0, 0"
                     Style="{StaticResource BorderUnderline}">
-                <TextBlock Style="{StaticResource ProgTitleStyle}"
-                               Text="ПАРАМЕТРЫ ПРОРАММЫ" />
+
+                <TextBlock Style="{StaticResource HeaderStyle}"
+                               Text="ПАРАМЕТРЫ ПРЕПАРАТА" />
             </Border>
 
             <TextBlock Grid.Column="0"
-                       Grid.Row="7"
+                       Grid.Row="2"
                        Style="{StaticResource ValueTitleStyle}"
                            Text="Адрес"></TextBlock>
 
             <mah:NumericUpDown Grid.Column="1"
-                               Grid.Row="7"
+                               Grid.Row="2"
                                Value="{Binding Address}"
                                Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
 
             <TextBlock Grid.Column="0"
-                       Grid.Row="8"
+                       Grid.Row="3"
                        Style="{StaticResource ValueTitleStyle}"
                            Text="Ячейка"></TextBlock>
 
             <mah:NumericUpDown Grid.Column="1"
-                               Grid.Row="8"
+                               Grid.Row="3"
                                Value="{Binding Cell}"
                                Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
 
             <TextBlock Grid.Column="0"
-                       Grid.Row="9"
+                       Grid.Row="4"
                        Style="{StaticResource ValueTitleStyle}"
                            Text="Пауза перед"></TextBlock>
 
             <mah:NumericUpDown Grid.Column="1"
-                               Grid.Row="9"
+                               Grid.Row="4"
                                    Value="{Binding PauseBefore, Converter={StaticResource ToSecondsConverter}}"
                                Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
 
             <TextBlock Grid.Column="0"
-                       Grid.Row="10"
+                       Grid.Row="5"
                        Style="{StaticResource ValueTitleStyle}"
                            Text="Длительность"></TextBlock>
 
             <mah:NumericUpDown Grid.Column="1"
-                               Grid.Row="10"
+                               Grid.Row="5"
                                Value="{Binding Duration, Converter={StaticResource ToSecondsConverter}}"
                                Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
 
             <TextBlock Grid.Column="0"
-                       Grid.Row="11"
+                       Grid.Row="6"
                        Style="{StaticResource ValueTitleStyle}"
                            Text="Пауза после"></TextBlock>
 
             <mah:NumericUpDown Grid.Column="1"
-                               Grid.Row="11"
+                               Grid.Row="6"
                                Value="{Binding PauseAfter, Converter={StaticResource ToSecondsConverter}}"
-                               Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown> 
-                
+                               Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
+
+
+
         </Grid>
-    </Grid>
-     </Border>
+    </Border>
 </UserControl>

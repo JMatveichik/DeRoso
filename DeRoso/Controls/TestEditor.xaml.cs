@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DeRoso.UI.Controls
+namespace DeRoso.Controls
 {
     /// <summary>
     /// Interaction logic for ProgrammEditor.xaml
     /// </summary>
-    public partial class ProgrammEditor : UserControl
+    public partial class TestEditor : UserControl
     {
-        public ProgrammEditor()
+        public TestEditor()
         {
             InitializeComponent();
         }

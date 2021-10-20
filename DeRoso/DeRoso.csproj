@@ -28,6 +28,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -130,14 +131,32 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\CurrentTestProcessControl.xaml.cs">
+      <DependentUpon>CurrentTestProcessControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DescribedItemEditor.xaml.cs">
+      <DependentUpon>DescribedItemEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DrugEditor.xaml.cs">
+      <DependentUpon>DrugEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TestDrugsListContainer.xaml.cs">
+      <DependentUpon>TestDrugsListContainer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MainNavigationPanel.xaml.cs">
       <DependentUpon>MainNavigationPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TestEditor.xaml.cs">
+      <DependentUpon>TestEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\CurrentTestProcessViewModel.cs" />
+    <Compile Include="ViewModels\DataViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\CreatorViewArchive.cs" />
     <Compile Include="Views\CreatorViewHelp.cs" />
     <Compile Include="Views\CreatorViewHome.cs" />
     <Compile Include="Views\CreatorViewTesting.cs" />
+    <Compile Include="Views\CreatorViewTestsEditor.cs" />
     <Compile Include="Views\ViewArchive.xaml.cs">
       <DependentUpon>ViewArchive.xaml</DependentUpon>
     </Compile>
@@ -147,23 +166,41 @@
     <Compile Include="Views\ViewHome.xaml.cs">
       <DependentUpon>ViewHome.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CreatorViewProgramms.cs" />
     <Compile Include="Views\ViewTesting.xaml.cs">
       <DependentUpon>ViewTesting.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ViewTestsEditor.xaml.cs">
+      <DependentUpon>ViewTestsEditor.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\CurrentTestProcessControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DescribedItemEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DrugEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TestDrugsListContainer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\MainNavigationPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TestEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewArchive.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewHelp.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ViewProgramms.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -175,9 +212,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\ViewProgramms.xaml.cs">
-      <DependentUpon>ViewProgramms.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -187,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewTesting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewTestsEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

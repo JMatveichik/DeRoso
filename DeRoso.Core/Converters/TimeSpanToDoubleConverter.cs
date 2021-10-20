@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace DeRoso.UI.Converters
+namespace DeRoso.Core.Converters
 {
     public enum TimeValueBase
     {

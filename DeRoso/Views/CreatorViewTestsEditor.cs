@@ -8,11 +8,11 @@ using System.Windows.Controls;
 
 namespace DeRoso.Views
 {
-    class CreatorViewProgramms : IContentCreator
+    class CreatorViewTestsEditor : IContentCreator
     {
         public UserControl CreateContent()
         {
-            return new ViewProgramms();
+            return new ViewTestsEditor();
         }
     }
 }

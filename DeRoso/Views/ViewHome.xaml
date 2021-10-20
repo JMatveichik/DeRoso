@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DeRoso.Views"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             xmlns:ctrl="clr-namespace:DeRoso.UI.Controls;assembly=DeRoso.UI"
+             xmlns:ctrl="clr-namespace:DeRoso.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     

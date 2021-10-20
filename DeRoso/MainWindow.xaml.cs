@@ -38,6 +38,9 @@ namespace DeRoso
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.Testing, TestingExecute, TestingCanExecute));
 
             //byte[] buf = DeviceCommand.CreateCommand(EnumDeviceCommands.MeteringOn, new byte[] { 1, 2, 3, 4 });
+
+            DeviceProvider deRosoDevice = new DeviceProvider();
+
         }
 
         private void TestingCanExecute(object sender, CanExecuteRoutedEventArgs e)

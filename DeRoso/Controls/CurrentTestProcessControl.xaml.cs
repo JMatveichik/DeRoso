@@ -13,18 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DeRoso.Views
+namespace DeRoso.Controls
 {
     /// <summary>
-    /// Interaction logic for PagePrograms.xaml
+    /// Interaction logic for CurrentTestProcessControl.xaml
     /// </summary>
-    public partial class ViewProgramms : UserControl
+    public partial class CurrentTestProcessControl : UserControl
     {
-        public ViewProgramms()
+        public CurrentTestProcessControl()
         {
             InitializeComponent();
-            App app = (App) Application.Current;
-            this.DataContext = app.Programs;
         }
     }
 }

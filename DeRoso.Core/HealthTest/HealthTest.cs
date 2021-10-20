@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -35,7 +36,7 @@ namespace DeRoso.Core.Health
         /// <summary>
         /// Набор препаратов для теста
         /// </summary>
-        public List<HealthTestDrug> Drugs { get; set; }        
+        public ObservableCollection<HealthTestDrug> Drugs { get; set; }        
 
 
         /// <summary>
@@ -163,7 +164,22 @@ namespace DeRoso.Core.Health
 
         private double _highLimit = 100.0;
 
+        /// <summary>
+        /// Тип рассчета параметров
+        /// </summary>
+        public EnumCalculationType CalculationType
+        {
+            get { return _calcType; }
+            set
+            {
+                if (value == _calcType)
+                    return;
 
+                _calcType = value;
+                OnPropertyChanged();
+            }
+        }
+        private EnumCalculationType _calcType = EnumCalculationType.Medium;
 
     }
 }

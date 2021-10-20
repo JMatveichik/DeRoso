@@ -37,7 +37,7 @@ namespace DeRoso.Core.Data
         public DeRosoContext()
         {
             //Database.EnsureDeleted();
-            Database.EnsureCreated();  
+            //Database.EnsureCreated();  
            
         }
 
@@ -52,7 +52,8 @@ namespace DeRoso.Core.Data
         public DeRosoContext(DbContextOptions<DeRosoContext> options)
             : base(options)
         {
-            
+            //Database.EnsureDeleted();
+            //Database.EnsureCreated();
         }
        
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DeRoso.Core.Device
 {
-    public enum EnumDeviceCommands : byte
+    public enum DeviceCommands : byte
     {
         [Description ("Включить импульс")]
         ImpulsOn = 0x40,
@@ -18,11 +18,17 @@ namespace DeRoso.Core.Device
         [Description("Включить селектор")]
         SelectorOn = 0x42,
 
+        [Description("Задание частоты HV")]
+        SetFrequency = 0x44,
+
         [Description("Выключить селектор")]
         SelectorOff = 0x43,
 
         [Description("Включить диагностику")]
         DiagnosticOn = 0x45,
+
+        [Description("Добавить препарат")]
+        AddDrug = 0x46,
 
         ImpulsTest = 0x47,
         OutDrugStart = 0x48,

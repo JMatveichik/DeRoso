@@ -26,6 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -141,11 +142,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentManager.cs" />
+    <Compile Include="Converters\EnumDescriptionConverter.cs" />
+    <Compile Include="Converters\EnumItemSourceProvider.cs" />
+    <Compile Include="Converters\TimeSpanToDoubleConverter.cs" />
     <Compile Include="Data\DeRossoDBTools.cs" />
     <Compile Include="Data\DeRosoContext.cs" />
     <Compile Include="DeviceProgram.cs" />
     <Compile Include="DevicePrograms.cs" />
     <Compile Include="Device\DeviceCommand.cs" />
+    <Compile Include="Device\DevicePacketMaker.cs" />
+    <Compile Include="Device\DeviceProvider.cs" />
     <Compile Include="Device\EnumDeviceCommands.cs" />
     <Compile Include="HealthTest\EnumCalculationType.cs" />
     <Compile Include="HealthTest\HealthTest.cs" />

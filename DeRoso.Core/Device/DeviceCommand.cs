@@ -9,7 +9,7 @@ namespace DeRoso.Core.Device
     public class DeviceCommand
     {
 
-        public static byte[] CreateCommand(EnumDeviceCommands cmd, byte[] data = null)
+        public static byte[] CreateCommand(DeviceCommands cmd, byte[] data = null)
         {
             //выходной буфер
             byte[] output = null;

@@ -14,7 +14,9 @@
                 <!--Icons-->
                 <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Icons/Icons.xaml" />
                 <!--Program List box items -->
-                <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/ProgramsListBoxItemTemplate.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/DescribedListBoxItemTemplate.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/DrugListBoxItemTemplate.xaml" />
 
                 <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/BordersStyles.xaml" />
 

@@ -10,7 +10,6 @@ namespace DeRoso.Core.Health
     [Table("Drugs")]
     public class HealthTestDrug : HealthTestItem
     {
-
         /// <summary>
         /// Идентификатор теста
         /// </summary>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeRoso.Core.Converters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,15 +8,16 @@ using System.Threading.Tasks;
 
 namespace DeRoso.Core.Health
 {
+    [TypeConverter(typeof(EnumDescriptionConverter))]
     public enum EnumCalculationType : byte
     {
-        [Description ("Вычислять минимальный показатель")]
+        [Description ("Минимальный")]
         Minimum = 0x01,
 
-        [Description("Вычислять средний показатель")]
+        [Description("Средний")]
         Medium  = 0x02,
 
-        [Description("Вычислять максимальный показатель")]
+        [Description("Максимальный")]
         Maximum = 0x03
     }
 }

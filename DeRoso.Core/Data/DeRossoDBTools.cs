@@ -1,6 +1,7 @@
 ﻿using DeRoso.Core.Health;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -62,7 +63,7 @@ namespace DeRoso.Core.Data
             foreach (string gn in groups)
             {
                 var pr = all.Select(p => p).Where(p => p.SubsectionTitle == gn).FirstOrDefault().SectionTitle;
-                int secId = db.Sections.Select(s => s).Where(s => s.Title == pr).FirstOrDefault().Id;
+                int secId = db.Sections.Local.Select(s => s).Where(s => s.Title == pr).FirstOrDefault().Id;
 
                 db.Groups.Add(new HealthTestGroup()
                 {
@@ -75,14 +76,11 @@ namespace DeRoso.Core.Data
 
             db.SaveChanges();
 
-
-
-
             id = 1000;
             foreach (DeviceProgram p in all)
             {
-                int secId = db.Sections.Select(s => s).Where(s => s.Title == p.SectionTitle).FirstOrDefault().Id;
-                int grId = db.Groups.Select(g => g).Where(g => g.Title == p.SubsectionTitle).FirstOrDefault().Id;
+                int secId = db.Sections.Local.Select(s => s).Where(s => s.Title == p.SectionTitle).FirstOrDefault().Id;
+                int grId = db.Groups.Local.Select(g => g).Where(g => g.Title == p.SubsectionTitle).FirstOrDefault().Id;
 
                 db.Tests.Add(new HealthTest()
                 {
@@ -162,7 +160,7 @@ namespace DeRoso.Core.Data
 
 
                         if (t.Drugs == null)
-                            t.Drugs = new List<HealthTestDrug>();
+                            t.Drugs = new ObservableCollection<HealthTestDrug>();
                         else
                             t.Drugs.Clear();
 

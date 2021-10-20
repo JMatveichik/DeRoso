@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="DeRoso.Controls.TestEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DeRoso.Controls"
+             xmlns:conv="clr-namespace:DeRoso.Core.Converters;assembly=DeRoso.Core"
+             xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <conv:TimeSpanToDoubleConverter x:Key="ToSecondsConverter" ConvertBase="Seconds"/>
+    </UserControl.Resources>
+
+    <Border 
+            Style="{StaticResource BorderBox}">
+    <Grid>
+        <Grid  Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+                
+                <local:DescribedItemEditor Grid.ColumnSpan="2" DataContext="{Binding}"/>
+
+            <Border Grid.Column="0"
+                       Grid.Row="2"
+                       Grid.ColumnSpan="2"                       
+                       Style="{StaticResource BorderUnderline}">
+                
+                <TextBlock 
+                       Style="{StaticResource HeaderStyle}"
+                           Text="ПАРАМЕТРЫ HV" />
+            </Border>
+
+
+                <CheckBox Grid.Column="0" Grid.Row="3" 
+                      Content="Использовать HV импульс после препаратов"
+                      
+                      IsChecked="{Binding UseHV}"
+                      Style="{StaticResource CheckInputStyle}">
+                </CheckBox>
+            
+                <TextBlock Grid.Column="0"
+                           Grid.Row="4"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource ValueTitleStyle}"
+                           IsEnabled="{Binding UseHV}"
+                           Text="Частота импульса"></TextBlock>
+
+                <mah:NumericUpDown Grid.Column="1"
+                         Grid.Row="4" Value="{Binding FrequencyHV}"
+                                   IsEnabled="{Binding UseHV}"
+                                   Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="5"
+                       Style="{StaticResource ValueTitleStyle}"
+                           Text="Задержка перед импульсом"></TextBlock>
+
+            <mah:NumericUpDown Grid.Column="1"
+                               Grid.Row="5"
+                                   Value="{Binding PauseBeforeHV, Converter={StaticResource ToSecondsConverter}}"
+                               IsEnabled="{Binding UseHV}"
+                               
+                               Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
+
+
+                <Border Grid.Column="0"
+                       Grid.Row="6"
+                       Grid.ColumnSpan="2"                       
+                       Style="{StaticResource BorderUnderline}">
+
+                    <TextBlock 
+                       Style="{StaticResource HeaderStyle}"
+                           Text="ПРЕДЕЛЫ" />
+                </Border>
+
+                <TextBlock Grid.Column="0"
+                       Grid.Row="7"
+                       Style="{StaticResource ValueTitleStyle}"
+                           Text="Минимально положительный"></TextBlock>
+
+                <mah:NumericUpDown Grid.Column="1"
+                               Grid.Row="7"
+                               Value="{Binding LowLimit}"                               
+                               Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
+
+                <TextBlock Grid.Column="0"
+                       Grid.Row="8"
+                       Style="{StaticResource ValueTitleStyle}"
+                           Text="Максимально положительный"></TextBlock>
+
+                <mah:NumericUpDown Grid.Column="1"
+                               Grid.Row="8"
+                               Value="{Binding HighLimit}"                               
+                               Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
+
+
+
+
+
+            </Grid>
+    </Grid>
+     </Border>
+</UserControl>
