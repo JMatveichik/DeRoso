@@ -27,7 +27,7 @@ namespace DeRoso.Core.Device
                 int left = data.Length - lastIndex;
                 int count = (left < size) ? left : size;
 
-                byte[] buffer = new byte[count];
+                byte[] buffer = new byte[size];
 
                 //копируем данные во временный буфер
                 Array.Copy(data, lastIndex, buffer, 0, count);

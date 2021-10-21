@@ -1,6 +1,7 @@
 ﻿using DeRoso.Core.Health;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -9,6 +10,21 @@ using UsbLibrary;
 
 namespace DeRoso.Core.Device
 {
+
+    /// <summary>
+    /// Делегат для события конвертирования данных устройства
+    /// </summary>
+    /// <param name="data">Данные для конвертации</param>
+    public delegate void ReciveDataArray(byte[] data);
+
+    /// <summary>
+    /// Делегат для событий проверочных тестов для устройства
+    /// </summary>
+    /// <param name="sender">Отправитель сообщения (устройство)</param>
+    /// <param name="args">Аргументы события</param>
+    public delegate void DeviceTest(object sender, DeviceInitializationTestEventArgs args);
+
+
     public class DeviceProvider
     {
 
@@ -23,25 +39,46 @@ namespace DeRoso.Core.Device
             this.usb.OnDataRecieved += new UsbLibrary.DataRecievedEventHandler(this.OnDataRecieved);
             this.usb.OnDataSend += new System.EventHandler(this.OnDataSend);
 
-            testHV();
-
             DataConversion += OnDataConversion;
+
+            Connect();
+
+            Reset();
         }
 
-        #region ДЕЛЕГАТЫ И СОБЫТИЯ
-
+        #region ДЕЛЕГАТЫ И СОБЫТИЯ        
         
-        /// <summary>
-        /// Делегат для события конвертирования данных устройства
-        /// </summary>
-        /// <param name="data">Данные для конвертации</param>
-        public delegate void ReciveDataArray(byte[] data);
 
         /// <summary>
         /// Событие для конвертации данных 
         /// </summary>
         public static event ReciveDataArray DataConversion;
 
+
+        /// <summary>
+        /// Событие начала теста устройства
+        /// </summary>
+        public  event DeviceTest TestStarted;
+
+        /// <summary>
+        /// Событие удачного окончания теста устройства
+        /// </summary>
+        public  event DeviceTest TestComplete;
+
+
+        /// <summary>
+        /// Событие  ошибочного  окончания теста устройства
+        /// </summary>
+        public  event DeviceTest TestFailed;
+
+
+        /// <summary>
+        /// Буфер данных от прибора
+        /// </summary>
+        public List<int> DataBuffer = new List<int>();
+
+        //порог регистрации данных
+        private int registrationBorder = 130;
 
         /// <summary>
         /// Обработчик события конвертации данных 
@@ -59,30 +96,25 @@ namespace DeRoso.Core.Device
 
                 int[] correct = { 0x4f56, 0x4f57, 0x4f58, 0x4f59 };
 
+                //получаем данные от селектора или HV
                 if ( correct.Contains( dataTmp ) )
                 {
+                    if (DataBuffer.Count == 0)
+                        DataBuffer.Add(dataTmp);
+                    else
+                        DataBuffer[0] = dataTmp;
+
+                    isDataRecived = true;
                     return;
                 }
+                
+                //получаем данные об измерении 
+                dataTmp = data[i * 2 + 1] | (data[i * 2 + 1 + 1] & 0x1f) << 7;
 
-                /*
-                Data_SELECTOR = Data_HV = 0;
-                if (dataTmp == 0x4f56 || dataTmp == 0x4f57 || dataTmp == 0x4f58 || dataTmp == 0x4f59)
-                {
-                    Data_SELECTOR = Data_HV = dataTmp;
-                    return;
-                }
-
-                Data_out = data[i * 2 + 1] | (data[i * 2 + 1 + 1] & 0x1f) << 7;
-
-                if (Data_out > 130)  //порог регистрации 0.1V
-                    dataFoleBuf[indexBufFole] = Data_out;     //512 значений
+                if (DataBuffer.Count < 512)
+                    DataBuffer.Add(dataTmp > registrationBorder ? dataTmp : 0);
                 else
-                    dataFoleBuf[indexBufFole] = 0;
-
-                dataReciveComplete++;
-                indexBufFole++; // 0 - 512 (текущий объем данных)
-                indexBufFole &= 0x1ff; // сброс индекса (оганичение по размеру 512 ) 
-                */
+                    isDataRecived = true;
 
             }
         }
@@ -94,7 +126,12 @@ namespace DeRoso.Core.Device
         /// <param name="e"></param>
         private void OnDataSend(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+        }
+
+        private void TraceRecivedData(byte[] data)
+        {
+            Debug.WriteLine(BitConverter.ToString(data));
         }
 
         /// <summary>
@@ -104,6 +141,8 @@ namespace DeRoso.Core.Device
         /// <param name="args"></param>
         private void OnDataRecieved(object sender, DataRecievedEventArgs args)
         {
+            TraceRecivedData(args.data);
+
             for (int i = 0; i < 16; i++)        //проверка на наличие 0 в данных
             {
                 if (args.data[i + 1] == 0)
@@ -120,7 +159,7 @@ namespace DeRoso.Core.Device
         /// <param name="e"></param>
         private void OnDeviceRemoved(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -130,7 +169,7 @@ namespace DeRoso.Core.Device
         /// <param name="e"></param>
         private void OnDeviceArrived(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -140,7 +179,7 @@ namespace DeRoso.Core.Device
         /// <param name="e"></param>
         private void OnSpecifiedDeviceRemoved(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -150,7 +189,7 @@ namespace DeRoso.Core.Device
         /// <param name="e"></param>
         private void OnSpecifiedDeviceArrived(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
         #endregion
 
@@ -158,6 +197,19 @@ namespace DeRoso.Core.Device
         public readonly int TXPackSize = 64;
 
         private UsbHidPort usb;
+
+
+
+        /// <summary>
+        /// Сброс устройства в начальное состояние
+        /// </summary>
+        /// <returns></returns>
+        public void Reset()
+        {
+            sendCommand(DeviceCommands.MeteringOff);
+            sendCommand(DeviceCommands.AllOff);
+            sendCommand(DeviceCommands.OutDrugStop);
+        }
 
         /// <summary>
         /// Соединение с устройством 
@@ -178,7 +230,7 @@ namespace DeRoso.Core.Device
         /// </summary>
         /// <param name="tests"></param>
         /// <returns></returns>
-        public async Task<bool> Do(List<HealthTest> tests)
+        public async Task<bool> Do(IEnumerable<HealthTest> tests)
         {
             foreach(HealthTest test in tests)
             {
@@ -202,11 +254,7 @@ namespace DeRoso.Core.Device
             return false;
         }
 
-        public async Task<bool> Meassure(HealthTestDrug drug)
-        {
-            
-            return false;
-        }
+        
 
         #region ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ       
 
@@ -218,6 +266,7 @@ namespace DeRoso.Core.Device
         private void sendCommand(DeviceCommands cmd, byte [] data = null)
         {
             sendToUSB(DeviceCommand.CreateCommand(cmd, data));
+            Thread.Sleep(50);
         }
 
         /// <summary>
@@ -227,7 +276,7 @@ namespace DeRoso.Core.Device
         /// <returns></returns>
         private bool sendToUSB(byte[] data)
         {
-            
+            TraceRecivedData(data);
             if (this.usb.SpecifiedDevice != null)
             {
                 //делим данные на пакеты с максимальным размером  TXPackSize
@@ -237,7 +286,7 @@ namespace DeRoso.Core.Device
                 foreach (byte[] pack in packs)
                 {
                     usb.SpecifiedDevice.SendData(pack);
-                    Thread.Sleep(20);
+                    
                 }
                 return true;
             }
@@ -301,12 +350,97 @@ namespace DeRoso.Core.Device
 
         }
 
+
+        /// <summary>
+        /// Флаг готовности буфера данных
+        /// </summary>
+        bool isDataRecived = false;
+
+        private void PrepareDataBuffer()
+        {
+            //очищаем буфер данных
+            DataBuffer.Clear();
+
+            //сбрасываем флаг окончания получения данных
+            isDataRecived = false;
+        }
+
+        /// <summary>
+        /// Ожидание получения данных от прибора
+        /// </summary>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
+        private bool reciveData(TimeSpan timeout)
+        {
+            //начало ожидания данных
+            DateTime begin = DateTime.Now;
+            TimeSpan duration = TimeSpan.FromMilliseconds(0);
+
+            //ожидание данных
+            while (!isDataRecived)
+            {
+                Thread.Sleep(10);
+                duration = DateTime.Now - begin;
+
+                if (duration > timeout)
+                    return false;
+            }
+
+            return true;
+            
+        }
+
+        /// <summary>
+        /// Тестирование работоспособности прибора
+        /// </summary>
+        /// <returns></returns>
+        public  bool Test()
+        {
+            if (!testHV())
+            {
+                Debug.WriteLine("Ошибка проверки HV");
+                sendCommand(DeviceCommands.AllOff);
+                return false;
+            }
+
+            Thread.Sleep(500);
+            if (!testSelector())
+            {
+                Debug.WriteLine("Ошибка проверки селектора");
+                sendCommand(DeviceCommands.AllOff);
+                return false;
+            }
+
+            Thread.Sleep(500);
+            if (!testCalibration())
+            {
+                Debug.WriteLine("Ошибка проверки калибровки");
+                sendCommand(DeviceCommands.AllOff);
+                return false;
+            }
+
+            Thread.Sleep(500);
+            if (!testElectrodes())
+            {
+                Debug.WriteLine("Ошибка проверки электродов");
+                sendCommand(DeviceCommands.AllOff);
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Тестирование импульса HV 
         /// </summary>
         /// <returns></returns>
-        private bool testHV()
+        private  bool testHV()
         {
+            string testName = "Тестирование импульса HV";
+
+            //вызов обработчиков начала тестирования устройства
+            TestStarted?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Started));
+
             sendCommand(DeviceCommands.MeteringOff);
             sendCommand(DeviceCommands.ReleSelectorOn);
             sendCommand(DeviceCommands.ReleDiagnosticOff);
@@ -314,163 +448,196 @@ namespace DeRoso.Core.Device
             setFrequencyHV(10000);
             Thread.Sleep(600);
 
+            //Подготовка буфера к приему данных
+            PrepareDataBuffer();
+
+            //выдаем тестовые импульсы
             sendCommand(DeviceCommands.ImpulsTest);
             sendCommand(DeviceCommands.ImpulsTest);
 
-            return false; 
+            //ожидаем получение данных
+            Task<bool> getdata = new Task<bool>( () => reciveData(TimeSpan.FromSeconds(3.0)));
+            getdata.Start();
+            getdata.Wait();
+
+            //сброс частоты
+            setFrequencyHV(0);
+
+            //если данные не получены
+            if (!getdata.Result)
+            {
+                //вызов обработчиков неудачного тестирования устройства
+                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                return false;
+            }
+                
+
+            //получаем данные 
+            int dataHV = DataBuffer[0];
+
+            //проверка ошибки HV
+            if (dataHV == 0x4f57)
+            {
+                //вызов обработчиков неудачного тестирования устройства
+                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                return false;
+
+            }
+
+            //вызов обработчиков окончания тестирования устройства
+            TestComplete?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Complete));
+            return true; 
         }
 
-        #endregion
 
-        /*
-        
-        private bool test()
+        /// <summary>
+        /// Проверка селектора
+        /// </summary>
+        /// <returns></returns>
+        private bool testSelector()
         {
-            if (stepTest == 0)                      //проверка работы HV
+            string testName = "Тестирование селектора";//вызов обработчиков начала тестирования устройства
+            TestStarted?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Started));
+
+
+            sendCommand(DeviceCommands.SelectorTest);
+            sendCommand(DeviceCommands.SelectorTest);
+
+            //Подготовка буфера к приему данных
+            PrepareDataBuffer();
+
+            sendCommand(DeviceCommands.ReadSelectorTest);            
+
+            //ожидаем получение данных
+            Task<bool> getdata = new Task<bool>(() => reciveData(TimeSpan.FromSeconds(3.0)));
+            getdata.Start();
+            getdata.Wait();
+
+            //если данные не получены
+            if (!getdata.Result)
             {
-                label_Wrning.Text = "";
-                CmdOut((byte)MyComm.Metering_OFF);
-                CmdOut((byte)MyComm.RELE_SELECTOR_ON);
-                CmdOut((byte)MyComm.RELE_DIAGNOST_OFF);
-
-                Set_Freq(10000);   //Set_Freq Установка частоты HV                
-
-                Thread.Sleep(600);
-                Data_HV = 0;
-
-                CmdOut((byte)MyComm.Impuls_TEST);
-                CmdOut((byte)MyComm.Impuls_TEST);
-
-                stepTest++;
-                return;
+                //вызов обработчиков неудачного тестирования устройства
+                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                return false;
             }
 
-            if (stepTest == 1)
+            //получаем данные 
+            int dataSelector = DataBuffer[0];
+
+            //проверка ошибки селектора
+            if (dataSelector == 0x4f59)
             {
-                if (Data_HV == 0)
-                    return;
-
-                Set_Freq(0);               //Set_Freq Установка частоты HV  
-
-                if (Data_HV == 0x4f57)
-                {
-                    CmdOut((byte)MyComm.All_Off);
-                    this.BackColor = Color.Coral;
-                    stepTest = 0;
-                    timer1.Enabled = false;
-                    timer2.Enabled = false;
-                    label_Wrning.Text = "Ошибка HV";
-                    return;
-                }
-
-                stepTest++;
-                return;
+                //вызов обработчиков неудачного тестирования устройства
+                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                return false;
             }
 
-            if (stepTest == 2)          //проверка работы Selector
-            {
-                CmdOut((byte)MyComm.SELECTOR_TEST); //RELE_CALIBR_ON, CP_RELE_SELECTOR_OFF, CP_RELE_DIAGNOST_ON 	
-                CmdOut((byte)MyComm.SELECTOR_TEST);
-                CmdOut((byte)MyComm.READ_SELECTOR_TEST);
-                stepTest++;
-                return;
-            }
-
-
-            if (stepTest == 3)
-            {
-                if (Data_SELECTOR == 0)
-                    return;
-
-                if (Data_SELECTOR == 0x4f59)
-                {
-                    CmdOut((byte)MyComm.All_Off);
-                    this.BackColor = Color.Coral;
-                    stepTest = 0;
-                    timer1.Enabled = false;
-                    timer2.Enabled = false;
-                    label_Wrning.Text = "Ошибка Селектора";
-                    return;
-                }
-                stepTest++;
-                return;
-            }
-
-
-            if (stepTest == 4)      //КАЛИБРОВКА
-            {
-                CmdOut((byte)MyComm.RELE_DIAGNOST_ON);
-                CmdOut((byte)MyComm.Metering_ON);
-                dataReciveComplete = 0;
-                startCalibr = "Start";
-                stepTest++;
-                return;
-            }
-
-            if (stepTest == 5)
-            {
-                testEndCalibr();
-                if (startCalibr == "")
-                    stepTest++;
-                return;
-            }
-
-            if (stepTest == 6)                              //Проверка на подключение электродов
-            {
-                CmdOut((byte)MyComm.Rele_Calibr_OFF);
-                CmdOut((byte)MyComm.Diagnostic_ON);
-                CmdOut((byte)MyComm.Metering_ON);
-                dataReciveComplete = 0;
-                TimeControl_OUT = 0;
-                TimeControl_IN = 0;
-
-                stepTest++;
-                return;
-            }
-
-            if (stepTest == 7)                              //Проверка на подключение электродов
-            {
-                tmp = Calculate();
-                if (tmp == 0xffff)                          //преобразование не закончено
-                    return;
-
-                if ((int)tmp < 130)                         //меньше 100 мВ
-                {
-                    TimeControl_IN = 0;
-                    this.BackColor = Color.Coral;
-                    label_Wrning.Text = "Подключите электроды";
-
-                    TimeControl_OUT++;
-                    if (TimeControl_OUT > 11)
-                    {
-                        CmdOut((byte)MyComm.All_Off);
-                        stepTest = 0;
-                        timer1.Enabled = false;
-                        timer2.Enabled = false;
-                        label_Wrning.Text = "Стоп! Нет подключения электродов";
-                        TimeControl_OUT = 0;
-                        return;
-                    }
-                }
-                else
-                {
-                    TimeControl_OUT = 0;
-
-                    TimeControl_IN++;
-                    if (TimeControl_IN > 2)
-                    {
-                        this.BackColor = SystemColors.Control;
-                        label_Wrning.Text = "";
-                        timer1.Enabled = true;
-                        timer2.Enabled = false;
-                        stepTest = 0;
-                        TimeControl_IN = 0;
-                    }
-                }
-                dataReciveComplete = 0;
-            }
+            //вызов обработчиков окончания тестирования устройства
+            TestComplete?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Complete));
+            return true;
+           
         }
 
-        */
+
+        private double kADC = 0.0;
+
+        private double minADC = 3000;
+
+        private double maxADC = 3850;
+
+        /// <summary>
+        /// Проверка калибровки
+        /// </summary>
+        /// <returns></returns>
+        private bool testCalibration()
+        {
+            string testName = "Тестирование калибровки";//вызов обработчиков начала тестирования устройства
+            TestStarted?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Started));
+
+            sendCommand(DeviceCommands.ReleDiagnosticOn);
+            sendCommand(DeviceCommands.MeteringOn);
+
+            //Подготовка буфера к приему данных
+            PrepareDataBuffer();
+
+            //ожидаем получение данных
+            Task<bool> getdata = new Task<bool>(() => reciveData(TimeSpan.FromSeconds(3.0)));
+            getdata.Start();
+            getdata.Wait();
+
+            //если данные не получены
+            if (!getdata.Result)
+            {
+                //вызов обработчиков неудачного тестирования устройства
+                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                return false;
+            }
+
+            sendCommand(DeviceCommands.AllOff);
+
+            double average = DataBuffer.Average();
+
+            //
+            if (average > minADC && average < maxADC)
+            {
+                kADC = average;
+                //вызов обработчиков окончания тестирования устройства
+                TestComplete?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Complete));
+                return true;
+            }
+
+
+            //вызов обработчиков неудачного тестирования устройства
+            TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+            return false;
+        }
+
+        /// <summary>
+        /// Проверка подключения электродов
+        /// </summary>
+        /// <returns></returns>
+        private bool testElectrodes()
+        {
+            string testName = "Тестирование электродов";//вызов обработчиков начала тестирования устройства
+            TestStarted?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Started));
+
+            sendCommand(DeviceCommands.ReleCalibrationOff);
+            sendCommand(DeviceCommands.DiagnosticOn);
+            sendCommand(DeviceCommands.MeteringOn);
+
+            //Подготовка буфера к приему данных
+            PrepareDataBuffer();
+
+            //ожидаем получение данных
+            Task<bool> getdata = new Task<bool>(() => reciveData(TimeSpan.FromSeconds(3.0)));
+            getdata.Start();
+            getdata.Wait();
+
+            //если данные не получены
+            if (!getdata.Result)
+            {
+                //вызов обработчиков неудачного тестирования устройства
+                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                return false;
+            }
+
+            sendCommand(DeviceCommands.AllOff);
+
+            double average = DataBuffer.Average();
+
+            if (average < registrationBorder)
+            {
+                //вызов обработчиков неудачного тестирования устройства
+                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                return false;
+            }
+
+            //вызов обработчиков окончания тестирования устройства
+            TestComplete?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Complete));
+            return true;
+            
+        }
+
+        #endregion       
     }
 }

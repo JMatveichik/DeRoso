@@ -150,6 +150,9 @@
     <Compile Include="DeviceProgram.cs" />
     <Compile Include="DevicePrograms.cs" />
     <Compile Include="Device\DeviceCommand.cs" />
+    <Compile Include="Device\DeviceInitializationTestEventArgs.cs" />
+    <Compile Include="Device\DeviceException.cs" />
+    <Compile Include="Device\DeviceInitializationTestState.cs" />
     <Compile Include="Device\DevicePacketMaker.cs" />
     <Compile Include="Device\DeviceProvider.cs" />
     <Compile Include="Device\EnumDeviceCommands.cs" />

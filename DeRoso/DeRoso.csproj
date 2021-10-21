@@ -19,7 +19,7 @@
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -140,6 +140,9 @@
     <Compile Include="Controls\DescribedItemEditor.xaml.cs">
       <DependentUpon>DescribedItemEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DeviceTestingControl.xaml.cs">
+      <DependentUpon>DeviceTestingControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DrugEditor.xaml.cs">
       <DependentUpon>DrugEditor.xaml</DependentUpon>
     </Compile>
@@ -154,14 +157,19 @@
     </Compile>
     <Compile Include="ViewModels\CurrentTestProcessViewModel.cs" />
     <Compile Include="ViewModels\DataViewModel.cs" />
+    <Compile Include="ViewModels\DeviceTestingViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\CreatorViewArchive.cs" />
+    <Compile Include="Views\CreatorViewDeviceInit.cs" />
     <Compile Include="Views\CreatorViewHelp.cs" />
     <Compile Include="Views\CreatorViewHome.cs" />
     <Compile Include="Views\CreatorViewTesting.cs" />
     <Compile Include="Views\CreatorViewTestsEditor.cs" />
     <Compile Include="Views\ViewArchive.xaml.cs">
       <DependentUpon>ViewArchive.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDeviceInit.xaml.cs">
+      <DependentUpon>ViewDeviceInit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewHelp.xaml.cs">
       <DependentUpon>ViewHelp.xaml</DependentUpon>
@@ -183,6 +191,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\DeviceTestingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\DrugEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -200,6 +212,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewArchive.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDeviceInit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

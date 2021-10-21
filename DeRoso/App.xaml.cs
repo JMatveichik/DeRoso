@@ -26,11 +26,11 @@ namespace DeRoso
             base.OnStartup(e);
 
             ContentManager.Instance.RegisterCreator("HOME", new CreatorViewHome());
-            //ContentManager.Instance.RegisterCreator("PROGRAMMS", new CreatorViewProgramms());
             ContentManager.Instance.RegisterCreator("HELP", new CreatorViewHelp());
             ContentManager.Instance.RegisterCreator("ARCHIVE", new CreatorViewArchive());
-            //ContentManager.Instance.RegisterCreator("TESTING", new CreatorViewTesting());
-            ContentManager.Instance.RegisterCreator("TESTING", new CreatorViewTestsEditor());
+            ContentManager.Instance.RegisterCreator("EDIT", new CreatorViewTestsEditor());
+            ContentManager.Instance.RegisterCreator("TESTING", new CreatorViewTesting());
+
 
             var optionsBuilder = new DbContextOptionsBuilder<DeRosoContext>();
             var options = optionsBuilder.UseSqlite("Filename=DeRoso.db").Options;
@@ -38,17 +38,7 @@ namespace DeRoso
             DeRossoData = new DeRosoContext(options);
             DeRossoData.Load();
 
-            /*
-            byte[] data = new byte[500];
-
-            for (int i = 0; i < 500; i++)
-            {
-                data[i] = (byte)i;
-            }
-            
-
-            List<byte[]> packs = DevicePacketMaker.Split(64, data);
-            */
+            Device = new DeviceProvider();
 
             //DeRossoDBTools.Instance.InitDB(DeRossoData, "db.xml", "ProfLeng.txt");
             //DeRossoDBTools.Instance.TraceDB(DeRossoData, "outtree.txt");
@@ -62,6 +52,12 @@ namespace DeRoso
         }
 
         public DeRosoContext DeRossoData {
+            get;
+            private set;
+        }
+
+        public DeviceProvider Device
+        {
             get;
             private set;
         }

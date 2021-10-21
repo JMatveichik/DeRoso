@@ -35,7 +35,7 @@
 
         <Button Grid.Row="0" 
                 Grid.Column="0"
-                Command="{Binding Testing}">
+                Command="{Binding TestDevice}">
             <StackPanel>
                 <ContentPresenter Width="48" Height="48"  
                                   Content="{StaticResource IconLaunch}"/>
@@ -54,7 +54,7 @@
                                   Height="48"
                                   Content="{StaticResource IconSettings}" />
                 <TextBlock>НАСТРОЙКА</TextBlock>
-                <TextBlock FontSize="12"></TextBlock>
+                <TextBlock FontSize="12">Редактирование базы данных</TextBlock>
             </StackPanel>
 
         </Button>

@@ -58,5 +58,10 @@ namespace DeRoso.ViewModels
             get;
         } = new RoutedUICommand("Go to testing page", "Testing", typeof(MainWindowViewModel), null);
 
+        public static RoutedUICommand TestDevice
+        {
+            get;
+        } = new RoutedUICommand("Test device", "Testing device status", typeof(MainWindowViewModel), null);
+
     }
 }

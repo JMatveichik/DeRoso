@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -36,11 +37,30 @@ namespace DeRoso
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.Archive, ArchiveExecute, ArchiveCanExecute));
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.Programms, ProgrammsExecute, ProgrammsCanExecute));
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.Testing, TestingExecute, TestingCanExecute));
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.TestDevice, TestDeviceExecute, TestDeviceCanExecute));
 
             //byte[] buf = DeviceCommand.CreateCommand(EnumDeviceCommands.MeteringOn, new byte[] { 1, 2, 3, 4 });
 
             DeviceProvider deRosoDevice = new DeviceProvider();
 
+        }
+
+        private void TestDeviceCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void TestDeviceExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
+            vm.CurrentContent = ContentManager.Instance.GetContent("TESTING");
+
+            DeviceProvider dev = ((App)App.Current).Device;
+
+            dev.Reset();
+
+            Task<bool> test = new Task<bool>(() => dev.Test());
+            test.Start();
         }
 
         private void TestingCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -62,7 +82,7 @@ namespace DeRoso
         private void ProgrammsExecute(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
-            vm.CurrentContent = ContentManager.Instance.GetContent("PROGRAMMS");
+            vm.CurrentContent = ContentManager.Instance.GetContent("EDIT");
         }
 
         private void ArchiveCanExecute(object sender, CanExecuteRoutedEventArgs e)

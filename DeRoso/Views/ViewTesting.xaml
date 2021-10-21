@@ -4,9 +4,35 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DeRoso.Views"
+              xmlns:ctrl="clr-namespace:DeRoso.Controls"
+             xmlns:cmd ="clr-namespace:DeRoso.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource SectionTitleStyle}">ТЕСТИРОВАНИЕ</TextBlock>
+    
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Height="200" Width="800">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+
+        <ctrl:DeviceTestingControl Grid.Row="0" >
+            
+        </ctrl:DeviceTestingControl>
+
+        <Button Grid.Row="1" 
+                Grid.Column="0"
+                Command="{x:Static cmd:MainWindowViewModel.TestDevice}">
+            
+            <StackPanel>
+                <ContentPresenter Width="48" Height="48"  
+                                  Content="{StaticResource IconLaunch}"/>
+                <TextBlock>ТЕСТИРОВАНИЕ</TextBlock>
+                <TextBlock FontSize="12">Тестирование устройства</TextBlock>
+
+            </StackPanel>
+        </Button>
+
     </Grid>
 </UserControl>
