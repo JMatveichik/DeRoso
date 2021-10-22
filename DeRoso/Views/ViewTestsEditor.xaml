@@ -5,10 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DeRoso.Views"
              xmlns:ctrl="clr-namespace:DeRoso.Controls"
+             xmlns:sel="clr-namespace:DeRoso.Selectors"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024">
-    
-    <Grid>
+
+    <UserControl.Resources>
+        <sel:TestListBoxItemTemplateSelector x:Key="TestListBoxItemTemplateSelector"
+            NonValidTestDrugsDataTemplate="{StaticResource NonValidTestListBoxItemTemplate}"
+            ValidTestDrugsDataTemplate="{StaticResource NormalTestListBoxItemTemplate}">
+            
+        </sel:TestListBoxItemTemplateSelector>
+        
+    </UserControl.Resources>
+        
+        <Grid>
         
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -56,6 +66,7 @@
                 <ComboBox Grid.Column="0" MinHeight="50"
                  Grid.Row="1"
                  Margin="10,5"
+                 SelectedIndex="0"
                  ItemsSource="{Binding Sections}"                         
                      SelectedItem ="{Binding SelectedSection, Mode=TwoWay}"
                      ItemTemplate="{StaticResource DescribedListBoxItemTemplate}">
@@ -77,6 +88,7 @@
                 <ComboBox Grid.Column="0" MinHeight="50"
                  Grid.Row="3"
                  Margin="10,5"
+                          SelectedIndex="0"
                      ItemsSource="{Binding SelectedSection.Groups}"
                      SelectedItem ="{Binding SelectedGroup, Mode=TwoWay}"
                      ItemTemplate="{StaticResource DescribedListBoxItemTemplate}">
@@ -164,10 +176,11 @@
                 </Border>
 
                 <ListBox Grid.Column="0"
+                         SelectedIndex="0"
                  Grid.Row="1"
                  SelectedItem="{Binding SelectedTest}"
                  Margin="10,5" ItemsSource="{Binding SelectedGroup.Tests}"
-                 ItemTemplate="{StaticResource DescribedListBoxItemTemplate}">
+                 ItemTemplateSelector="{StaticResource TestListBoxItemTemplateSelector}">
 
                 </ListBox>
             </Grid>

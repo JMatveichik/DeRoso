@@ -6,13 +6,20 @@
              xmlns:local="clr-namespace:DeRoso.Controls"
              xmlns:conv="clr-namespace:DeRoso.Core.Converters;assembly=DeRoso.Core"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:sel="clr-namespace:DeRoso.Selectors"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
 
     <UserControl.Resources>
         <conv:TimeSpanToDoubleConverter x:Key="ToSecondsConverter" ConvertBase="Seconds"/>
+
+        
+        
     </UserControl.Resources>
 
+      
+    
+    
     <Border 
             Style="{StaticResource BorderBox}">
     <Grid>

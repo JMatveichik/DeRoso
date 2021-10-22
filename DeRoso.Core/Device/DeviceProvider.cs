@@ -355,56 +355,50 @@ namespace DeRoso.Core.Device
         public HealthTestResult Do(HealthTest test)
         {
             //готовим объект результата теста
-            HealthTestResult res = new HealthTestResult();
-            res.HealthTestId = test.Id;
-            res.Test = test;
-
-            /************************************************/
-            /*                  ПАУЗА ПЕРЕД ЗАПУСКОМ        */
-            /************************************************/
-
-            MakePause(test.PauseBeforeStart, 200, test, EnumHealthTestStep.WaitMeassure);
-            
-
-            /************************************************/
-            /*                  ИЗМЕРЕНИЕ ДО                */
-            /************************************************/
-
-            //готовим буфер к приемму данных
-            PrepareDataBuffer();
-
-            sendCommand(DeviceCommands.DiagnosticOn);
-            sendCommand(DeviceCommands.MeteringOn);
-
-            //ожидаем получение данных
-            Task<bool> getdata = new Task<bool>(() => reciveData(TimeSpan.FromSeconds(3.0)));
-            getdata.Start();
-            getdata.Wait();
-
-            sendCommand(DeviceCommands.MeteringOff);
-            sendCommand(DeviceCommands.AllOff);
-
-
-            //если данные не получены
-            if (!getdata.Result)
-                return null;
-            
-
-            //вычисления на основе полученных данных
-            float value = Calculate( DataBuffer );
-
-            //обновляем буфер измерений для результата теста
-            res.Meassurments.Add(value);
-            res.MeassurmentBefore = value;
+            HealthTestResult resTest = new HealthTestResult();
+            resTest.HealthTestId = test.Id;
+            resTest.Test = test;            
 
 
             /************************************************/
             /*              ВЫДАЧА ПРЕПАРАТОВ               */
             /************************************************/
 
-
             foreach (HealthTestDrug drug in test.Drugs)
             {
+                HealthTestDrugResult res = new HealthTestDrugResult();
+                res.HealthTestDrugId = drug.Id;
+                res.HealthTestId = test.Id;
+                res.Test = test;
+                res.Drug = drug;
+
+                /************************************************/
+                /*                  ИЗМЕРЕНИЕ ДО                */
+                /************************************************/
+
+                //готовим буфер к приемму данных
+                PrepareDataBuffer();
+
+                sendCommand(DeviceCommands.DiagnosticOn);
+                sendCommand(DeviceCommands.MeteringOn);
+
+                //ожидаем получение данных
+                Task<bool> getdata = new Task<bool>(() => reciveData(TimeSpan.FromSeconds(3.0)));
+                getdata.Start();
+                getdata.Wait();
+
+                sendCommand(DeviceCommands.MeteringOff);
+                sendCommand(DeviceCommands.AllOff);
+
+
+                //если данные не получены
+                if (!getdata.Result)
+                    return null;
+               
+                //схраняем результаты измерений до выдачи препарата
+                res.MeassurmentBefore = Calculate(DataBuffer); 
+
+
                 /************* ОЖИДАНИЕ ПЕРЕД ВЫДАЧЕЙ *****************/
                 MakePause(drug.PauseBefore, 200, drug, EnumHealthTestStep.DrugDespencing);
 
@@ -425,7 +419,7 @@ namespace DeRoso.Core.Device
                 MakePause(drug.PauseAfter, 200, drug, EnumHealthTestStep.DrugDespencing);
 
                 /*************************************************/
-                /*             ИЗМЕРЕНИЯ ПОСЛЕ  ВЫДФЧИ ПРЕПАРАТА */
+                /*             ИЗМЕРЕНИЯ ПОСЛЕ  ВЫДАЧИ ПРЕПАРАТА */
                 /*************************************************/
 
                 //готовим буфер к приемму данных
@@ -449,17 +443,16 @@ namespace DeRoso.Core.Device
                     //вызов обработчиков неудачного теста 
                     //TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
                     //return false;
-                }
+                }                
 
-                //вычисления на основе полученных данных
-                value = Calculate(DataBuffer);
+                //схраняем результаты измерений после выдачи препарата
+                res.MeassurmentAfter = Calculate(DataBuffer);
 
-                //обновляем буфер измерений для результата теста
-                res.Meassurments.Add(value);
-                
+
+                resTest.Meassurments.Add(res);
             }
 
-            res.MeassurmentAfter = value;
+           
 
 
 
@@ -479,7 +472,7 @@ namespace DeRoso.Core.Device
 
             sendCommand(DeviceCommands.AllOff);
 
-            return res;
+            return resTest;
             
         }
 

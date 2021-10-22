@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DeRoso.Core.Health;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -37,46 +39,12 @@ namespace DeRoso.Core.Health
         /// <summary>
         /// Буфер измерений
         /// </summary>
-        public List<float> Meassurments
+        public ObservableCollection<HealthTestDrugResult> Meassurments
         {
             get;
             private set;
-        } = new List<float>();
+        } = new ObservableCollection<HealthTestDrugResult>();
 
-        /// <summary>
-        /// Значение измеряемого параметра перед выполнение теста 
-        /// </summary>
-        public float MeassurmentBefore
-        {
-            get { return _meassurmentBefore; }
-            set
-            {
-                if (Math.Abs(value - _meassurmentBefore) < 0.000001)
-                    return;
-
-                _meassurmentBefore = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private float _meassurmentBefore;
-
-        /// <summary>
-        /// Значение измеряемого параметра перед выполнение теста 
-        /// </summary>
-        public float MeassurmentAfter
-        {
-            get { return _meassurmentAfter; }
-            set
-            {
-                if (Math.Abs(value - _meassurmentAfter) < 0.000001)
-                    return;
-
-                _meassurmentAfter = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private float _meassurmentAfter;
+        
     }
 }

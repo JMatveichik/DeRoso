@@ -35,7 +35,11 @@
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Foreground" Value="DarkCyan"></Setter>
     </Style>
-    
+
+    <Style x:Key="NonValidItemTitleStyle" TargetType="TextBlock" BasedOn="{StaticResource ItemTitleStyle}">
+        <Setter Property="Foreground" Value="DarkGray"></Setter>
+    </Style>
+
     <Style x:Key="ItemDescriptionStyle" TargetType="TextBlock" BasedOn="{StaticResource DeRossoTetxBlockStyle}">
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="TextTrimming" Value="CharacterEllipsis"/>

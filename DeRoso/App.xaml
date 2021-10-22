@@ -3,26 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:DeRoso"
              StartupUri="MainWindow.xaml">
+    
     <Application.Resources>
+        
         <ResourceDictionary>
+            
             <ResourceDictionary.MergedDictionaries>
+                
                 <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                
                 <!-- Theme setting -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
-                <!--Icons-->
-                <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Icons/Icons.xaml" />
-                <!--Program List box items -->
-                <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/DescribedListBoxItemTemplate.xaml" />
 
-                <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/DrugListBoxItemTemplate.xaml" />
-
-                <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/BordersStyles.xaml" />
+                
+                <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/DeRosso.UI.Dictionary.xaml" />                
 
             </ResourceDictionary.MergedDictionaries>
+            
         </ResourceDictionary>
 
-
     </Application.Resources>
+    
 </Application>

@@ -28,6 +28,22 @@ namespace DeRoso.Core.Health
         public ObservableCollection<HealthTestDrug> Drugs { get; set; }        
 
 
+        public bool ContainValidDrugs()
+        {
+            if (Drugs == null)
+                return false;
+
+            if (Drugs.Count == 0)
+                return false;
+
+            foreach(HealthTestDrug d in Drugs)
+            {
+                if (d.Title.Contains("Нет"))
+                    return false;
+            }
+
+            return true;
+        }
         /// <summary>
         /// Использовать HV после выполнения теста
         /// </summary>        

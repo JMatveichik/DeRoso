@@ -6,8 +6,9 @@
         <ResourceDictionary Source="../Styles/TextBlockStyles.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
-    <DataTemplate x:Key="ProgListBoxItemTemplate">
-        <Grid Margin="5">
+    <DataTemplate x:Key="NonValidTestListBoxItemTemplate">
+        
+        <Grid Margin="5" MinHeight="40">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -17,18 +18,17 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0"
-                       Grid.Row="0"
-                       Style="{StaticResource SectionTitleStyle}"
-                       Text="{Binding SectionTitle}" />
-            <TextBlock Grid.Column="1"
-                       Grid.Row="0"
-                       Style="{StaticResource SubSectionTitleStyle}"
-                       Text="{Binding SubsectionTitle}" />
+            <TextBlock Grid.Column="0" Grid.Row="0" 
+                       Style="{StaticResource NonValidItemTitleStyle}"
+                       Text="{Binding Title}"/>
+
             <TextBlock Grid.Column="0"
                        Grid.Row="1"
-                       Style="{StaticResource ProgTitleStyle}"
-                       Text="{Binding Title}" />
+                       Style="{StaticResource ItemDescriptionStyle}"
+                       MaxWidth="300"
+                       HorizontalAlignment="Left"
+                       Text="Не валидный список препаратов. Отредактируйте тест в базе данных..." />
+
         </Grid>
 
     </DataTemplate>

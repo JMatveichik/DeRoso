@@ -4,9 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DeRoso.Views"
+             xmlns:sel="clr-namespace:DeRoso.Selectors"
              xmlns:models="clr-namespace:DeRoso.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000">
+
+    <UserControl.Resources>
+        
+        <sel:TestListBoxItemTemplateSelector x:Key="TestListBoxItemTemplateSelector"
+            NonValidTestDrugsDataTemplate="{StaticResource NonValidTestListBoxItemTemplate}"
+            ValidTestDrugsDataTemplate="{StaticResource NormalTestListBoxItemTemplate}">
+
+        </sel:TestListBoxItemTemplateSelector>
+
+    </UserControl.Resources>
+    
     <Grid>
 
         <Grid.RowDefinitions>
@@ -114,7 +126,9 @@
                  Grid.Row="1"
                  SelectedItem="{Binding SelectedTest}"
                  Margin="10,5" ItemsSource="{Binding SelectedGroup.Tests}"
-                 ItemTemplate="{StaticResource DescribedListBoxItemTemplate}">
+                 PreviewMouseLeftButtonDown="OnTestsListBoxPreviewMouseLeftButtonDown"
+                 MouseDoubleClick="OnTestsListBoxMouseDoubleClick"
+                         ItemTemplateSelector="{StaticResource TestListBoxItemTemplateSelector }">
 
                 </ListBox>
             </Grid>
@@ -145,10 +159,11 @@
 
                 <ListBox Grid.Column="0"
                  Grid.Row="1"
+                 AllowDrop="true"
                  SelectedItem="{Binding SelectedDrug, Mode=TwoWay}"
                  Margin="10,5" ItemsSource="{Binding SelectedTests}"
-                 ItemTemplate="{StaticResource DescribedListBoxItemTemplate}">
-
+                 ItemTemplate="{StaticResource DescribedListBoxItemTemplate}"
+                         Drop="SelectedTestsListBoxDrop">
 
                 </ListBox>
             </Grid>

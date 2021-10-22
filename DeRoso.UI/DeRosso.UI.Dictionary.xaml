@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:DeRoso.UI">
+    
+    <ResourceDictionary.MergedDictionaries>
+
+        <!--Icons-->
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Icons/Icons.xaml" />
+        
+        <!--Program List box items -->
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/DescribedListBoxItemTemplate.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/NormalTestListBoxItemTemplate.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/NonValidTestListBoxItemTemplate.xaml" />       
+        
+        
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/DrugListBoxItemTemplate.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/BordersStyles.xaml" />
+        
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/BordersStyles.xaml" />
+        
+    </ResourceDictionary.MergedDictionaries>
+    
+</ResourceDictionary>

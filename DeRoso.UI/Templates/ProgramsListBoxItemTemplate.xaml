@@ -6,7 +6,7 @@
         <ResourceDictionary Source="../Styles/TextBlockStyles.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
-    <DataTemplate x:Key="ProgListBoxItemTemplate">
+    <DataTemplate x:Key="EmptyTestListBoxTemplate">
         <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>

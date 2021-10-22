@@ -1,4 +1,5 @@
-﻿using DeRoso.ViewModels;
+﻿using DeRoso.Core.Health;
+using DeRoso.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace DeRoso.Views
         }
 
 
-        private void OnDrugListBoxPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void OnTestsListBoxPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ListBox parent = (ListBox)sender;
             object data = GetDataFromListBox(parent, e.GetPosition(parent));
@@ -67,6 +68,48 @@ namespace DeRoso.Views
             }
 
             return null;
+        }
+
+        private bool  CanAddToSelectedTests(HealthTest test)
+        {           
+
+            if (test == null)
+                return false;
+            
+            if (!test.ContainValidDrugs())
+                return false;
+
+            TestSelectionViewModel model = (TestSelectionViewModel)this.DataContext;
+            if (model.SelectedTests.Contains(test))
+                return false;
+
+            return true;
+        }
+
+        private void SelectedTestsListBoxDrop(object sender, DragEventArgs e)
+        {
+            ListBox parent = (ListBox)sender;
+
+            
+            HealthTest test = (HealthTest)e.Data.GetData(typeof(HealthTest));
+            TestSelectionViewModel model = (TestSelectionViewModel)this.DataContext;
+
+            if (CanAddToSelectedTests(test))
+                model.SelectedTests.Add (test);
+        }
+
+        private void OnTestsListBoxMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                ListBox parent = (ListBox)sender;
+                HealthTest test = (HealthTest)GetDataFromListBox(parent, e.GetPosition(parent));
+                TestSelectionViewModel model = (TestSelectionViewModel)this.DataContext;
+
+                if (CanAddToSelectedTests(test))
+                    model.SelectedTests.Add(test);
+            }
+            e.Handled = false;
         }
     }
 }
