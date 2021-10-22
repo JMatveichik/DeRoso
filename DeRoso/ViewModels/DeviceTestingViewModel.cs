@@ -12,9 +12,9 @@ namespace DeRoso.ViewModels
     {
         public DeviceTestingViewModel(DeviceProvider device)
         {
-            device.TestStarted += OnDeviceTestEvent;
-            device.TestFailed += OnDeviceTestEvent;
-            device.TestComplete += OnDeviceTestEvent;
+            device.DeviceTestStarted += OnDeviceTestEvent;
+            device.DeviceTestFailed += OnDeviceTestEvent;
+            device.DeviceTestComplete += OnDeviceTestEvent;
         }
 
 

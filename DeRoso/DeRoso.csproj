@@ -159,17 +159,15 @@
     <Compile Include="ViewModels\DataViewModel.cs" />
     <Compile Include="ViewModels\DeviceTestingViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\TestSelectionViewModel.cs" />
     <Compile Include="Views\CreatorViewArchive.cs" />
-    <Compile Include="Views\CreatorViewDeviceInit.cs" />
     <Compile Include="Views\CreatorViewHelp.cs" />
     <Compile Include="Views\CreatorViewHome.cs" />
     <Compile Include="Views\CreatorViewTesting.cs" />
     <Compile Include="Views\CreatorViewTestsEditor.cs" />
+    <Compile Include="Views\CreatorViewTestSelection.cs" />
     <Compile Include="Views\ViewArchive.xaml.cs">
       <DependentUpon>ViewArchive.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ViewDeviceInit.xaml.cs">
-      <DependentUpon>ViewDeviceInit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewHelp.xaml.cs">
       <DependentUpon>ViewHelp.xaml</DependentUpon>
@@ -182,6 +180,9 @@
     </Compile>
     <Compile Include="Views\ViewTestsEditor.xaml.cs">
       <DependentUpon>ViewTestsEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewTestSelection.xaml.cs">
+      <DependentUpon>ViewTestSelection.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\CurrentTestProcessControl.xaml">
       <SubType>Designer</SubType>
@@ -215,10 +216,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewDeviceInit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ViewHelp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -244,6 +241,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewTestsEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewTestSelection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -9,22 +9,21 @@
     
     
     <Grid  Margin="5" >
+        
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>                   
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0"
+            Style="{StaticResource ItemTitleStyle}" 
+                   Text="{Binding DeviceTestingPartDescription}"
+                   HorizontalAlignment="Center"></TextBlock>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-
-        <TextBlock Grid.Row="0"  Grid.Column="0"
-            Style="{StaticResource PageTitleStyle}" 
-                   Text="{Binding DeviceTestingPartDescription}"></TextBlock>
-
-        <TextBlock Grid.Row="0"  Grid.Column="1"
-            Style="{StaticResource PageTitleStyle}" 
-                   Text="{Binding TestState}"></TextBlock>       
+        <TextBlock Grid.Row="1" 
+            Style="{StaticResource ValueTitleStyle}" 
+                   Text="{Binding TestState}"
+                   HorizontalAlignment="Center"></TextBlock>       
 
     </Grid>
     

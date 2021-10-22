@@ -35,14 +35,27 @@ namespace DeRoso
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.Home, HomeExecute, HomeCanExecute));
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.Help, HelpExecute, HelpCanExecute));
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.Archive, ArchiveExecute, ArchiveCanExecute));
-            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.Programms, ProgrammsExecute, ProgrammsCanExecute));
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.EditDB, EditDBExecute, EditDBCanExecute));
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.Testing, TestingExecute, TestingCanExecute));
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.SelectTests, SelectTestsExecute, SelectTestsCanExecute));
+
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.TestDevice, TestDeviceExecute, TestDeviceCanExecute));
 
             //byte[] buf = DeviceCommand.CreateCommand(EnumDeviceCommands.MeteringOn, new byte[] { 1, 2, 3, 4 });
 
             DeviceProvider deRosoDevice = new DeviceProvider();
 
+        }
+
+        private void SelectTestsCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void SelectTestsExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
+            vm.CurrentContent = ContentManager.Instance.GetContent("SELECTION");
         }
 
         private void TestDeviceCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -74,12 +87,12 @@ namespace DeRoso
             vm.CurrentContent = ContentManager.Instance.GetContent("TESTING");
         }
 
-        private void ProgrammsCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        private void EditDBCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
 
-        private void ProgrammsExecute(object sender, ExecutedRoutedEventArgs e)
+        private void EditDBExecute(object sender, ExecutedRoutedEventArgs e)
         {
             MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
             vm.CurrentContent = ContentManager.Instance.GetContent("EDIT");

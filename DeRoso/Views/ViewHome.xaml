@@ -35,7 +35,8 @@
 
         <Button Grid.Row="0" 
                 Grid.Column="0"
-                Command="{Binding TestDevice}">
+                Command="{Binding SelectTests}">
+            
             <StackPanel>
                 <ContentPresenter Width="48" Height="48"  
                                   Content="{StaticResource IconLaunch}"/>
@@ -47,7 +48,7 @@
 
         <Button Grid.Row="1"
                 Grid.Column="0"
-                Command="{Binding Programms}">
+                Command="{Binding EditDB}">
             
             <StackPanel>
                 <ContentPresenter Width="48"

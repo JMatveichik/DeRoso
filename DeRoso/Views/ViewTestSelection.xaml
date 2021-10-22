@@ -1,41 +1,40 @@
-﻿<UserControl x:Class="DeRoso.Views.ViewTestsEditor"
+﻿<UserControl x:Class="DeRoso.Views.ViewTestSelection"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DeRoso.Views"
-             xmlns:ctrl="clr-namespace:DeRoso.Controls"
+             xmlns:models="clr-namespace:DeRoso.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="768" d:DesignWidth="1024">
-    
+             d:DesignHeight="800" d:DesignWidth="1000">
     <Grid>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="2*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
+            
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="РЕДАКТИРОВАНИЕ ТЕСТОВ"
+        <TextBlock Text="ВЫБЕРИТЕ ТЕСТЫ"
                    Grid.ColumnSpan="3"
-                   Style="{StaticResource PageTitleStyle}">            
+                   Style="{StaticResource PageTitleStyle}">
         </TextBlock>
 
         <Border Grid.Column="0"
                  Grid.Row="1"
                  Style="{StaticResource BorderBox}">
-        <Grid>
-            
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
@@ -82,67 +81,14 @@
                      ItemTemplate="{StaticResource DescribedListBoxItemTemplate}">
                 </ComboBox>
 
-                <!--
-                <ListBox Grid.Column="0"
-                 Grid.Row="1"
-                 Margin="10,5"
-                 ItemsSource="{Binding Sections}"                         
-                     SelectedItem ="{Binding SelectedSection, Mode=TwoWay}"
-                     ItemTemplate="{StaticResource DescribedListBoxItemTemplate}">
-                    
-                </ListBox>
-            -->
-        </Grid>
-
-        </Border>
-
-        <!--
-        <Border Grid.Column="1"
-                 Grid.Row="1"
-               Style="{StaticResource BorderBox}">
-            
-        <Grid  >
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-                <Border Grid.Column="0"
-                 Grid.Row="0"
-                 Style="{StaticResource BorderUnderline}">
-                    <TextBlock 
-                 Style="{StaticResource HeaderStyle}"
-                       Text="РАЗДЕЛ"
-                       Margin="5, 5">
-
-
-                    </TextBlock>
-                </Border>
-    
-                <ComboBox Grid.Column="0"
-                 Grid.Row="1"
-                 Margin="10,5"
-                     ItemsSource="{Binding SelectedSection.Groups}"
-                     SelectedItem ="{Binding SelectedGroup, Mode=TwoWay}"
-                     ItemTemplate="{StaticResource DescribedListBoxItemTemplate}">
-                </ComboBox>
-            
-                <ListBox Grid.Column="0"
-                 Grid.Row="1"
-                 Margin="10,5"
-                     ItemsSource="{Binding SelectedSection.Groups}"
-                     SelectedItem ="{Binding SelectedGroup, Mode=TwoWay}"
-                     ItemTemplate="{StaticResource DescribedListBoxItemTemplate}">
-                </ListBox
-            
+                
+           
             </Grid>
-        </Border>
-    -->
 
+        </Border>       
 
-        <Border Grid.Column="1"
-                 Grid.Row="1"
+        <Border Grid.Column="0"
+                 Grid.Row="2"
                 Style="{StaticResource BorderBox}">
             <Grid  >
 
@@ -154,9 +100,10 @@
                 <Border Grid.Column="0"
                  Grid.Row="0"
                  Style="{StaticResource BorderUnderline}">
+                    
                     <TextBlock 
                  Style="{StaticResource HeaderStyle}"
-                       Text="ТЕСТЫ"
+                       Text="ДОСТУПНЫЕ ТЕСТЫ"
                        Margin="5, 5">
 
 
@@ -175,6 +122,7 @@
 
         <Border Grid.Column="2"
                  Grid.Row="1"
+                Grid.RowSpan="2"
                 Style="{StaticResource BorderBox}">
             <Grid  >
 
@@ -188,7 +136,7 @@
                  Style="{StaticResource BorderUnderline}">
                     <TextBlock 
                  Style="{StaticResource HeaderStyle}"
-                       Text="ДОСТУПНЫЕ ПРЕПАРАТЫ"
+                       Text="ВЫБРАННЫЕ ТЕСТЫ"
                        Margin="5, 5">
 
 
@@ -198,33 +146,30 @@
                 <ListBox Grid.Column="0"
                  Grid.Row="1"
                  SelectedItem="{Binding SelectedDrug, Mode=TwoWay}"
-                 Margin="10,5" ItemsSource="{Binding Drugs}"
-                 ItemTemplate="{StaticResource DrugListBoxItemTemplate}" PreviewMouseLeftButtonDown="OnDrugListBoxPreviewMouseLeftButtonDown"
-                         >
-                    
+                 Margin="10,5" ItemsSource="{Binding SelectedTests}"
+                 ItemTemplate="{StaticResource DescribedListBoxItemTemplate}">
+
 
                 </ListBox>
             </Grid>
         </Border>
 
-        <TextBlock Text="{Binding CurrentTestPath}"
-                   Grid.Row="2"
-                   Grid.ColumnSpan="3"
-                   Style="{StaticResource PageTitleStyle}">
-        </TextBlock>
 
-        <ctrl:TestEditor 
-            DataContext="{Binding SelectedTest}" Grid.Row="3" Grid.Column="0">            
-        </ctrl:TestEditor>
+        <StackPanel Grid.Column="0" 
+                    Grid.Row="3" 
+                    Grid.ColumnSpan="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
 
-        <ctrl:TestDrugsListContainer
-            DataContext="{Binding}" Grid.Row="3" Grid.Column="1">
-        </ctrl:TestDrugsListContainer>
+            <Button Width="100" Height="40" Margin="10" 
+                    Command="{x:Static models:MainWindowViewModel.Home}">НАЗАД</Button>
 
-        <ctrl:DrugEditor
-            DataContext="{Binding SelectedDrug}" Grid.Row="3" Grid.Column="2">
-        </ctrl:DrugEditor>
+            <Button Width="100" Height="40" Margin="10" 
+                    Command="{x:Static models:MainWindowViewModel.Testing}"> ПРОДОЛЖИТЬ</Button>
+            
+
+        </StackPanel>
+
 
     </Grid>
-    
 </UserControl>

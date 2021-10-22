@@ -38,10 +38,10 @@ namespace DeRoso.ViewModels
             get;
         } = new RoutedUICommand("Go to home page", "Home", typeof(MainWindowViewModel), null);
 
-        public static RoutedUICommand Programms
+        public static RoutedUICommand EditDB
         {
             get;
-        } = new RoutedUICommand("Go to programms page", "Programms", typeof(MainWindowViewModel), null);
+        } = new RoutedUICommand("Edit database", "EditDB", typeof(MainWindowViewModel), null);
 
         public static RoutedUICommand Archive
         {
@@ -61,7 +61,13 @@ namespace DeRoso.ViewModels
         public static RoutedUICommand TestDevice
         {
             get;
-        } = new RoutedUICommand("Test device", "Testing device status", typeof(MainWindowViewModel), null);
+        } = new RoutedUICommand("Test device", "Testing device", typeof(MainWindowViewModel), null);
+
+
+        public static RoutedUICommand SelectTests
+        {
+            get;
+        } = new RoutedUICommand("Select tests", "Select test for process", typeof(MainWindowViewModel), null);
 
     }
 }

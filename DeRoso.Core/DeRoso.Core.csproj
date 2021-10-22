@@ -156,11 +156,14 @@
     <Compile Include="Device\DevicePacketMaker.cs" />
     <Compile Include="Device\DeviceProvider.cs" />
     <Compile Include="Device\EnumDeviceCommands.cs" />
+    <Compile Include="Device\HealthTestEventArgs.cs" />
+    <Compile Include="Device\EnumHealthTestStep.cs" />
     <Compile Include="HealthTest\EnumCalculationType.cs" />
     <Compile Include="HealthTest\HealthTest.cs" />
     <Compile Include="HealthTest\HealthTestDrug.cs" />
     <Compile Include="HealthTest\HealthTestGroup.cs" />
     <Compile Include="HealthTest\HealthTestItem.cs" />
+    <Compile Include="HealthTest\HealthTestResult.cs" />
     <Compile Include="HealthTest\HealthTestSection.cs" />
     <Compile Include="IContentCreator.cs" />
     <Compile Include="IDescribed.cs" />

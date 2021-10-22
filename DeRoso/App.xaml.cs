@@ -29,6 +29,7 @@ namespace DeRoso
             ContentManager.Instance.RegisterCreator("HELP", new CreatorViewHelp());
             ContentManager.Instance.RegisterCreator("ARCHIVE", new CreatorViewArchive());
             ContentManager.Instance.RegisterCreator("EDIT", new CreatorViewTestsEditor());
+            ContentManager.Instance.RegisterCreator("SELECTION", new CreatorViewTestSelection());
             ContentManager.Instance.RegisterCreator("TESTING", new CreatorViewTesting());
 
 
@@ -50,6 +51,8 @@ namespace DeRoso
             DeRossoData.SaveChanges();
             base.OnExit(e);
         }
+
+        
 
         public DeRosoContext DeRossoData {
             get;

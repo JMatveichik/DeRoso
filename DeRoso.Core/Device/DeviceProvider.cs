@@ -24,6 +24,14 @@ namespace DeRoso.Core.Device
     /// <param name="args">Аргументы события</param>
     public delegate void DeviceTest(object sender, DeviceInitializationTestEventArgs args);
 
+    /// <summary>
+    /// Делегат для событий текущих тестов
+    /// </summary>
+    /// <param name="sennder">Отправитель сообщения (устройство)</param>
+    /// <param name="args">Аргументыы события</param>
+    public delegate void HealthTestProcess(object sennder, HealthTestEventArgs args);
+
+
 
     public class DeviceProvider
     {
@@ -58,18 +66,39 @@ namespace DeRoso.Core.Device
         /// <summary>
         /// Событие начала теста устройства
         /// </summary>
-        public  event DeviceTest TestStarted;
+        public  event DeviceTest DeviceTestStarted;
 
         /// <summary>
         /// Событие удачного окончания теста устройства
         /// </summary>
-        public  event DeviceTest TestComplete;
+        public  event DeviceTest DeviceTestComplete;
 
 
         /// <summary>
         /// Событие  ошибочного  окончания теста устройства
         /// </summary>
-        public  event DeviceTest TestFailed;
+        public  event DeviceTest DeviceTestFailed;
+
+
+        /// <summary>
+        /// Событие при нахождении теста в режиме ожидания перехода к следующему шагу
+        /// </summary>
+        public event HealthTestProcess HealthTestTick;
+
+        /// <summary>
+        /// Событие при запуске теста
+        /// </summary>
+        public event HealthTestProcess HealthTestStarted;
+
+        /// <summary>
+        /// Событие неудачного окончания  теста
+        /// </summary>
+        public event HealthTestProcess HealthTestComplete;
+
+        /// <summary>
+        /// Событие удачного окончания  теста
+        /// </summary>
+        public event HealthTestProcess HealthTestFailed;
 
 
         /// <summary>
@@ -225,33 +254,233 @@ namespace DeRoso.Core.Device
         }
 
 
+        private float Calculate(IEnumerable<int> data) 
+        {
+            float sum = 0.0f;
+            int count = 0;
+            float value = 0.0f;
+
+            
+            //вычисляем среднее не нулевых элементов
+            for (int i = 0; i < data.Count(); i++)      
+            {
+                int elem = data.ElementAt(i);
+                if (elem > 0)
+                {
+                    sum += elem;
+                    count++;
+                }
+            }
+
+            if (count > 0)
+                value = sum / count;
+
+            //получаем значение параметра
+            value = (value * 100.0f) / kADC;
+            
+            return value;
+        }
+
         /// <summary>
         /// Выполнить список тестов
         /// </summary>
-        /// <param name="tests"></param>
+        /// <param name="tests">Список выполняемых тестов</param>
         /// <returns></returns>
-        public async Task<bool> Do(IEnumerable<HealthTest> tests)
+        public void Do(IEnumerable<HealthTest> tests)
         {
+            //сбрасываем прибор
+            Reset();
+
+            //Тестирование устройства
+            if (!Test())
+                return;
+
+            //запускаем тесты в цикле
             foreach(HealthTest test in tests)
             {
-                 await Do(test);
+                HealthTestStarted?.Invoke(this, new HealthTestEventArgs(test, EnumHealthTestStep.Started, TimeSpan.FromSeconds(0) ));
 
+                HealthTestResult res = Do(test);
+
+                if (res != null)
+                {
+                    HealthTestComplete?.Invoke(this, new HealthTestEventArgs(test, EnumHealthTestStep.Complete, TimeSpan.FromSeconds(0)));
+                }
+                else
+                {
+                    HealthTestFailed?.Invoke(this, new HealthTestEventArgs(test, EnumHealthTestStep.Started, TimeSpan.FromSeconds(0)));
+                    break;
+                }
             }
-            return false;
+            
+        }
+
+        /// <summary>
+        /// Функция ожидания заданного времени с выдачей сообщений с заданным интервалом
+        /// </summary>
+        /// <param name="interval"></param>
+        /// <param name="pausetick"></param>
+        private void MakePause(TimeSpan interval, int pausetick, HealthTestItem testitem, EnumHealthTestStep step)
+        {
+            ///фиксируем время старта
+            DateTime begin = DateTime.Now;
+
+            ///текущее значение ожидания
+            TimeSpan duration = TimeSpan.FromSeconds(0);
+
+            //оставшееся время
+            TimeSpan left = interval;
+
+            while (duration < interval)
+            {
+                //ждем один тик
+                Thread.Sleep(pausetick);
+
+                //получаем общую длительность
+                duration = DateTime.Now - begin;
+
+                //получаем ставшееся время
+                left = interval - duration;
+
+                HealthTestTick?.Invoke(this, new HealthTestEventArgs(testitem, step, left));
+            }
+
         }
 
         /// <summary>
         /// Выполнить конкретный тест
         /// </summary>
-        /// <param name="test"></param>
+        /// <param name="test">Конкретный выполняемый тест</param>
         /// <returns></returns>
-        public async Task<bool> Do(HealthTest test)
+        public HealthTestResult Do(HealthTest test)
         {
-            foreach(HealthTestDrug drug in test.Drugs)
-            {
+            //готовим объект результата теста
+            HealthTestResult res = new HealthTestResult();
+            res.HealthTestId = test.Id;
+            res.Test = test;
 
+            /************************************************/
+            /*                  ПАУЗА ПЕРЕД ЗАПУСКОМ        */
+            /************************************************/
+
+            MakePause(test.PauseBeforeStart, 200, test, EnumHealthTestStep.WaitMeassure);
+            
+
+            /************************************************/
+            /*                  ИЗМЕРЕНИЕ ДО                */
+            /************************************************/
+
+            //готовим буфер к приемму данных
+            PrepareDataBuffer();
+
+            sendCommand(DeviceCommands.DiagnosticOn);
+            sendCommand(DeviceCommands.MeteringOn);
+
+            //ожидаем получение данных
+            Task<bool> getdata = new Task<bool>(() => reciveData(TimeSpan.FromSeconds(3.0)));
+            getdata.Start();
+            getdata.Wait();
+
+            sendCommand(DeviceCommands.MeteringOff);
+            sendCommand(DeviceCommands.AllOff);
+
+
+            //если данные не получены
+            if (!getdata.Result)
+                return null;
+            
+
+            //вычисления на основе полученных данных
+            float value = Calculate( DataBuffer );
+
+            //обновляем буфер измерений для результата теста
+            res.Meassurments.Add(value);
+            res.MeassurmentBefore = value;
+
+
+            /************************************************/
+            /*              ВЫДАЧА ПРЕПАРАТОВ               */
+            /************************************************/
+
+
+            foreach (HealthTestDrug drug in test.Drugs)
+            {
+                /************* ОЖИДАНИЕ ПЕРЕД ВЫДАЧЕЙ *****************/
+                MakePause(drug.PauseBefore, 200, drug, EnumHealthTestStep.DrugDespencing);
+
+                /*************  ВЫДАЧА КОНКРЕТНОГО ПРЕПАРАТА **********/
+                addDrug(drug.Address, drug.Cell);
+
+                sendCommand(DeviceCommands.SelectorOn);
+                sendCommand(DeviceCommands.OutDrugStart);
+
+                MakePause(drug.Duration, 200, drug, EnumHealthTestStep.DrugDespencing);
+
+                sendCommand(DeviceCommands.OutDrugStop);
+                sendCommand(DeviceCommands.SelectorOff);
+                
+
+                /************* ОЖИДАНИЕ ПОСЛЕ ВЫДАЧИ ******************/
+
+                MakePause(drug.PauseAfter, 200, drug, EnumHealthTestStep.DrugDespencing);
+
+                /*************************************************/
+                /*             ИЗМЕРЕНИЯ ПОСЛЕ  ВЫДФЧИ ПРЕПАРАТА */
+                /*************************************************/
+
+                //готовим буфер к приемму данных
+                PrepareDataBuffer();
+
+                sendCommand(DeviceCommands.DiagnosticOn);
+                sendCommand(DeviceCommands.MeteringOn);
+
+                //ожидаем получение данных
+                getdata = new Task<bool>(() => reciveData(TimeSpan.FromSeconds(3.0)));
+                getdata.Start();
+                getdata.Wait();
+
+                sendCommand(DeviceCommands.MeteringOff);
+                sendCommand(DeviceCommands.AllOff);
+
+
+                //если данные не получены
+                if (!getdata.Result)
+                {
+                    //вызов обработчиков неудачного теста 
+                    //TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                    //return false;
+                }
+
+                //вычисления на основе полученных данных
+                value = Calculate(DataBuffer);
+
+                //обновляем буфер измерений для результата теста
+                res.Meassurments.Add(value);
+                
             }
-            return false;
+
+            res.MeassurmentAfter = value;
+
+
+
+            /************************************************/
+            /*            ВЫДАЧА ИМПУЛЬСА HV                */
+            /************************************************/
+
+            if (test.UseHV)
+            {
+                /************* ОЖИДАНИЕ ПЕРЕД ИМПУЛЬСОМ  *****************/
+                MakePause(test.PauseBeforeHV, 200, test, EnumHealthTestStep.WaitHV);
+
+                /************* ВЫДАЧА ИМПУЛЬСА  *****************/
+                sendCommand(DeviceCommands.ImpulsOn);
+                setFrequencyHV((int)(test.FrequencyHV * 100));
+            }
+
+            sendCommand(DeviceCommands.AllOff);
+
+            return res;
+            
         }
 
         
@@ -439,7 +668,7 @@ namespace DeRoso.Core.Device
             string testName = "Тестирование импульса HV";
 
             //вызов обработчиков начала тестирования устройства
-            TestStarted?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Started));
+            DeviceTestStarted?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Started));
 
             sendCommand(DeviceCommands.MeteringOff);
             sendCommand(DeviceCommands.ReleSelectorOn);
@@ -467,7 +696,7 @@ namespace DeRoso.Core.Device
             if (!getdata.Result)
             {
                 //вызов обработчиков неудачного тестирования устройства
-                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                DeviceTestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
                 return false;
             }
                 
@@ -479,13 +708,13 @@ namespace DeRoso.Core.Device
             if (dataHV == 0x4f57)
             {
                 //вызов обработчиков неудачного тестирования устройства
-                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                DeviceTestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
                 return false;
 
             }
 
             //вызов обработчиков окончания тестирования устройства
-            TestComplete?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Complete));
+            DeviceTestComplete?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Complete));
             return true; 
         }
 
@@ -497,7 +726,7 @@ namespace DeRoso.Core.Device
         private bool testSelector()
         {
             string testName = "Тестирование селектора";//вызов обработчиков начала тестирования устройства
-            TestStarted?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Started));
+            DeviceTestStarted?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Started));
 
 
             sendCommand(DeviceCommands.SelectorTest);
@@ -517,7 +746,7 @@ namespace DeRoso.Core.Device
             if (!getdata.Result)
             {
                 //вызов обработчиков неудачного тестирования устройства
-                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                DeviceTestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
                 return false;
             }
 
@@ -528,22 +757,22 @@ namespace DeRoso.Core.Device
             if (dataSelector == 0x4f59)
             {
                 //вызов обработчиков неудачного тестирования устройства
-                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                DeviceTestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
                 return false;
             }
 
             //вызов обработчиков окончания тестирования устройства
-            TestComplete?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Complete));
+            DeviceTestComplete?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Complete));
             return true;
            
         }
 
 
-        private double kADC = 0.0;
+        private float kADC = 0.0f;
 
-        private double minADC = 3000;
+        private float minADC = 3000.0f;
 
-        private double maxADC = 3850;
+        private float maxADC = 3850.0f;
 
         /// <summary>
         /// Проверка калибровки
@@ -552,7 +781,7 @@ namespace DeRoso.Core.Device
         private bool testCalibration()
         {
             string testName = "Тестирование калибровки";//вызов обработчиков начала тестирования устройства
-            TestStarted?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Started));
+            DeviceTestStarted?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Started));
 
             sendCommand(DeviceCommands.ReleDiagnosticOn);
             sendCommand(DeviceCommands.MeteringOn);
@@ -569,26 +798,26 @@ namespace DeRoso.Core.Device
             if (!getdata.Result)
             {
                 //вызов обработчиков неудачного тестирования устройства
-                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                DeviceTestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
                 return false;
             }
 
             sendCommand(DeviceCommands.AllOff);
 
-            double average = DataBuffer.Average();
+            float average = (float)DataBuffer.Average();
 
             //
             if (average > minADC && average < maxADC)
             {
                 kADC = average;
                 //вызов обработчиков окончания тестирования устройства
-                TestComplete?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Complete));
+                DeviceTestComplete?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Complete));
                 return true;
             }
 
 
             //вызов обработчиков неудачного тестирования устройства
-            TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+            DeviceTestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
             return false;
         }
 
@@ -599,7 +828,7 @@ namespace DeRoso.Core.Device
         private bool testElectrodes()
         {
             string testName = "Тестирование электродов";//вызов обработчиков начала тестирования устройства
-            TestStarted?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Started));
+            DeviceTestStarted?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Started));
 
             sendCommand(DeviceCommands.ReleCalibrationOff);
             sendCommand(DeviceCommands.DiagnosticOn);
@@ -617,7 +846,7 @@ namespace DeRoso.Core.Device
             if (!getdata.Result)
             {
                 //вызов обработчиков неудачного тестирования устройства
-                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                DeviceTestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
                 return false;
             }
 
@@ -628,12 +857,12 @@ namespace DeRoso.Core.Device
             if (average < registrationBorder)
             {
                 //вызов обработчиков неудачного тестирования устройства
-                TestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
+                DeviceTestFailed?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Failed));
                 return false;
             }
 
             //вызов обработчиков окончания тестирования устройства
-            TestComplete?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Complete));
+            DeviceTestComplete?.Invoke(usb, new DeviceInitializationTestEventArgs(testName, DeviceInitializationTestState.Complete));
             return true;
             
         }

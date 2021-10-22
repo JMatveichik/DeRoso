@@ -1,4 +1,5 @@
 ﻿using DeRoso.Core;
+using DeRoso.Core.Device;
 using DeRoso.Core.Health;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,12 @@ namespace DeRoso.ViewModels
 {
     public class CurrentTestProcessViewModel : ViewModelBase
     {
-        
+
+        public CurrentTestProcessViewModel(DeviceProvider device)
+        {
+
+        }
+
         /// <summary>
         /// Текущий тест
         /// </summary>

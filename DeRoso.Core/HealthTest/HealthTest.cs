@@ -21,17 +21,6 @@ namespace DeRoso.Core.Health
         /// </summary>
         public HealthTestGroup Group { get; set; }
 
-        /*
-        /// <summary>
-        /// Идентификатор секции  тестов
-        /// </summary>
-        public int HealthTestSectionId { get; set; }
-
-        /// <summary>
-        /// Секция к которой принадлежит тест
-        /// </summary>
-        public HealthTestSection Section { get; set; }
-        */
             
         /// <summary>
         /// Набор препаратов для теста
@@ -90,43 +79,27 @@ namespace DeRoso.Core.Health
             }
         }
         private TimeSpan _pauseBeforeHV = TimeSpan.FromSeconds(3.0);
-               
-        
+
+
         /// <summary>
-        /// Значение измеряемого параметра перед выполнение теста 
+        /// Пауза перед запуском теста
         /// </summary>
-        public double MeassurmentBefore
+        public TimeSpan PauseBeforeStart
         {
-            get { return _meassurmentBefore; }
+            get => _pauseBeforeStart;
             set
             {
-                if (Math.Abs(value - _meassurmentBefore) < 0.000001)
+                if (value == _pauseBeforeStart)
                     return;
 
-                _meassurmentBefore = value;
+                _pauseBeforeStart = value;
                 OnPropertyChanged();
             }
         }
+        private TimeSpan _pauseBeforeStart = TimeSpan.FromSeconds(3.0);
 
-        private double _meassurmentBefore;
 
-        /// <summary>
-        /// Значение измеряемого параметра перед выполнение теста 
-        /// </summary>
-        public double MeassurmentAfter
-        {
-            get { return _meassurmentAfter; }
-            set
-            {
-                if (Math.Abs(value - _meassurmentAfter) < 0.000001)
-                    return;
 
-                _meassurmentAfter = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private double _meassurmentAfter;
 
         /// <summary>
         /// Минимально нормальное показания измеряемого параметра 
