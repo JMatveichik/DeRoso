@@ -14,7 +14,19 @@ namespace DeRoso.ViewModels
 
         public CurrentTestProcessViewModel(DeviceProvider device)
         {
+            device.HealthTestStarted += DeviceHealthTestStarted;
+            device.HealthTestTick += DeviceHealthTestTick;
+        }
 
+        private void DeviceHealthTestTick(object sennder, HealthTestEventArgs args)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void DeviceHealthTestStarted(object sennder, HealthTestEventArgs args)
+        {
+            //throw new NotImplementedException();
+            CurrentTest = (HealthTest)args.TestItem;
         }
 
         /// <summary>

@@ -36,8 +36,12 @@ namespace DeRoso.Controls
             HealthTest test = model.SelectedTest;
             HealthTestDrug drug = (HealthTestDrug)e.Data.GetData(typeof(HealthTestDrug));
 
-            test.Drugs.Add(drug);
-            model.SelectedDrug = drug;
+            if (test != null && test.Drugs != null)
+            {
+                test.Drugs.Add(drug);
+                model.SelectedDrug = drug;
+            }
+            
         }
 
         private void TestDrugsListBoxKeyDown(object sender, KeyEventArgs e)

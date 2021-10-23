@@ -3,9 +3,11 @@ using DeRoso.Core.Data;
 using DeRoso.Core.Health;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace DeRoso.ViewModels
 {
@@ -14,7 +16,12 @@ namespace DeRoso.ViewModels
         public DataViewModel(DeRosoContext data)
         {
             DeRossoData = data;
-        }
+
+            FilteredDrugs = (CollectionView)CollectionViewSource.GetDefaultView(Drugs);
+            FilteredDrugs.Filter = DrugFilter;
+
+            SelectedSection = Sections.FirstOrDefault();
+            SelectedGroup = SelectedSection?.Groups.FirstOrDefault();        }
 
         public DeRosoContext DeRossoData
         {
@@ -27,7 +34,7 @@ namespace DeRoso.ViewModels
         {
             string res = "";
 
-            res = SelectedSection?.Title + " > " + SelectedGroup?.Title + " > " + SelectedTest?.Title; 
+            res = SelectedSection?.Title + " > " + SelectedGroup?.Title + " > " + SelectedTest?.Title;
 
             return res;
         }
@@ -46,7 +53,7 @@ namespace DeRoso.ViewModels
                 if (value == _selectedSection)
                     return;
 
-                _selectedSection = value;               
+                _selectedSection = value;
                 OnPropertyChanged();
 
                 CurrentTestPath = buildTetsPath();
@@ -113,7 +120,7 @@ namespace DeRoso.ViewModels
                     return;
 
                 _selectedDrug = value;
-                OnPropertyChanged();                
+                OnPropertyChanged();
             }
         }
         private HealthTestDrug _selectedDrug = null;
@@ -131,11 +138,46 @@ namespace DeRoso.ViewModels
                     return;
 
                 _currentTestPath = value;
-                OnPropertyChanged();                
+                OnPropertyChanged();
             }
         }
         private string _currentTestPath = null;
 
+
+
+        public ICollectionView FilteredDrugs
+        {
+            get;
+            private set;
+        }
+
+        public int DrugMinimalAddress
+        {
+            get
+            {
+                return _drugMinimalAddress;
+            }
+            set
+            {
+                if (value == _drugMinimalAddress)
+                    return;
+
+                _drugMinimalAddress = value;
+                CollectionViewSource.GetDefaultView(FilteredDrugs).Refresh();
+                OnPropertyChanged();
+            }
+
+        }
+        private int _drugMinimalAddress = 0;
+
+        private bool DrugFilter(object item)
+        {
+            HealthTestDrug d = (HealthTestDrug)item;
+            if (d.Address >= DrugMinimalAddress)
+                return true;
+
+            return false;
+        }
         /// <summary>
         /// Таблица разделов тестов
         /// </summary>

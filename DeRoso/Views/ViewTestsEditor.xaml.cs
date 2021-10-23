@@ -29,12 +29,16 @@ namespace DeRoso.Views
 
         private void OnDrugListBoxPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ListBox parent = (ListBox)sender;           
-            object data = GetDataFromListBox(parent, e.GetPosition(parent));
-
-            if (data != null)
+            if (e.ChangedButton == MouseButton.Left)
             {
-                DragDrop.DoDragDrop(parent, data, DragDropEffects.All);
+                ListBox parent = (ListBox)sender;
+                object data = GetDataFromListBox(parent, e.GetPosition(parent));
+
+                if (data != null)
+                {
+                    DragDrop.DoDragDrop(parent, data, DragDropEffects.All);
+                }
+                e.Handled = false;
             }
         }
 

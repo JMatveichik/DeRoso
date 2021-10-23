@@ -47,6 +47,7 @@
 
 
     <Style x:Key="HeaderStyle" TargetType="TextBlock" BasedOn="{StaticResource DeRossoTetxBlockStyle}">
+        <Setter Property="Margin" Value="5"></Setter>
         <Setter Property="FontSize" Value="24"></Setter>
         <Setter Property="FontFamily" Value="Roboto Condensed"></Setter>
         <Setter Property="FontWeight" Value="Bold"/>

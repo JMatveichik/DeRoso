@@ -55,8 +55,7 @@
                  Style="{StaticResource BorderUnderline}">
                     <TextBlock 
                  Style="{StaticResource HeaderStyle}"
-                       Text="СЕКЦИЯ"
-                       Margin="5, 5">
+                       Text="СЕКЦИЯ">
 
 
                     </TextBlock>
@@ -67,28 +66,30 @@
                  Grid.Row="1"
                  Margin="10,5"
                  SelectedIndex="0"
+                 IsSynchronizedWithCurrentItem="True"
                  ItemsSource="{Binding Sections}"                         
                      SelectedItem ="{Binding SelectedSection, Mode=TwoWay}"
                      ItemTemplate="{StaticResource DescribedListBoxItemTemplate}">
 
                 </ComboBox>
 
-                <Border Grid.Column="0"
-                 Grid.Row="2"
-                 Style="{StaticResource BorderUnderline}">
+                <Border 
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Style="{StaticResource BorderUnderline}">
+                    
                     <TextBlock 
-                 Style="{StaticResource HeaderStyle}"
-                       Text="РАЗДЕЛ"
-                       Margin="5, 5">
-
-
+                        Style="{StaticResource HeaderStyle}"
+                        Text="РАЗДЕЛ">
                     </TextBlock>
+                    
                 </Border>
 
                 <ComboBox Grid.Column="0" MinHeight="50"
                  Grid.Row="3"
                  Margin="10,5"
                           SelectedIndex="0"
+                          IsSynchronizedWithCurrentItem="True"
                      ItemsSource="{Binding SelectedSection.Groups}"
                      SelectedItem ="{Binding SelectedGroup, Mode=TwoWay}"
                      ItemTemplate="{StaticResource DescribedListBoxItemTemplate}">
@@ -168,8 +169,7 @@
                  Style="{StaticResource BorderUnderline}">
                     <TextBlock 
                  Style="{StaticResource HeaderStyle}"
-                       Text="ТЕСТЫ"
-                       Margin="5, 5">
+                       Text="ТЕСТЫ">
 
 
                     </TextBlock>
@@ -177,6 +177,7 @@
 
                 <ListBox Grid.Column="0"
                          SelectedIndex="0"
+                         IsSynchronizedWithCurrentItem="True"
                  Grid.Row="1"
                  SelectedItem="{Binding SelectedTest}"
                  Margin="10,5" ItemsSource="{Binding SelectedGroup.Tests}"
@@ -199,20 +200,38 @@
                 <Border Grid.Column="0"
                  Grid.Row="0"
                  Style="{StaticResource BorderUnderline}">
-                    <TextBlock 
-                 Style="{StaticResource HeaderStyle}"
-                       Text="ДОСТУПНЫЕ ПРЕПАРАТЫ"
-                       Margin="5, 5">
-
-
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Column="0"
+                        Style="{StaticResource HeaderStyle}"
+                        Text="ДОСТУПНЫЕ ПРЕПАРАТЫ"> 
                     </TextBlock>
+
+                        <TextBlock Grid.Column="1" 
+                            Style="{StaticResource ValueTitleStyle}"
+                            Text="Адрес" Margin="20, 0, 5, 0"/>
+
+                        <TextBox Grid.Column="2"
+                            Width="50"
+                            Style="{StaticResource ValueInputTextBoxStyle}"
+                            Text="{Binding DrugMinimalAddress, Mode=TwoWay,
+                                            NotifyOnSourceUpdated=True,
+                                            UpdateSourceTrigger=PropertyChanged}" />
+
+                    </Grid>
                 </Border>
 
                 <ListBox Grid.Column="0"
                  Grid.Row="1"
                  SelectedItem="{Binding SelectedDrug, Mode=TwoWay}"
-                 Margin="10,5" ItemsSource="{Binding Drugs}"
-                 ItemTemplate="{StaticResource DrugListBoxItemTemplate}" PreviewMouseLeftButtonDown="OnDrugListBoxPreviewMouseLeftButtonDown"
+                 Margin="10,5" ItemsSource="{Binding FilteredDrugs}"
+                 ItemTemplate="{StaticResource DrugListBoxItemTemplate}" 
+                         PreviewMouseLeftButtonDown="OnDrugListBoxPreviewMouseLeftButtonDown"
                          >
                     
 

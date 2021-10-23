@@ -24,7 +24,8 @@ namespace DeRoso.Controls
         public DeviceTestingControl()
         {
             InitializeComponent();
-            DataContext = new DeviceTestingViewModel(((App)App.Current).Device);
+            App app = (App)Application.Current;
+            DataContext = new DeviceTestingViewModel( app.Device);
         }
     }
 }
