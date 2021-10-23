@@ -354,10 +354,43 @@ namespace DeRoso.Core.Device
         /// <returns></returns>
         public HealthTestResult Do(HealthTest test)
         {
+            Random rnd = new Random(DateTime.Now.Millisecond);
+
             //готовим объект результата теста
             HealthTestResult resTest = new HealthTestResult();
             resTest.HealthTestId = test.Id;
-            resTest.Test = test;            
+            resTest.Test = test;
+
+
+            /************************************************/
+            /*                  ИЗМЕРЕНИЕ ДО                */
+            /************************************************/
+
+            
+
+            //готовим буфер к приемму данных
+            PrepareDataBuffer();
+
+            sendCommand(DeviceCommands.DiagnosticOn);
+            sendCommand(DeviceCommands.MeteringOn);
+
+            //ожидаем получение данных
+            Task<bool> getdata = new Task<bool>(() => reciveData(TimeSpan.FromSeconds(3.0)));
+            getdata.Start();
+            getdata.Wait();
+
+            sendCommand(DeviceCommands.MeteringOff);
+            sendCommand(DeviceCommands.AllOff);
+
+
+            //если данные не получены
+            if (!getdata.Result)
+                return null;
+
+            //схраняем результаты измерений до выдачи препарата
+            float meassureBefore = Calculate(DataBuffer);
+            meassureBefore = rnd.Next(20, 98);
+
 
 
             /************************************************/
@@ -372,35 +405,12 @@ namespace DeRoso.Core.Device
                 res.Test = test;
                 res.Drug = drug;
 
-                /************************************************/
-                /*                  ИЗМЕРЕНИЕ ДО                */
-                /************************************************/
-
-                //готовим буфер к приемму данных
-                PrepareDataBuffer();
-
-                sendCommand(DeviceCommands.DiagnosticOn);
-                sendCommand(DeviceCommands.MeteringOn);
-
-                //ожидаем получение данных
-                Task<bool> getdata = new Task<bool>(() => reciveData(TimeSpan.FromSeconds(3.0)));
-                getdata.Start();
-                getdata.Wait();
-
-                sendCommand(DeviceCommands.MeteringOff);
-                sendCommand(DeviceCommands.AllOff);
-
-
-                //если данные не получены
-                if (!getdata.Result)
-                    return null;
-               
-                //схраняем результаты измерений до выдачи препарата
-                res.MeassurmentBefore = Calculate(DataBuffer); 
+                res.MeassurmentBefore = meassureBefore;
+                HealthTestTick?.Invoke(this, new HealthTestEventArgs(res, EnumHealthTestStep.MeassureBefore, TimeSpan.FromSeconds(0)));
 
 
                 /************* ОЖИДАНИЕ ПЕРЕД ВЫДАЧЕЙ *****************/
-                MakePause(drug.PauseBefore, 200, drug, EnumHealthTestStep.DrugDespencing);
+                MakePause(drug.PauseBefore, 200, drug, EnumHealthTestStep.WaitBeforeDrugDespencing);
 
                 /*************  ВЫДАЧА КОНКРЕТНОГО ПРЕПАРАТА **********/
                 addDrug(drug.Address, drug.Cell);
@@ -416,11 +426,13 @@ namespace DeRoso.Core.Device
 
                 /************* ОЖИДАНИЕ ПОСЛЕ ВЫДАЧИ ******************/
 
-                MakePause(drug.PauseAfter, 200, drug, EnumHealthTestStep.DrugDespencing);
+                MakePause(drug.PauseAfter, 200, drug, EnumHealthTestStep.WaitAfterDrugDespencing);
 
                 /*************************************************/
                 /*             ИЗМЕРЕНИЯ ПОСЛЕ  ВЫДАЧИ ПРЕПАРАТА */
                 /*************************************************/
+
+                HealthTestTick?.Invoke(this, new HealthTestEventArgs(res, EnumHealthTestStep.MeassureAfter, TimeSpan.FromSeconds(0)));
 
                 //готовим буфер к приемму данных
                 PrepareDataBuffer();
@@ -447,13 +459,15 @@ namespace DeRoso.Core.Device
 
                 //схраняем результаты измерений после выдачи препарата
                 res.MeassurmentAfter = Calculate(DataBuffer);
+                res.MeassurmentAfter = rnd.Next(20, 98);
 
+                meassureBefore = res.MeassurmentAfter;
 
                 resTest.Meassurments.Add(res);
             }
 
-           
 
+            resTest.SelectOptimalResult();
 
 
             /************************************************/

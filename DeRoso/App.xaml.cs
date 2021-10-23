@@ -52,7 +52,7 @@ namespace DeRoso
             base.OnExit(e);
         }
 
-        
+      
 
         public DeRosoContext DeRossoData {
             get;

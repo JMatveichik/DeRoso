@@ -32,8 +32,7 @@ namespace DeRoso.Core.Health
         /// Оптимальный препарат теста
         /// </summary>
         public HealthTestDrug Drug { get; set; }
-
-
+        
 
         [NotMapped]
         /// <summary>
@@ -45,6 +44,57 @@ namespace DeRoso.Core.Health
             private set;
         } = new ObservableCollection<HealthTestDrugResult>();
 
-        
+        /// <summary>
+        /// Выбор оптимального препарата для теста
+        /// </summary>
+        public void SelectOptimalResult()
+        {
+            switch(Test.CalculationType)
+            {
+                case EnumCalculationType.Maximum:
+                    {
+                        //упорядочиваие по убыванию разницы в измерениях и выбор последнего элемента
+                        var res = Meassurments.OrderBy(d => Math.Abs(d.MeassurmentBefore - d.MeassurmentAfter)).Last();
+
+                        HealthDrugId = res.HealthTestDrugId;
+                        Drug = res.Drug;
+                    }
+                    break;
+
+                case EnumCalculationType.Minimum:
+                    {
+                        //упорядочиваие по возрастанию разницы в измерениях и выбор первого элемента
+                        var res = Meassurments.OrderBy(d => Math.Abs(d.MeassurmentBefore - d.MeassurmentAfter)).First();
+
+                        HealthDrugId = res.HealthTestDrugId;
+                        Drug = res.Drug;
+                    }
+                    break;
+
+                case EnumCalculationType.Medium:
+                    {
+                        //среднее отклонение для всех измерений
+                        var averageGlobal = Meassurments.Select(d => Math.Abs(d.MeassurmentBefore - d.MeassurmentAfter)).Average();
+                       
+                        //первая разница она же минимальная
+                        HealthTestDrugResult res = Meassurments.First();
+                        double minDiff = Math.Abs(res.MeassurmentBefore - res.MeassurmentAfter);
+
+                        foreach (HealthTestDrugResult r in Meassurments)
+                        {
+                            var diff = Math.Abs(r.MeassurmentBefore - r.MeassurmentAfter);
+                            if (diff < minDiff)
+                            {
+                                res = r;
+                                minDiff = diff;
+                            }                                
+                        }
+
+                        HealthDrugId = res.HealthTestDrugId;
+                        Drug = res.Drug;
+                    }
+                    break;
+            }
+        }
     }
 }

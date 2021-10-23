@@ -143,6 +143,7 @@
   <ItemGroup>
     <Compile Include="ContentManager.cs" />
     <Compile Include="Converters\EnumDescriptionConverter.cs" />
+    <Compile Include="Converters\EnumHelper.cs" />
     <Compile Include="Converters\EnumItemSourceProvider.cs" />
     <Compile Include="Converters\TimeSpanToDoubleConverter.cs" />
     <Compile Include="Data\DeRossoDBTools.cs" />

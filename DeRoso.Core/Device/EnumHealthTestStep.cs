@@ -15,28 +15,31 @@ namespace DeRoso.Core.Device
         [Description("Запущен")]
         Started = 0x02,
 
-        [Description("Ожидание измерения")]
-        WaitMeassure = 0x03,
-
         [Description("Измерение перед")]
-        MeassureBefore = 0x04,
+        MeassureBefore = 0x03,
+
+        [Description("Ожидание перед выдачей препарата")]
+        WaitBeforeDrugDespencing = 0x04,        
 
         [Description("Выдача препарата")]
         DrugDespencing = 0x05,
 
+        [Description("Ожидание после выдачи препарата")]
+        WaitAfterDrugDespencing = 0x06,
+
         [Description("Измерение после")]
-        MeassureAfter = 0x06,
+        MeassureAfter = 0x07,
 
         [Description("Ожидание импульса HV")]
-        WaitHV = 0x07,
+        WaitHV = 0x08,
 
         [Description("Импульс HV")]
-        ImpulseHV = 0x08,
+        ImpulseHV = 0x09,
 
-        [Description("Завершен")]
-        Complete = 0x09,
+        [Description("Тест завершен")]
+        Complete = 0x10,
 
         [Description("Провален")]
-        Failed = 0x10
+        Failed = 0x11
     }
 }

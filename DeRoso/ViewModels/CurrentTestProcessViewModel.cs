@@ -3,9 +3,11 @@ using DeRoso.Core.Device;
 using DeRoso.Core.Health;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DeRoso.ViewModels
 {
@@ -20,13 +22,36 @@ namespace DeRoso.ViewModels
 
         private void DeviceHealthTestTick(object sennder, HealthTestEventArgs args)
         {
-            //throw new NotImplementedException();
+            CurrentOperation = EnumHelper.GetDescription(args.CurrentStep);
+            OnPropertyChanged("CurrentOperation");
+
+            TimeLeft = args.OperationLeftTime.TotalSeconds < 0.0 ? 0.0 : args.OperationLeftTime.TotalSeconds;
+            OnPropertyChanged("TimeLeft");
+
+            if (args.CurrentStep == EnumHealthTestStep.MeassureBefore)
+            {
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => Results.Add((HealthTestDrugResult)args.TestItem)));
+                
+            }
         }
 
         private void DeviceHealthTestStarted(object sennder, HealthTestEventArgs args)
         {
-            //throw new NotImplementedException();
             CurrentTest = (HealthTest)args.TestItem;
+            CurrentOperation = EnumHelper.GetDescription(args.CurrentStep);
+            OnPropertyChanged("CurrentOperation");
+        }
+
+        public double TimeLeft
+        {
+            get;
+            private set;
+        }
+
+        public string CurrentOperation
+        {
+            get;
+            private set;
         }
 
         /// <summary>
@@ -58,7 +83,7 @@ namespace DeRoso.ViewModels
         {
             get
             {
-                return _currentTest.Group.Title;
+                return _currentTest?.Group.Title;
             }
             
         }
@@ -70,10 +95,16 @@ namespace DeRoso.ViewModels
         {
             get
             {
-                return _currentTest.Group.Section.Title;
+                return _currentTest?.Group.Section.Title;
             }
 
         }
+
+        public ObservableCollection<HealthTestResult> Results
+        {
+            get;
+            private set;
+        } = new ObservableCollection<HealthTestResult>();
 
 
 
