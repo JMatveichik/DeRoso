@@ -9,7 +9,7 @@
 
 
 
-    <HierarchicalDataTemplate x:Key="HierarchicalTestResultsDataTemplate">
+    <HierarchicalDataTemplate x:Key="HierarchicalTestResultsDataTemplate" ItemsSource="{Binding Meassurments}">
 
         <Grid Margin="5" MinHeight="40">
             <Grid.RowDefinitions>
@@ -23,18 +23,18 @@
 
             <TextBlock Grid.Column="0" Grid.Row="0" 
                        Style="{StaticResource ItemTitleStyle}"
-                       Text="{Binding Title}"/>
+                       Text="{Binding Test.Title}"/>
 
             <TextBlock Grid.Column="0"
                        Grid.Row="1"
                        Style="{StaticResource ItemDescriptionStyle}"
                        MaxWidth="300"
                        HorizontalAlignment="Left"
-                       Text="{Binding Description}" />
+                       Text="{Binding Test.Description}" />
 
         </Grid>
         
-        <HierarchicalDataTemplate.ItemTemplate>
+        <HierarchicalDataTemplate.ItemTemplate >
             <DataTemplate>
                 <Grid Margin="5">
                     <Grid.RowDefinitions>
