@@ -58,6 +58,7 @@ namespace DeRoso.Core.Health
 
                         HealthDrugId = res.HealthTestDrugId;
                         Drug = res.Drug;
+                        res.IsOptimal = true;
                     }
                     break;
 
@@ -68,6 +69,7 @@ namespace DeRoso.Core.Health
 
                         HealthDrugId = res.HealthTestDrugId;
                         Drug = res.Drug;
+                        res.IsOptimal = true;
                     }
                     break;
 
@@ -92,6 +94,7 @@ namespace DeRoso.Core.Health
 
                         HealthDrugId = res.HealthTestDrugId;
                         Drug = res.Drug;
+                        res.IsOptimal = true;
                     }
                     break;
             }

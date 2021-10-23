@@ -28,6 +28,27 @@ namespace DeRoso.Core.Health
         /// </summary>
         public HealthTestDrug Drug { get; set; }
 
+        
+        /// <summary>
+        /// Оптимальный препарат в тесте
+        /// </summary>
+        public bool IsOptimal
+        {
+            get { return _isOptimal; }
+            set
+            {
+                if (value == _isOptimal)
+                    return;
+
+                _isOptimal = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isOptimal;
+
+
+
         /// <summary>
         /// Значение измеряемого параметра перед выдачей препарата
         /// </summary>
