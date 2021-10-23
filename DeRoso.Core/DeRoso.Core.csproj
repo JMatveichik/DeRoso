@@ -166,6 +166,7 @@
     <Compile Include="HealthTest\HealthTestItem.cs" />
     <Compile Include="HealthTest\HealthTestResult.cs" />
     <Compile Include="HealthTest\HealthTestSection.cs" />
+    <Compile Include="HealthTest\HealthTestSelected.cs" />
     <Compile Include="IContentCreator.cs" />
     <Compile Include="IDescribed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -18,9 +18,11 @@
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/DrugListBoxItemTemplate.xaml" />
 
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/BordersStyles.xaml" />
-        
-        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/BordersStyles.xaml" />
-        
+
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/TextBlockStyles.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/Brushes.xaml" />
+
     </ResourceDictionary.MergedDictionaries>
     
 </ResourceDictionary>

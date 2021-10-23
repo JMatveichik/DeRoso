@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DeRoso.Core;
 using DeRoso.Core.Device;
+using DeRoso.Core.Health;
 using DeRoso.ViewModels;
 using MahApps.Metro.Controls;
 
@@ -70,9 +71,9 @@ namespace DeRoso
 
             DeviceProvider dev = ((App)App.Current).Device;
 
-            dev.Reset();
+            //dev.Reset();
 
-            Task<bool> test = new Task<bool>(() => dev.Test());
+            Task test = new Task(() => dev.Do(HealthTestSelected.Tests));
             test.Start();
         }
 

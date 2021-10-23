@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:DeRoso.Views"
              xmlns:sel="clr-namespace:DeRoso.Selectors"
              xmlns:models="clr-namespace:DeRoso.ViewModels"
+             xmlns:health="clr-namespace:DeRoso.Core.Health;assembly=DeRoso.Core"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000">
 
@@ -161,7 +162,8 @@
                  Grid.Row="1"
                  AllowDrop="true"
                  SelectedItem="{Binding SelectedDrug, Mode=TwoWay}"
-                 Margin="10,5" ItemsSource="{Binding SelectedTests}"
+                 Margin="10,5" 
+                 ItemsSource="{x:Static health:HealthTestSelected.Tests}"
                  ItemTemplate="{StaticResource DescribedListBoxItemTemplate}"
                          Drop="SelectedTestsListBoxDrop">
 

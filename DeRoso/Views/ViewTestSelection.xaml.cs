@@ -79,8 +79,7 @@ namespace DeRoso.Views
             if (!test.ContainValidDrugs())
                 return false;
 
-            TestSelectionViewModel model = (TestSelectionViewModel)this.DataContext;
-            if (model.SelectedTests.Contains(test))
+            if (HealthTestSelected.Tests.Contains(test))
                 return false;
 
             return true;
@@ -89,13 +88,10 @@ namespace DeRoso.Views
         private void SelectedTestsListBoxDrop(object sender, DragEventArgs e)
         {
             ListBox parent = (ListBox)sender;
-
-            
             HealthTest test = (HealthTest)e.Data.GetData(typeof(HealthTest));
-            TestSelectionViewModel model = (TestSelectionViewModel)this.DataContext;
-
+            
             if (CanAddToSelectedTests(test))
-                model.SelectedTests.Add (test);
+                HealthTestSelected.Tests.Add (test);
         }
 
         private void OnTestsListBoxMouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -104,10 +100,9 @@ namespace DeRoso.Views
             {
                 ListBox parent = (ListBox)sender;
                 HealthTest test = (HealthTest)GetDataFromListBox(parent, e.GetPosition(parent));
-                TestSelectionViewModel model = (TestSelectionViewModel)this.DataContext;
-
+                
                 if (CanAddToSelectedTests(test))
-                    model.SelectedTests.Add(test);
+                    HealthTestSelected.Tests.Add(test);
             }
             e.Handled = false;
         }
