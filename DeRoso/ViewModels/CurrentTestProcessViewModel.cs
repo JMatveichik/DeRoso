@@ -18,12 +18,12 @@ namespace DeRoso.ViewModels
             device.HealthTestTick += DeviceHealthTestTick;
         }
 
-        private void DeviceHealthTestTick(object sennder, HealthTestEventArgs args)
+        private void DeviceHealthTestTick(object sender, HealthTestEventArgs args)
         {
             //throw new NotImplementedException();
         }
 
-        private void DeviceHealthTestStarted(object sennder, HealthTestEventArgs args)
+        private void DeviceHealthTestStarted(object sender, HealthTestEventArgs args)
         {
             //throw new NotImplementedException();
             CurrentTest = (HealthTest)args.TestItem;
