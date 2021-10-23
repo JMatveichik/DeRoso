@@ -3,15 +3,15 @@
                     xmlns:local="clr-namespace:DeRoso.UI.Templates">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../Templates/HealthTetsResultListBoxItemTemplate.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="../Templates/HealthTetsResultListBoxItemTemplate.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="../Styles/BordersStyles.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="../Styles/TextBlockStyles.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
 
 
     <HierarchicalDataTemplate x:Key="HierarchicalTestResultsDataTemplate" ItemsSource="{Binding Meassurments}">
-
-        <Grid Margin="5" MinHeight="40">
+        <Border Style="{StaticResource BorderUnderline}">
+        <Grid Margin="5" MinWidth="800">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -19,6 +19,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
+                
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" Grid.Row="0" 
@@ -31,52 +32,77 @@
                        MaxWidth="300"
                        HorizontalAlignment="Left"
                        Text="{Binding Test.Description}" />
+            
+            <TextBlock Grid.Column="1"
+                       Grid.Row="0"
+                       Style="{StaticResource ItemDescriptionStyle}"
+                       MaxWidth="300"
+                       HorizontalAlignment="Left"
+                       Text="Метод расчета" />
+
+            <TextBlock Grid.Column="1"
+                       Grid.Row="1"
+                       Style="{StaticResource ItemDescriptionStyle}"
+                       MaxWidth="300"
+                       HorizontalAlignment="Left"
+                       Text="{Binding Test.CalculationType}" />
 
         </Grid>
-        
+        </Border>
         <HierarchicalDataTemplate.ItemTemplate >
+            
             <DataTemplate>
-                <Grid Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
+                <Grid Margin="5" MinWidth="800">
+                    
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition Width="60"></ColumnDefinition>
-                        <ColumnDefinition Width="60"></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>                        
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
+                    <TextBlock Grid.Column="0" 
                        Style="{StaticResource ValueTitleStyle}"
                        HorizontalAlignment="Center"
                        FontSize="28"
                        Text="{Binding MeassurmentBefore, StringFormat={}{0:0.0}}"/>
 
-                    <TextBlock Grid.Column="1" Grid.Row="0" 
-                       Style="{StaticResource ItemTitleStyle}"
-                       Text="{Binding Drug.Address}"/>
+                    <Grid Grid.Column="1" HorizontalAlignment="Center">
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>                            
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="0" 
+                            Style="{StaticResource ItemTitleStyle}"
+                            Text="{Binding Drug.Address}"/>
 
-                    <TextBlock Grid.Column="2"
-                       Grid.Row="0"
-                       Style="{StaticResource ItemTitleStyle}"
-                       Text="{Binding Drug.Cell}" />
+                        <TextBlock Grid.Column="1"
+                           Grid.Row="0"
+                           Style="{StaticResource ItemTitleStyle}"
+                           Text="{Binding Drug.Cell}" />
 
-                    <TextBlock Grid.Column="3"
-                       Grid.Row="0"
-                       Style="{StaticResource ItemTitleStyle}"
-                       TextAlignment="Left"
-                       Text="{Binding Drug.Title}" />
+                        <TextBlock Grid.Column="2"
+                           Grid.Row="0"
+                           Style="{StaticResource ItemTitleStyle}"
+                           TextAlignment="Left"
+                           Text="{Binding Drug.Title}" />
 
-                    <TextBlock Grid.Column="1"
-                       Grid.Row="1"
-                       Grid.ColumnSpan="3"
-                       Style="{StaticResource ItemDescriptionStyle}"
-                       Text="{Binding Drug.Description}" />
+                        <TextBlock Grid.Column="0"
+                           Grid.Row="1"
+                           Grid.ColumnSpan="3"
+                           Style="{StaticResource ItemDescriptionStyle}"
+                           Text="{Binding Drug.Description}" />
 
-                    <TextBlock Grid.Column="4" Grid.Row="0" Grid.RowSpan="2"
+                    </Grid>
+                    
+                    <TextBlock Grid.Column="2" 
                         HorizontalAlignment="Center"
                        FontSize="28"
                        Style="{StaticResource ValueTitleStyle}"

@@ -308,7 +308,7 @@ namespace DeRoso.Core.Device
                 }
                 else
                 {
-                    HealthTestFailed?.Invoke(this, new HealthTestEventArgs(test, EnumHealthTestStep.Started, TimeSpan.FromSeconds(0)));
+                    HealthTestFailed?.Invoke(this, new HealthTestEventArgs(test, EnumHealthTestStep.Failed, TimeSpan.FromSeconds(0)));
                     break;
                 }
             }
@@ -366,7 +366,7 @@ namespace DeRoso.Core.Device
             /*                  ИЗМЕРЕНИЕ ДО                */
             /************************************************/
 
-            
+            HealthTestTick?.Invoke(this, new HealthTestEventArgs(resTest, EnumHealthTestStep.MeassureBefore, TimeSpan.FromSeconds(0)));
 
             //готовим буфер к приемму данных
             PrepareDataBuffer();
@@ -405,8 +405,9 @@ namespace DeRoso.Core.Device
                 res.Test = test;
                 res.Drug = drug;
 
+                HealthTestTick?.Invoke(this, new HealthTestEventArgs(res, EnumHealthTestStep.AddDrug, TimeSpan.FromSeconds(0)));
                 res.MeassurmentBefore = meassureBefore;
-                HealthTestTick?.Invoke(this, new HealthTestEventArgs(res, EnumHealthTestStep.MeassureBefore, TimeSpan.FromSeconds(0)));
+                
 
 
                 /************* ОЖИДАНИЕ ПЕРЕД ВЫДАЧЕЙ *****************/
@@ -463,7 +464,8 @@ namespace DeRoso.Core.Device
 
                 meassureBefore = res.MeassurmentAfter;
 
-                resTest.Meassurments.Add(res);
+                
+                //resTest.Meassurments.Add(res);
             }
 
 

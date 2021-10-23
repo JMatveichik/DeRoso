@@ -18,6 +18,21 @@ namespace DeRoso.ViewModels
         {
             device.HealthTestStarted += DeviceHealthTestStarted;
             device.HealthTestTick += DeviceHealthTestTick;
+            device.HealthTestComplete += DeviceHealthTestComplete;
+            device.HealthTestFailed += DeviceHealthTestFailed;
+
+        }
+
+        private void DeviceHealthTestFailed(object sennder, HealthTestEventArgs args)
+        {
+            CurrentOperation = EnumHelper.GetDescription(args.CurrentStep);
+            OnPropertyChanged("CurrentOperation");
+        }
+
+        private void DeviceHealthTestComplete(object sennder, HealthTestEventArgs args)
+        {
+            CurrentOperation = EnumHelper.GetDescription(args.CurrentStep);
+            OnPropertyChanged("CurrentOperation");
         }
 
         private void DeviceHealthTestTick(object sender, HealthTestEventArgs args)
@@ -28,11 +43,18 @@ namespace DeRoso.ViewModels
             TimeLeft = args.OperationLeftTime.TotalSeconds < 0.0 ? 0.0 : args.OperationLeftTime.TotalSeconds;
             OnPropertyChanged("TimeLeft");
 
-            if (args.CurrentStep == EnumHealthTestStep.MeassureBefore)
+            switch(args.CurrentStep)
             {
-                Application.Current.Dispatcher.BeginInvoke(new Action(() => Results.Add((HealthTestDrugResult)args.TestItem)));
-                
+                case EnumHealthTestStep.AddDrug:
+                    HealthTestResult lastRes = Results.Last();
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() => lastRes.Meassurments.Add((HealthTestDrugResult)args.TestItem)));
+                    break;
+
+                case EnumHealthTestStep.MeassureBefore:
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() => Results.Add((HealthTestResult)args.TestItem)));
+                    break;
             }
+            
         }
 
         private void DeviceHealthTestStarted(object sender, HealthTestEventArgs args)
