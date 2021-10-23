@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeRoso.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace DeRoso.Controls
 {
     /// <summary>
@@ -23,6 +25,9 @@ namespace DeRoso.Controls
         public CurrentTestProcessControl()
         {
             InitializeComponent();
+            App app = (App)Application.Current;
+            DataContext = new CurrentTestProcessViewModel(app.Device);
+            
         }
     }
 }

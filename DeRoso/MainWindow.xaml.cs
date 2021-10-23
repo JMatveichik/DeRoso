@@ -71,9 +71,9 @@ namespace DeRoso
 
             DeviceProvider dev = ((App)App.Current).Device;
 
-            //dev.Reset();
+            dev.Reset();
 
-            Task test = new Task(() => dev.Do(HealthTestSelected.Tests));
+            Task<bool> test = new Task<bool>(() => dev.Test());
             test.Start();
         }
 
@@ -86,6 +86,13 @@ namespace DeRoso
         {
             MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
             vm.CurrentContent = ContentManager.Instance.GetContent("TESTING");
+
+            DeviceProvider dev = ((App)App.Current).Device;
+
+            //dev.Reset();
+
+            Task test = new Task(() => dev.Do(HealthTestSelected.Tests));
+            test.Start();
         }
 
         private void EditDBCanExecute(object sender, CanExecuteRoutedEventArgs e)

@@ -12,10 +12,13 @@
 
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/NormalTestListBoxItemTemplate.xaml" />
 
-        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/NonValidTestListBoxItemTemplate.xaml" />       
-        
-        
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/NonValidTestListBoxItemTemplate.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/HealthTetsResultListBoxItemTemplate.xaml" />
+      
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/DrugListBoxItemTemplate.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/HierarchicalTestResultsDataTemplate.xaml" />        
 
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/BordersStyles.xaml" />
 

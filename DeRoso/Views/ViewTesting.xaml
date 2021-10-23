@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:DeRoso.Views"
               xmlns:ctrl="clr-namespace:DeRoso.Controls"
              xmlns:cmd ="clr-namespace:DeRoso.ViewModels"
+             xmlns:health="clr-namespace:DeRoso.Core.Health;assembly=DeRoso.Core"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -14,15 +15,15 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="ПРОВЕДЕНИЕ ТЕСТОВ"
@@ -30,15 +31,49 @@
                    Style="{StaticResource PageTitleStyle}">
         </TextBlock>
 
+        <Border Grid.Column="0"
+                 Grid.Row="2"
+                Grid.RowSpan="2"
+                Style="{StaticResource BorderBox}">
+            <Grid  >
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Column="0"
+                 Grid.Row="0"
+                 Style="{StaticResource BorderUnderline}">
+                    <TextBlock 
+                 Style="{StaticResource HeaderStyle}"
+                       Text="ВЫБРАННЫЕ ТЕСТЫ"
+                       Margin="5, 5">
+
+
+                    </TextBlock>
+                </Border>
+
+                <ListBox Grid.Column="0"
+                 Grid.Row="1"
+                 IsEnabled="False"
+                 SelectedItem="{Binding CurrentTest, Mode=TwoWay}"
+                 Margin="10,5" 
+                 ItemsSource="{x:Static health:HealthTestSelected.Tests}"
+                 ItemTemplate="{StaticResource DescribedListBoxItemTemplate}"/>
+
+            </Grid>
+        </Border>
+        
         <ctrl:DeviceTestingControl            
             Grid.Column="2" 
-            Grid.Row="1"
+            Grid.Row="0"
             HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
         <ctrl:CurrentTestProcessControl
-            Grid.Column="0" Grid.Row="1" 
-            Grid.ColumnSpan="3" Grid.RowSpan="3" 
-            Margin="100"/>
+            Grid.Column="1" Grid.Row="2" 
+             Grid.RowSpan="2" 
+           />
         
     </Grid>
     
