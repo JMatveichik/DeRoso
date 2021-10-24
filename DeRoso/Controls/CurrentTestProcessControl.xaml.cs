@@ -1,4 +1,5 @@
-﻿using DeRoso.ViewModels;
+﻿using DeRoso.Core.Data;
+using DeRoso.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,12 @@ namespace DeRoso.Controls
             App app = (App)Application.Current;
             DataContext = new CurrentTestProcessViewModel(app.Device);
             
+        }
+
+        private void ButtonSaveResultsClick(object sender, RoutedEventArgs e)
+        {
+            CurrentTestProcessViewModel vm = (CurrentTestProcessViewModel)DataContext;
+            vm.Save(new ExcelResultsSaver("res.xls"));
         }
     }
 }

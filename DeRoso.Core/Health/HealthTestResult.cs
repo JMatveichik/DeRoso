@@ -1,4 +1,5 @@
-﻿using DeRoso.Core.Health;
+﻿using DeRoso.Core.Data;
+using DeRoso.Core.Health;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,11 @@ namespace DeRoso.Core.Health
     [Table("Results")]
     public class HealthTestResult : HealthTestItem
     {
+
+        public HealthTestResult()
+        {
+            Date = DateTime.Now;
+        }
 
         /// <summary>
         /// Идентификатор теста
@@ -33,6 +39,12 @@ namespace DeRoso.Core.Health
         /// </summary>
         public HealthTestDrug Drug { get; set; }
         
+
+        public DateTime Date
+        {
+            get;
+            private set;
+        }
 
         [NotMapped]
         /// <summary>
@@ -99,5 +111,6 @@ namespace DeRoso.Core.Health
                     break;
             }
         }
+
     }
 }

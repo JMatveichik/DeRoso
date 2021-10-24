@@ -7,7 +7,7 @@ using DeRoso.Core.Health;
 
 namespace DeRoso.Core.Data
 {
-    public abstract class FileOutputResultSaver : IResultatSaver
+    public abstract class FileOutputResultSaver : IResultsSaver
     {
         /// <summary>
         /// Конструктор класса сохранения результатов во внешний файл
@@ -32,7 +32,7 @@ namespace DeRoso.Core.Data
         /// Сохранение результатов
         /// </summary>
         /// <param name="results"></param>
-        abstract public bool Save(HealthTestResult results);
+        abstract public bool Save(IEnumerable <HealthTestResult> results);
         
     }
 }

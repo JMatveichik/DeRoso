@@ -1,4 +1,5 @@
 ﻿using DeRoso.Core;
+using DeRoso.Core.Data;
 using DeRoso.Core.Device;
 using DeRoso.Core.Health;
 using System;
@@ -128,7 +129,10 @@ namespace DeRoso.ViewModels
             private set;
         } = new ObservableCollection<HealthTestResult>();
 
-
-
+        
+        public void Save(IResultsSaver sp)
+        {
+            sp.Save(Results);
+        }
     }
 }

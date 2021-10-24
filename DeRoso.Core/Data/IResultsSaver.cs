@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace DeRoso.Core.Data
 {
-    interface IResultatSaver
+    public interface IResultsSaver
     {
 
         /// <summary>
         /// Сохранение результатов тесирования
         /// </summary>
         /// <param name="results"></param>
-        bool Save(HealthTestResult results);
+        bool Save(IEnumerable< HealthTestResult> results);
     }
 }
