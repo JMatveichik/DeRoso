@@ -20,6 +20,11 @@
 
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/HierarchicalTestResultsDataTemplate.xaml" />        
 
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/OptimalHeathTestDrugResult.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/NormalHealthTestDrugResult.xaml" />    
+        
+
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/BordersStyles.xaml" />
 
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/TextBlockStyles.xaml" />

@@ -4,6 +4,8 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../Styles/TextBlockStyles.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="../Styles/BordersStyles.xaml"></ResourceDictionary>
+        
     </ResourceDictionary.MergedDictionaries>
 
     <DataTemplate x:Key="DescribedListBoxItemTemplate">

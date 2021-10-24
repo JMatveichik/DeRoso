@@ -170,7 +170,7 @@ namespace DeRoso.Core.Device
         /// <param name="args"></param>
         private void OnDataRecieved(object sender, DataRecievedEventArgs args)
         {
-            TraceRecivedData(args.data);
+            //TraceRecivedData(args.data);
 
             for (int i = 0; i < 16; i++)        //проверка на наличие 0 в данных
             {
@@ -514,7 +514,7 @@ namespace DeRoso.Core.Device
         /// <returns></returns>
         private bool sendToUSB(byte[] data)
         {
-            TraceRecivedData(data);
+            //TraceRecivedData(data);
             if (this.usb.SpecifiedDevice != null)
             {
                 //делим данные на пакеты с максимальным размером  TXPackSize

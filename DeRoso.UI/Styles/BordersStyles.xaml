@@ -3,6 +3,7 @@
                     xmlns:local="clr-namespace:DeRoso.UI.Styles">
 
     <SolidColorBrush x:Key="BordersBrush" Color="{StaticResource MahApps.Colors.Accent2}" />
+    <SolidColorBrush x:Key="BordersSuccsessBrush" Color="Green" />
 
     <Style x:Key="BorderUnderline" TargetType="Border">
 
@@ -23,6 +24,13 @@
         <Setter Property="CornerRadius" Value="3"/>
 
         <Setter Property="Margin" Value="10"/>
+    </Style>
+
+    <Style x:Key="BorderSuccsessBox" TargetType="Border" BasedOn="{StaticResource BorderBox}">
+
+        <Setter Property="BorderBrush"
+                Value="{StaticResource BordersSuccsessBrush}" />
+        
     </Style>
 
 </ResourceDictionary>
