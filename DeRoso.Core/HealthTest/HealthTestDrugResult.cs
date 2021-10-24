@@ -34,7 +34,9 @@ namespace DeRoso.Core.Health
         /// </summary>
         public bool IsOptimal
         {
-            get { return _isOptimal; }
+            get {
+                return _isOptimal;
+            }
             set
             {
                 if (value == _isOptimal)
