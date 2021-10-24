@@ -16,6 +16,9 @@ namespace DeRoso.ViewModels
         public TestSelectionViewModel(DeRosoContext data)
         {
             DeRossoData = data;
+            SelectedSection = Sections?.FirstOrDefault();
+            SelectedGroup = SelectedSection.Groups?.FirstOrDefault();
+
         }
 
         public DeRosoContext DeRossoData
@@ -102,10 +105,50 @@ namespace DeRoso.ViewModels
         /// <summary>
         /// Выбранные тесты
         /// </summary>
-        public ObservableCollection<HealthTest> SelectedTests
+        public ObservableCollection<HealthTest> SelectedTargetTests
         {
             get;
             private set;
         } = new ObservableCollection<HealthTest>();
+
+        /// <summary>
+        /// Выбранный тест  в целевой группе
+        /// </summary>
+        public HealthTest SelectedTargetTest
+        {
+            get
+            {
+                return _selectedTargetTest;
+            }
+            set
+            {
+                if (value == _selectedTargetTest)
+                    return;
+
+                _selectedTargetTest = value;
+                OnPropertyChanged();
+            }
+        }
+        private HealthTest _selectedTargetTest = null;
+
+        /// <summary>
+        /// Выбранный тест  в исходной группе
+        /// </summary>
+        public HealthTest SelectedSourceTest
+        {
+            get
+            {
+                return _selectedSourceTest;
+            }
+            set
+            {
+                if (value == _selectedSourceTest)
+                    return;
+
+                _selectedSourceTest = value;
+                OnPropertyChanged();
+            }
+        }
+        private HealthTest _selectedSourceTest = null;
     }
 }

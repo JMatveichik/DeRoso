@@ -35,7 +35,7 @@
 
         <Button Grid.Row="0" 
                 Grid.Column="0"
-                Command="{Binding SelectTests}">
+                Command="{Binding SelectTestsPage}">
             
             <StackPanel>
                 <ContentPresenter Width="48" Height="48"  
@@ -48,7 +48,7 @@
 
         <Button Grid.Row="1"
                 Grid.Column="0"
-                Command="{Binding EditDB}">
+                Command="{Binding EditDBPage}">
             
             <StackPanel>
                 <ContentPresenter Width="48"
@@ -62,7 +62,7 @@
 
         <Button Grid.Row="0"
                 Grid.Column="1"
-                Command="{Binding Archive}">
+                Command="{Binding ArchivePage}">
 
             <StackPanel>
                 <ContentPresenter Width="48"
@@ -75,7 +75,7 @@
 
         <Button Grid.Row="1"
                 Grid.Column="1"
-                Command="{Binding Help}">
+                Command="{Binding HelpPage}">
 
             <StackPanel>
                 <ContentPresenter Width="48"

@@ -106,5 +106,54 @@ namespace DeRoso.Views
             }
             e.Handled = false;
         }
+
+        private void OnButtonAddAllAvailableTests(object sender, RoutedEventArgs e)
+        {
+            TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;
+            
+            foreach (HealthTest t in vm.SelectedGroup.Tests)
+            {
+                if (CanAddToSelectedTests(t))
+                    HealthTestSelected.Tests.Add(t);
+            }
+        }
+
+        private void OnButtonAddAllSectionTests(object sender, RoutedEventArgs e)
+        {
+            TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;
+
+            foreach (HealthTestGroup gr in vm.SelectedSection.Groups)
+            {
+                foreach (HealthTest t in gr.Tests)
+                {
+                    if (CanAddToSelectedTests(t))
+                        HealthTestSelected.Tests.Add(t);
+                }
+            }
+            
+        }
+
+        private void OnButtonAddAllGroupTests(object sender, RoutedEventArgs e)
+        {
+            TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;                        
+            foreach (HealthTest t in vm.SelectedGroup.Tests)
+            {
+                if (CanAddToSelectedTests(t))
+                    HealthTestSelected.Tests.Add(t);
+            }            
+        }
+
+
+        private void OnButtonClearTargetTests(object sender, RoutedEventArgs e)
+        {
+            HealthTestSelected.Tests.Clear();
+        }
+
+        private void SelectedTargetTestsListKeyDown(object sender, KeyEventArgs e)
+        {
+            TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;
+            HealthTestSelected.Tests.Remove(vm.SelectedTargetTest);
+        }
+        
     }
 }

@@ -33,41 +33,55 @@ namespace DeRoso.ViewModels
         } 
 
 
-        public static RoutedUICommand Home
+        public static RoutedUICommand HomePage
         {
             get;
         } = new RoutedUICommand("Go to home page", "Home", typeof(MainWindowViewModel), null);
 
-        public static RoutedUICommand EditDB
+        public static RoutedUICommand EditDBPage
         {
             get;
         } = new RoutedUICommand("Edit database", "EditDB", typeof(MainWindowViewModel), null);
 
-        public static RoutedUICommand Archive
+        public static RoutedUICommand ArchivePage
         {
             get;
         } = new RoutedUICommand("Go to archive page", "Archive", typeof(MainWindowViewModel), null);
 
-        public static RoutedUICommand Help
+        public static RoutedUICommand HelpPage
         {
             get;
         } = new RoutedUICommand("Go to help page", "Home", typeof(MainWindowViewModel), null);
 
-        public static RoutedUICommand Testing
+        public static RoutedUICommand TestingPage
         {
             get;
         } = new RoutedUICommand("Go to testing page", "Testing", typeof(MainWindowViewModel), null);
 
-        public static RoutedUICommand TestDevice
+        public static RoutedUICommand StartTestDevice
         {
             get;
         } = new RoutedUICommand("Test device", "Testing device", typeof(MainWindowViewModel), null);
 
 
-        public static RoutedUICommand SelectTests
+        public static RoutedUICommand SelectTestsPage
         {
             get;
         } = new RoutedUICommand("Select tests", "Select test for process", typeof(MainWindowViewModel), null);
 
+        public static RoutedUICommand StartTest
+        {
+            get;
+        } = new RoutedUICommand("Begin testing", "Begin testing process", typeof(MainWindowViewModel), null);
+
+        public static RoutedUICommand StopTest
+        {
+            get;
+        } = new RoutedUICommand("Stop testing", "Break testing process", typeof(MainWindowViewModel), null);
+
+        public static RoutedUICommand PauseTest
+        {
+            get;
+        } = new RoutedUICommand("Pause testing", "Pause testing process", typeof(MainWindowViewModel), null);
     }
 }

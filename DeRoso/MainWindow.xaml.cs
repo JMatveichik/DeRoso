@@ -33,21 +33,242 @@ namespace DeRoso
             App app = (App)System.Windows.Application.Current;
             this.DataContext = new MainWindowViewModel();
 
-            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.Home, HomeExecute, HomeCanExecute));
-            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.Help, HelpExecute, HelpCanExecute));
-            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.Archive, ArchiveExecute, ArchiveCanExecute));
-            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.EditDB, EditDBExecute, EditDBCanExecute));
-            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.Testing, TestingExecute, TestingCanExecute));
-            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.SelectTests, SelectTestsExecute, SelectTestsCanExecute));
 
-            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.TestDevice, TestDeviceExecute, TestDeviceCanExecute));
+            //привязка команд
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.HomePage, HomePageExecute, HomePageCanExecute));
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.HelpPage, HelpPageExecute, HelpPageCanExecute));
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.ArchivePage, ArchivePageExecute, ArchivePageCanExecute));
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.EditDBPage, EditDBPageExecute, EditDBPageCanExecute));
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.TestingPage, TestingPageExecute, TestingPageCanExecute));
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.SelectTestsPage, SelectTestsPagesExecute, SelectTestsPageCanExecute));
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.StartTestDevice, StartTestDeviceExecute, StartTestDeviceCanExecute));
 
-            //byte[] buf = DeviceCommand.CreateCommand(EnumDeviceCommands.MeteringOn, new byte[] { 1, 2, 3, 4 });
-
-            DeviceProvider deRosoDevice = new DeviceProvider();
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.StartTest, StartTestExecute, StartTestCanExecute));
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.StopTest, StopTestExecute, StopTestCanExecute));
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.PauseTest, PauseTestExecute, PauseTestCanExecute));
 
         }
 
+        /// <summary>
+        /// Возможно начать процесс тестирования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PauseTestCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void PauseTestExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            DeviceProvider dev = ((App)App.Current).Device;
+
+            //Task test = new Task(() => dev.Do(HealthTestSelected.Tests));
+            //test.Start();
+        }
+
+        /// <summary>
+        /// Возможно начать процесс тестирования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StopTestCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void StopTestExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            DeviceProvider dev = ((App)App.Current).Device;
+
+            //Task test = new Task(() => dev.Do(HealthTestSelected.Tests));
+            //test.Start();
+        }
+
+
+
+        /// <summary>
+        /// Возможно начать процесс тестирования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StartTestCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = HealthTestSelected.Tests.Count == 0 ? false : true;
+        }
+
+        /// <summary>
+        /// Начать процесс тестирования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StartTestExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            DeviceProvider dev = ((App)App.Current).Device;            
+
+            Task test = new Task(() => dev.Do(HealthTestSelected.Tests));
+            test.Start();
+        }
+
+
+        /// <summary>
+        /// Запуск тестирования прибора возможен
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StartTestDeviceCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        /// <summary>
+        /// Запуск процедуры тестирования прибора
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StartTestDeviceExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            DeviceProvider dev = ((App)App.Current).Device;
+            dev.Reset();
+
+            Task<bool> test = new Task<bool>(() => dev.Test());
+            test.Start();
+        }
+
+
+
+        /// <summary>
+        /// Возможность перехода на страницу выбора тестов
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SelectTestsPageCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        /// <summary>
+        /// Переход на страницу запуска выбора тестов
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param> 
+        private void SelectTestsPagesExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
+            vm.CurrentContent = ContentManager.Instance.GetContent("SELECTION");
+        }
+
+        /// <summary>
+        /// Возможность перехода на страницу запуска тестирования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TestingPageCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        /// <summary>
+        /// Переход на страницу запуска тестирования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param> 
+        private void TestingPageExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
+            vm.CurrentContent = ContentManager.Instance.GetContent("TESTING");
+        }
+
+        /// <summary>
+        /// Возможность перехода на страницу редактирования базы данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditDBPageCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        /// <summary>
+        /// Переход на страницу редактирования базы данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>  
+        private void EditDBPageExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
+            vm.CurrentContent = ContentManager.Instance.GetContent("EDIT");
+        }
+
+        /// <summary>
+        /// Возможность перехода на страницу помощи
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ArchivePageCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = false;
+        }
+
+        /// <summary>
+        /// Переход на страницу архива данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>  
+        private void ArchivePageExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
+            vm.CurrentContent = ContentManager.Instance.GetContent("HELP");
+        }
+
+
+        /// <summary>
+        /// Возможность перехода на страницу помощи
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HelpPageCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = false;
+        }
+
+
+        /// <summary>
+        /// Переход на страницу помощи
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>       
+        private void HelpPageExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
+            vm.CurrentContent = ContentManager.Instance.GetContent("HELP");
+        }
+
+
+
+        /// <summary>
+        /// Возможность перехода на главную страницу 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HomePageCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        /// <summary>
+        /// Переход на главную страницу
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HomePageExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
+            vm.CurrentContent = ContentManager.Instance.GetContent("HOME");
+        }
+
+
+        /*
         private void SelectTestsCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
@@ -69,12 +290,7 @@ namespace DeRoso
             MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
             vm.CurrentContent = ContentManager.Instance.GetContent("TESTING");
 
-            DeviceProvider dev = ((App)App.Current).Device;
-
-            dev.Reset();
-
-            Task<bool> test = new Task<bool>(() => dev.Test());
-            test.Start();
+           
         }
 
         private void TestingCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -87,12 +303,7 @@ namespace DeRoso
             MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
             vm.CurrentContent = ContentManager.Instance.GetContent("TESTING");
 
-            DeviceProvider dev = ((App)App.Current).Device;
-
-            //dev.Reset();
-
-            Task test = new Task(() => dev.Do(HealthTestSelected.Tests));
-            test.Start();
+            
         }
 
         private void EditDBCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -138,8 +349,10 @@ namespace DeRoso
             e.CanExecute = false;
         }
 
-        /*
+        */
 
+
+        /*
         private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
         {
             HwndSource src = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);

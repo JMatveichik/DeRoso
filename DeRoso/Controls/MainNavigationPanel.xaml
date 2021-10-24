@@ -4,9 +4,60 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DeRoso.Controls"
+             xmlns:models="clr-namespace:DeRoso.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="80" d:DesignWidth="800">
+    
+    <Grid Height="65">
+        <Grid.Resources>
+            <Style TargetType="Button">
+
+                <Setter Property="Margin" Value="5"></Setter>
+                <Setter Property="Height" Value="55"></Setter>
+                <Setter Property="Width" Value="55"></Setter>
+            </Style>
+
+            <Style TargetType="ContentPresenter">
+                <Setter Property="Margin"
+                        Value="1"></Setter>
+            </Style>
+        </Grid.Resources>
+
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+
+            <Button 
+                Command="{x:Static models:MainWindowViewModel.HomePage}">
+
+                <ContentPresenter Width="48" 
+                                  Height="48"                                   
+                                  Content="{StaticResource IconHome}"/>
+            </Button>
+
+            <Button 
+                Command="{x:Static models:MainWindowViewModel.EditDBPage}">
+
+                <ContentPresenter Width="48" 
+                                  Height="48"  
+                                  Content="{StaticResource IconSettings}"/>
+            </Button>
+
+            <Button 
+                Command="{x:Static models:MainWindowViewModel.ArchivePage}">
+
+                <ContentPresenter Width="48" 
+                                  Height="48"  
+                                  Content="{StaticResource IconCalendar}"/>
+            </Button>
+
+            <Button 
+                Command="{x:Static models:MainWindowViewModel.HelpPage}">
+
+                <ContentPresenter Width="48" 
+                                  Height="48"  
+                                  Content="{StaticResource IconHelp}"/>
+            </Button>
+
+
+        </StackPanel>
     </Grid>
 </UserControl>

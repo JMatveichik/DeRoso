@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DeRoso.Views"
+             xmlns:ctrl="clr-namespace:DeRoso.Controls"
              xmlns:sel="clr-namespace:DeRoso.Selectors"
              xmlns:models="clr-namespace:DeRoso.ViewModels"
              xmlns:health="clr-namespace:DeRoso.Core.Health;assembly=DeRoso.Core"
@@ -35,8 +36,11 @@
             
         </Grid.ColumnDefinitions>
 
+        <ctrl:MainNavigationPanel Grid.Column="2" HorizontalAlignment="Right"></ctrl:MainNavigationPanel>
+        
         <TextBlock Text="ВЫБЕРИТЕ ТЕСТЫ"
-                   Grid.ColumnSpan="3"
+                   Grid.ColumnSpan="1"
+                   Grid.Column="0"
                    Style="{StaticResource PageTitleStyle}">
         </TextBlock>
 
@@ -55,13 +59,28 @@
                 <Border Grid.Column="0"
                  Grid.Row="0"
                  Style="{StaticResource BorderUnderline}">
-                    <TextBlock 
-                 Style="{StaticResource HeaderStyle}"
-                       Text="СЕКЦИЯ"
-                       Margin="5, 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
+                        <TextBlock Grid.Column="0"                                   
+                            Style="{StaticResource HeaderStyle}"
+                                   VerticalAlignment="Center"
+                                Text="СЕКЦИЯ"
+                                Margin="5, 5">
 
-                    </TextBlock>
+                        </TextBlock>
+
+                        <Button  Grid.Column="1" Margin="2"
+                                 Click="OnButtonAddAllSectionTests">
+                            <ContentPresenter Width="32" 
+                                  Height="32"                                   
+                                  Content="{StaticResource IconRigthDoubleChevrone}"/>
+                        </Button>
+
+                    </Grid>
                 </Border>
 
 
@@ -77,13 +96,28 @@
                 <Border Grid.Column="0"
                  Grid.Row="2"
                  Style="{StaticResource BorderUnderline}">
-                    <TextBlock 
-                 Style="{StaticResource HeaderStyle}"
-                       Text="РАЗДЕЛ"
-                       Margin="5, 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
+                        <TextBlock Grid.Column="0"                                   
+                            Style="{StaticResource HeaderStyle}"
+                                   VerticalAlignment="Center"
+                                Text="РАЗДЕЛЫ"
+                                Margin="5, 5">
 
-                    </TextBlock>
+                        </TextBlock>
+
+                        <Button  Grid.Column="1" Margin="2"
+                                 Click="OnButtonAddAllGroupTests">
+                            <ContentPresenter Width="32" 
+                                  Height="32"                                   
+                                  Content="{StaticResource IconRigthDoubleChevrone}"/>
+                        </Button>
+
+                    </Grid>
                 </Border>
 
                 <ComboBox Grid.Column="0" MinHeight="50"
@@ -113,19 +147,34 @@
                 <Border Grid.Column="0"
                  Grid.Row="0"
                  Style="{StaticResource BorderUnderline}">
-                    
-                    <TextBlock 
-                 Style="{StaticResource HeaderStyle}"
-                       Text="ДОСТУПНЫЕ ТЕСТЫ"
-                       Margin="5, 5">
 
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0"                                   
+                            Style="{StaticResource HeaderStyle}"
+                                   VerticalAlignment="Center"
+                                Text="ДОСТУПНЫЕ ТЕСТЫ"
+                                Margin="5, 5">
 
                     </TextBlock>
+
+                        <Button  Grid.Column="1" Margin="2"
+                                 Click="OnButtonAddAllAvailableTests">
+                            <ContentPresenter Width="32" 
+                                  Height="32"                                   
+                                  Content="{StaticResource IconRigthDoubleChevrone}"/>
+                           </Button>
+
+                    </Grid>
                 </Border>
 
                 <ListBox Grid.Column="0"
                  Grid.Row="1"
-                 SelectedItem="{Binding SelectedTest}"
+                 SelectedItem="{Binding SelectedSourceTest}"
                  Margin="10,5" ItemsSource="{Binding SelectedGroup.Tests}"
                  PreviewMouseLeftButtonDown="OnTestsListBoxPreviewMouseLeftButtonDown"
                  MouseDoubleClick="OnTestsListBoxMouseDoubleClick"
@@ -146,26 +195,41 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Column="0"
-                 Grid.Row="0"
-                 Style="{StaticResource BorderUnderline}">
-                    <TextBlock 
-                 Style="{StaticResource HeaderStyle}"
-                       Text="ВЫБРАННЫЕ ТЕСТЫ"
-                       Margin="5, 5">
+                <Border Style="{StaticResource BorderUnderline}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
+                    <TextBlock Grid.Column="0"                                   
+                            Style="{StaticResource HeaderStyle}"
+                                   VerticalAlignment="Center"
+                                Text="ВЫБРАННЫЕ ТЕСТЫ"
+                                Margin="5, 5">
 
                     </TextBlock>
+
+                    <Button  Grid.Column="1" Margin="2"
+                                 Click="OnButtonClearTargetTests">
+                        <ContentPresenter Width="32" 
+                                  Height="32"                                   
+                                  Content="{StaticResource IconDelletAll}"/>
+                    </Button>
+
+                </Grid>
                 </Border>
 
                 <ListBox Grid.Column="0"
                  Grid.Row="1"
                  AllowDrop="true"
-                 SelectedItem="{Binding SelectedDrug, Mode=TwoWay}"
-                 Margin="10,5" 
+                 SelectedItem="{Binding SelectedTargetTest, Mode=TwoWay}"
+                 Margin="10,5"
+                         
                  ItemsSource="{x:Static health:HealthTestSelected.Tests}"
                  ItemTemplate="{StaticResource DescribedListBoxItemTemplate}"
-                         Drop="SelectedTestsListBoxDrop">
+                         Drop="SelectedTestsListBoxDrop"
+                         KeyDown="SelectedTargetTestsListKeyDown">
 
                 </ListBox>
             </Grid>
@@ -179,10 +243,10 @@
                     HorizontalAlignment="Right">
 
             <Button Width="100" Height="40" Margin="10" 
-                    Command="{x:Static models:MainWindowViewModel.Home}">НАЗАД</Button>
+                    Command="{x:Static models:MainWindowViewModel.HomePage}">НАЗАД</Button>
 
             <Button Width="100" Height="40" Margin="10" 
-                    Command="{x:Static models:MainWindowViewModel.Testing}"> ПРОДОЛЖИТЬ</Button>
+                    Command="{x:Static models:MainWindowViewModel.TestingPage}"> ПРОДОЛЖИТЬ</Button>
             
 
         </StackPanel>

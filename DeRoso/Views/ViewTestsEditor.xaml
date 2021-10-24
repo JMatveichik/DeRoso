@@ -24,7 +24,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
@@ -33,8 +33,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <ctrl:MainNavigationPanel Grid.Column="2" HorizontalAlignment="Right"></ctrl:MainNavigationPanel>
+
         <TextBlock Text="РЕДАКТИРОВАНИЕ ТЕСТОВ"
-                   Grid.ColumnSpan="3"
+                   Grid.ColumnSpan="2"
                    Style="{StaticResource PageTitleStyle}">            
         </TextBlock>
 

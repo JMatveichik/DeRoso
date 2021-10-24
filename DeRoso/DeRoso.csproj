@@ -153,6 +153,9 @@
     <Compile Include="Controls\DrugEditor.xaml.cs">
       <DependentUpon>DrugEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\HeathTestNavigationPanel.xaml.cs">
+      <DependentUpon>HeathTestNavigationPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TestDrugsListContainer.xaml.cs">
       <DependentUpon>TestDrugsListContainer.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,10 @@
     <Page Include="Controls\DrugEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\HeathTestNavigationPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\TestDrugsListContainer.xaml">
       <Generator>MSBuild:Compile</Generator>
