@@ -9,6 +9,7 @@
         <ResourceDictionary Source="../Styles/TextBlockStyles.xaml"></ResourceDictionary>
         <ResourceDictionary Source="../Styles/BordersStyles.xaml"></ResourceDictionary>
         <ResourceDictionary Source="../Icons/Icons.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="../Styles/PulseCheckBoxStyle.xaml"></ResourceDictionary>
 
     </ResourceDictionary.MergedDictionaries>
 
@@ -25,14 +26,11 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <ContentPresenter Width="32" 
-                              Height="32" 
-                              Grid.Column="0"
-                              Grid.Row="0"
-                              Grid.RowSpan="2"
-                              HorizontalAlignment="Right"
-                              Visibility="{cb:Binding UseHV, FalseToVisibility=Hidden}"
-                              Content="{StaticResource IconPulseOn}"/>
+            <CheckBox  Grid.Column="0"
+                       Grid.Row="0"
+                       Grid.RowSpan="2"  
+                       Style="{StaticResource PulseCheckBoxStyle}"
+                       IsChecked="{Binding UseHV}"/>
             
             <TextBlock Grid.Column="1" Grid.Row="0" 
                        Style="{StaticResource ItemTitleStyle}"

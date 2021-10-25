@@ -34,6 +34,8 @@
 
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/Brushes.xaml" />
 
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/PulseCheckBoxStyle.xaml" />
+
     </ResourceDictionary.MergedDictionaries>
     
 </ResourceDictionary>
