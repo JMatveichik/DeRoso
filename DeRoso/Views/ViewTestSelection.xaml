@@ -214,7 +214,7 @@
                                  Click="OnButtonClearTargetTests">
                         <ContentPresenter Width="32" 
                                   Height="32"                                   
-                                  Content="{StaticResource IconDelletAll}"/>
+                                  Content="{StaticResource IconDeleteAll}"/>
                     </Button>
 
                 </Grid>

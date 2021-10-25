@@ -1,6 +1,8 @@
-﻿using DeRoso.ViewModels;
+﻿using DeRoso.Core.Health;
+using DeRoso.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,6 +72,62 @@ namespace DeRoso.Views
             }
 
             return null;
+        }
+
+        private void OnDeleteCurrentSectionButtonClick(object sender, RoutedEventArgs e)
+        {
+            /*DataViewModel vm = (DataViewModel)this.DataContext;
+            if (vm.SelectedSection != null)
+            {
+                string msg = string.Format("Вы действительно хотите удалить секцию <{0}>?", vm.SelectedSection.Title);
+                MessageBoxResult res = MessageBox.Show(msg, "УДАЛЕНИЕ", MessageBoxButton.YesNo);
+                if (res == MessageBoxResult.Yes)
+                    vm.Sections.Remove(vm.SelectedSection);
+            }
+            */
+        }
+
+        private void OnAddNewSectionButtonClick(object sender, RoutedEventArgs e)
+        {
+            /*
+            DataViewModel vm = (DataViewModel)this.DataContext;
+            HealthTestSection sec = new HealthTestSection() { Title = "Новая секция", Description = "Описание новой секции" };
+            vm.Sections.Add(sec);
+            vm.SelectedSection = sec;
+            */
+        }
+
+        private void OnDeleteCurrentGroupButtonClick(object sender, RoutedEventArgs e)
+        {
+            /*DataViewModel vm = (DataViewModel)this.DataContext;
+            if (vm.SelectedGroup != null)
+            {
+                string msg = string.Format("Вы действительно хотите удалить раздел <{0}>?", vm.SelectedGroup.Title);
+                MessageBoxResult res = MessageBox.Show(msg, "УДАЛЕНИЕ", MessageBoxButton.YesNo);
+                if (res == MessageBoxResult.Yes)
+                {
+                    vm.SelectedSection.Groups.Remove(vm.SelectedGroup);
+                    vm.Groups.Remove(vm.SelectedGroup);
+                }                    
+            }
+            */
+        }
+
+        private void OnAddNewGroupButtonClick(object sender, RoutedEventArgs e)
+        {
+            /*
+            DataViewModel vm = (DataViewModel)this.DataContext;
+            HealthTestGroup gr = new HealthTestGroup() { Title = "Новая группа", Description = "Описание новой группы" };
+
+            if (vm.SelectedSection != null)
+            {
+                if (vm.SelectedSection.Groups == null)
+                    vm.SelectedSection.Groups = new ObservableCollection<HealthTestGroup>();
+
+                vm.SelectedSection.Groups.Add(gr);
+                vm.SelectedGroup = gr;
+            }  
+            */
         }
     }
 }

@@ -59,8 +59,8 @@
 
                 <ListBox Grid.Column="0"
                  Grid.Row="1"
-                 IsEnabled="False"
-                 SelectedItem="{Binding CurrentTest, Mode=TwoWay}"
+                 
+                 SelectedItem="{Binding CurrentTest, Mode=OneWay}"
                  Margin="10,5" 
                  ItemsSource="{x:Static health:HealthTestSelected.Tests}"
                  ItemTemplate="{StaticResource HealthTestListBoxItemTemplate}"/>

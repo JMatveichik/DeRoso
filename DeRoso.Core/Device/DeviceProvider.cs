@@ -311,9 +311,10 @@ namespace DeRoso.Core.Device
                     HealthTestFailed?.Invoke(this, new HealthTestEventArgs(test, EnumHealthTestStep.Failed, TimeSpan.FromSeconds(0)));
                     break;
                 }
-            }
-            
+            }            
         }
+
+
 
         /// <summary>
         /// Функция ожидания заданного времени с выдачей сообщений с заданным интервалом
@@ -375,10 +376,10 @@ namespace DeRoso.Core.Device
             HealthTestResult resTest = new HealthTestResult();
             resTest.HealthTestId = test.Id;
             resTest.Test = test;
-
             
 
             HealthTestTick?.Invoke(this, new HealthTestEventArgs(resTest, EnumHealthTestStep.MeassureBefore, TimeSpan.FromSeconds(0)));
+            Thread.Sleep(1000);
 
             //если был использван HV импульс начинаем измерение ДО
             if (IsUsedHV)
@@ -407,7 +408,7 @@ namespace DeRoso.Core.Device
 
                 //схраняем результаты измерений до выдачи препарата
                 MeassureBeforeHV = Calculate(DataBuffer);
-                MeassureBeforeHV = rnd.Next(20, 98);               
+                //MeassureBeforeHV = rnd.Next(20, 98);               
 
             }
 
@@ -480,7 +481,7 @@ namespace DeRoso.Core.Device
 
                 //схраняем результаты измерений после выдачи препарата
                 res.MeassurmentAfter = Calculate(DataBuffer);
-                res.MeassurmentAfter = rnd.Next(20, 98);
+                //res.MeassurmentAfter = rnd.Next(20, 98);
 
                 //meassureBefore = res.MeassurmentAfter;                
                 //resTest.Meassurments.Add(res);
