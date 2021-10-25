@@ -31,6 +31,7 @@ namespace DeRoso
             ContentManager.Instance.RegisterCreator("EDIT", new CreatorViewTestsEditor());
             ContentManager.Instance.RegisterCreator("SELECTION", new CreatorViewTestSelection());
             ContentManager.Instance.RegisterCreator("TESTING", new CreatorViewTesting());
+            ContentManager.Instance.RegisterCreator("EDITSECTIONS", new CreatorViewSectionEditor());
 
 
             var optionsBuilder = new DbContextOptionsBuilder<DeRosoContext>();

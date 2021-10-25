@@ -38,7 +38,44 @@ namespace DeRoso.Core.Health
         /// Оптимальный препарат теста
         /// </summary>
         public HealthTestDrug Drug { get; set; }
-        
+
+
+        /// <summary>
+        /// Значение измеряемого параметра перед выдачей препарата
+        /// </summary>
+        public float MeassurmentBefore
+        {
+            get { return _meassurmentBefore; }
+            set
+            {
+                if (Math.Abs(value - _meassurmentBefore) < 0.000001)
+                    return;
+
+                _meassurmentBefore = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private float _meassurmentBefore;
+
+        /// <summary>
+        /// Значение измеряемого параметра поле выдачи препарата
+        /// </summary>
+        public float MeassurmentAfter
+        {
+            get { return _meassurmentAfter; }
+            set
+            {
+                if (Math.Abs(value - _meassurmentAfter) < 0.000001)
+                    return;
+
+                _meassurmentAfter = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private float _meassurmentAfter;
+
 
         public DateTime Date
         {
@@ -71,6 +108,7 @@ namespace DeRoso.Core.Health
                         HealthDrugId = res.HealthTestDrugId;
                         Drug = res.Drug;
                         res.IsOptimal = true;
+                        MeassurmentAfter = res.MeassurmentAfter;
                     }
                     break;
 
@@ -82,6 +120,7 @@ namespace DeRoso.Core.Health
                         HealthDrugId = res.HealthTestDrugId;
                         Drug = res.Drug;
                         res.IsOptimal = true;
+                        MeassurmentAfter = res.MeassurmentAfter;
                     }
                     break;
 
@@ -107,6 +146,7 @@ namespace DeRoso.Core.Health
                         HealthDrugId = res.HealthTestDrugId;
                         Drug = res.Drug;
                         res.IsOptimal = true;
+                        MeassurmentAfter = res.MeassurmentAfter;
                     }
                     break;
             }

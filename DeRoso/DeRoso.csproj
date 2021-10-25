@@ -175,6 +175,7 @@
     <Compile Include="Views\CreatorViewArchive.cs" />
     <Compile Include="Views\CreatorViewHelp.cs" />
     <Compile Include="Views\CreatorViewHome.cs" />
+    <Compile Include="Views\CreatorViewSectionEditor.cs" />
     <Compile Include="Views\CreatorViewTesting.cs" />
     <Compile Include="Views\CreatorViewTestsEditor.cs" />
     <Compile Include="Views\CreatorViewTestSelection.cs" />
@@ -186,6 +187,9 @@
     </Compile>
     <Compile Include="Views\ViewHome.xaml.cs">
       <DependentUpon>ViewHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewSectionsEditor.xaml.cs">
+      <DependentUpon>ViewSectionsEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewTesting.xaml.cs">
       <DependentUpon>ViewTesting.xaml</DependentUpon>
@@ -249,6 +253,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\ViewHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewSectionsEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -21,7 +21,8 @@ namespace DeRoso.ViewModels
             FilteredDrugs.Filter = DrugFilter;
 
             SelectedSection = Sections.FirstOrDefault();
-            SelectedGroup = SelectedSection?.Groups.FirstOrDefault();        }
+            SelectedGroup = SelectedSection?.Groups.FirstOrDefault();
+        }
 
         public DeRosoContext DeRossoData
         {

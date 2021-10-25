@@ -2,6 +2,7 @@
 using DeRoso.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +37,12 @@ namespace DeRoso.Controls
             HealthTest test = model.SelectedTest;
             HealthTestDrug drug = (HealthTestDrug)e.Data.GetData(typeof(HealthTestDrug));
 
-            if (test != null && test.Drugs != null)
+            //если пустой список препаратов создаем его
+            if (test.Drugs == null)
+                test.Drugs = new ObservableCollection<HealthTestDrug>();
+
+
+            if (test != null)
             {
                 test.Drugs.Add(drug);
                 model.SelectedDrug = drug;

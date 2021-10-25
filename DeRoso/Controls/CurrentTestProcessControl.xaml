@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DeRoso.Controls"
+             xmlns:cb="clr-namespace:CalcBinding;assembly=CalcBinding"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -26,9 +27,9 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Button  Grid.Column="2"
-                       Grid.Row="2"
-                 HorizontalAlignment="Right" 
+            <Button  Grid.Column="1"
+                       Grid.Row="0"
+                 HorizontalAlignment="Center" 
                  VerticalAlignment="Center"
                      Margin="3"
                      Click="ButtonSaveResultsClick">
@@ -38,7 +39,24 @@
                                   
                                   Content="{StaticResource IconSave}"/>
             </Button>
-            
+
+            <ContentPresenter Width="48" 
+                              Height="48" 
+                              Grid.Column="2"
+                              Grid.Row="2"
+                              HorizontalAlignment="Right"
+                              Visibility="{cb:Binding CurrentTest.UseHV}"
+                              Content="{StaticResource IconPulseOn}"/>
+
+
+            <ContentPresenter Width="48" 
+                              Height="48" 
+                              Grid.Column="2"
+                              Grid.Row="2"
+                              HorizontalAlignment="Right"
+                              Visibility="{cb:Binding !CurrentTest.UseHV}"
+                              Content="{StaticResource IconPulseOff}"/>
+
             <TextBlock Grid.Column="0"
                        Grid.Row="0"
                        Style="{StaticResource HeaderStyle}"
