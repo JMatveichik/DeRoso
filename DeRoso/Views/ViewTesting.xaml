@@ -63,7 +63,7 @@
                  SelectedItem="{Binding CurrentTest, Mode=TwoWay}"
                  Margin="10,5" 
                  ItemsSource="{x:Static health:HealthTestSelected.Tests}"
-                 ItemTemplate="{StaticResource DescribedListBoxItemTemplate}"/>
+                 ItemTemplate="{StaticResource HealthTestListBoxItemTemplate}"/>
 
             </Grid>
         </Border>

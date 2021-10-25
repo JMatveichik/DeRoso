@@ -351,7 +351,7 @@ namespace DeRoso.Core.Device
         {
             get;
             private set;
-        } = false;
+        } = true;
 
         /// <summary>
         /// Результат измерений до пока не получим выдан HV импульс
@@ -376,14 +376,16 @@ namespace DeRoso.Core.Device
             resTest.HealthTestId = test.Id;
             resTest.Test = test;
 
+            
+
+            HealthTestTick?.Invoke(this, new HealthTestEventArgs(resTest, EnumHealthTestStep.MeassureBefore, TimeSpan.FromSeconds(0)));
+
             //если был использван HV импульс начинаем измерение ДО
             if (IsUsedHV)
             {
                 /************************************************/
                 /*                  ИЗМЕРЕНИЕ ДО                */
-                /************************************************/
-
-                HealthTestTick?.Invoke(this, new HealthTestEventArgs(resTest, EnumHealthTestStep.MeassureBefore, TimeSpan.FromSeconds(0)));
+                /************************************************/                
 
                 //готовим буфер к приемму данных
                 PrepareDataBuffer();
@@ -405,11 +407,11 @@ namespace DeRoso.Core.Device
 
                 //схраняем результаты измерений до выдачи препарата
                 MeassureBeforeHV = Calculate(DataBuffer);
-                MeassureBeforeHV = rnd.Next(20, 98);
-
-                resTest.MeassurmentBefore = MeassureBeforeHV;
+                MeassureBeforeHV = rnd.Next(20, 98);               
 
             }
+
+            resTest.MeassurmentBefore = MeassureBeforeHV;
 
             /************************************************/
             /*              ВЫДАЧА ПРЕПАРАТОВ               */
@@ -423,8 +425,9 @@ namespace DeRoso.Core.Device
                 res.Test = test;
                 res.Drug = drug;
 
-                HealthTestTick?.Invoke(this, new HealthTestEventArgs(res, EnumHealthTestStep.AddDrug, TimeSpan.FromSeconds(0)));
                 res.MeassurmentBefore = MeassureBeforeHV;                
+
+                HealthTestTick?.Invoke(this, new HealthTestEventArgs(res, EnumHealthTestStep.AddDrug, TimeSpan.FromSeconds(0)));                               
 
 
                 /************* ОЖИДАНИЕ ПЕРЕД ВЫДАЧЕЙ *****************/
@@ -499,7 +502,12 @@ namespace DeRoso.Core.Device
                 /************* ВЫДАЧА ИМПУЛЬСА  *****************/
                 sendCommand(DeviceCommands.ImpulsOn);
                 setFrequencyHV((int)(test.FrequencyHV * 100));
+
+                IsUsedHV = true;
+                Thread.Sleep(1000);
             }
+            else
+                IsUsedHV = false;
 
             sendCommand(DeviceCommands.AllOff);
 

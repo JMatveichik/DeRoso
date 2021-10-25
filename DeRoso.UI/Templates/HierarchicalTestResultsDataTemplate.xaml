@@ -26,8 +26,9 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
-
-            </Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" Grid.Row="0" 
                        Style="{StaticResource ItemTitleStyle}"
@@ -44,9 +45,10 @@
                        Grid.Row="0"
                        Grid.RowSpan="2"    
                        Style="{StaticResource ValueTitleStyle}"
+                       FontSize="28"
                        MaxWidth="300"
                        HorizontalAlignment="Center"
-                       Text="{Binding Test.MeassurmentBefore, StringFormat={}{0:0.0}}" />
+                       Text="{Binding MeassurmentBefore, StringFormat={}{0:0.0}}" />
 
                 <TextBlock Grid.Column="2"
                        Grid.Row="0"
@@ -61,14 +63,37 @@
                        MaxWidth="300"
                        HorizontalAlignment="Left"
                        Text="{Binding Test.CalculationType}" />
-                
+
                 <TextBlock Grid.Column="3"
+                       Grid.Row="0"
+                       Style="{StaticResource ItemDescriptionStyle}"
+                       MaxWidth="300"
+                       HorizontalAlignment="Left"
+                       Text="Количество пепаратов" />
+
+                <TextBlock Grid.Column="3"
+                       Grid.Row="1"
+                       Style="{StaticResource ItemDescriptionStyle}"
+                       MaxWidth="300"
+                       HorizontalAlignment="Left"
+                       Text="{Binding Test.Drugs.Count}" />
+
+                <TextBlock Grid.Column="4"
                        Grid.Row="0"
                         Grid.RowSpan="2"
                        Style="{StaticResource ValueTitleStyle}"
+                       FontSize="28"
                        MaxWidth="300"
                        HorizontalAlignment="Center"
-                       Text="{Binding Test.MeassurmentAfter, StringFormat={}{0:0.0}}" />
+                       Text="{Binding MeassurmentAfter, StringFormat={}{0:0.0}}" />
+                
+                <ContentPresenter Width="32" 
+                              Height="32" 
+                              Grid.Column="2"
+                              Grid.Row="2"
+                              HorizontalAlignment="Right"
+                              Visibility="{cb:Binding Test.UseHV, FalseToVisibility=Hidden}"
+                              Content="{StaticResource IconPulseOn}"/>
 
             </Grid>
         </Border>

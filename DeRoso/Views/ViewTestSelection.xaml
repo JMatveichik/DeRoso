@@ -227,7 +227,7 @@
                  Margin="10,5"
                          
                  ItemsSource="{x:Static health:HealthTestSelected.Tests}"
-                 ItemTemplate="{StaticResource DescribedListBoxItemTemplate}"
+                 ItemTemplate="{StaticResource HealthTestListBoxItemTemplate}"
                          Drop="SelectedTestsListBoxDrop"
                          KeyDown="SelectedTargetTestsListKeyDown">
 
