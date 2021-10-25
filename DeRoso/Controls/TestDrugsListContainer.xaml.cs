@@ -67,5 +67,27 @@ namespace DeRoso.Controls
                     
             }
         }
+
+        private void OnButtonClearTetsDrugs(object sender, RoutedEventArgs e)
+        {
+            DataViewModel model = (DataViewModel)this.DataContext;
+            HealthTest test = model.SelectedTest;
+            test.Drugs.Clear();
+        }
+
+        private void OnItemDeleteClick(object sender, RoutedEventArgs e)
+        {
+            HealthTestDrug drug = (HealthTestDrug)((Button)e.OriginalSource).DataContext;
+
+            DataViewModel model = (DataViewModel)this.DataContext;
+            HealthTest test = model.SelectedTest;
+
+            test.Drugs.Remove(drug);
+
+            
+        }
+
+        
+
     }
 }

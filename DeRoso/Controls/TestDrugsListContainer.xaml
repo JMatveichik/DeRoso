@@ -29,16 +29,32 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-             
+
             <Border Grid.Column="0"
-                Grid.Row="0"
-                Grid.ColumnSpan="2"               
-                Style="{StaticResource BorderUnderline}">
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource BorderUnderline}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                <TextBlock 
-                Style="{StaticResource HeaderStyle}"
-                    Text="ПРЕПАРАТЫ ТЕСТА" />
+                    <TextBlock Grid.Column="0"                                   
+                            Style="{StaticResource HeaderStyle}"
+                                   VerticalAlignment="Center"
+                                Text="ПРЕПАРАТЫ ТЕСТА"
+                                Margin="5, 5">
 
+                    </TextBlock>
+
+                    <Button  Grid.Column="1" Margin="2"
+                                 Click="OnButtonClearTetsDrugs">
+                        <ContentPresenter Width="32" 
+                                  Height="32"                                   
+                                  Content="{StaticResource IconDeleteAll}"/>
+                    </Button>
+
+                </Grid>
             </Border>
 
             <TextBlock Grid.Column="0"
@@ -58,7 +74,8 @@
                          AllowDrop="True"
                          ItemsSource="{Binding SelectedTest.Drugs}"
                          SelectedItem="{Binding SelectedDrug, Mode=TwoWay}"
-                         ItemTemplate="{StaticResource DrugListBoxItemTemplate}"
+                         Button.Click="OnItemDeleteClick"
+                         ItemTemplate="{StaticResource DeletedTestDrugListBoxItemTemplate}"
                      Drop="TestDrugsListBoxDrop"
                      KeyDown="TestDrugsListBoxKeyDown">
             </ListBox>
