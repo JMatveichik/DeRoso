@@ -114,7 +114,56 @@ namespace DeRoso.Core.Health
         }
         private TimeSpan _pauseBeforeStart = TimeSpan.FromSeconds(3.0);
 
+        /// <summary>
+        /// Пауза перед приемом препарата
+        /// </summary>
+        public TimeSpan PauseBeforeDrug
+        {
+            get => _pauseBefore;
+            set
+            {
+                if (value == _pauseBefore)
+                    return;
 
+                _pauseBefore = value;
+                OnPropertyChanged();
+            }
+        }
+        private TimeSpan _pauseBefore = TimeSpan.FromSeconds(3.0);
+
+        /// <summary>
+        /// Пауза после применения препарата
+        /// </summary>
+        public TimeSpan PauseAfterDrug
+        {
+            get => _pauseAfter;
+            set
+            {
+                if (value == _pauseAfter)
+                    return;
+
+                _pauseAfter = value;
+                OnPropertyChanged();
+            }
+        }
+        private TimeSpan _pauseAfter = TimeSpan.FromSeconds(3.0);
+
+        /// <summary>
+        /// Время применения препарата
+        /// </summary>
+        public TimeSpan DrugDuration
+        {
+            get => _duration;
+            set
+            {
+                if (value == _duration)
+                    return;
+
+                _duration = value;
+                OnPropertyChanged();
+            }
+        }
+        private TimeSpan _duration = TimeSpan.FromSeconds(3.0);
 
 
         /// <summary>

@@ -3,6 +3,7 @@ using DeRoso.Core.Data;
 using DeRoso.Core.Health;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -182,44 +183,44 @@ namespace DeRoso.ViewModels
         /// <summary>
         /// Таблица разделов тестов
         /// </summary>
-        public List<HealthTestSection> Sections
+        public ObservableCollection<HealthTestSection> Sections
         {
             get
             {
-                return DeRossoData.Sections.ToList();
+                return new ObservableCollection<HealthTestSection>(DeRossoData.Sections.ToList()); 
             }
         }
 
         /// <summary>
         /// Таблица групп тестов
         /// </summary>
-        public List<HealthTestGroup> Groups
+        public ObservableCollection<HealthTestGroup> Groups
         {
             get
             {
-                return DeRossoData.Groups.ToList();
+                return new ObservableCollection<HealthTestGroup>(DeRossoData.Groups.ToList());
             }
         }
 
         /// <summary>
         /// Таблица препаратов
         /// </summary>
-        public List<HealthTestDrug> Drugs
+        public ObservableCollection<HealthTestDrug> Drugs
         {
             get
             {
-                return DeRossoData.Drugs.ToList();
+                return new ObservableCollection<HealthTestDrug>(DeRossoData.Drugs.ToList()); 
             }
         }
 
         /// <summary>
         /// Таблица тестов
         /// </summary>
-        public List<HealthTest> Tests
+        public ObservableCollection<HealthTest> Tests
         {
             get
-            {
-                return DeRossoData.Tests.ToList();
+            {                
+                return new ObservableCollection<HealthTest>(DeRossoData.Tests.ToList());
             }
         }
 

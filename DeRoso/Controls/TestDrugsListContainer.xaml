@@ -1,85 +1,93 @@
-﻿<UserControl x:Class="DeRoso.Controls.TestDrugsListContainer"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
-             xmlns:conv="clr-namespace:DeRoso.Core.Converters;assembly=DeRoso.Core"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-   
+﻿<UserControl
+    x:Class="DeRoso.Controls.TestDrugsListContainer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:DeRoso.Core.Converters;assembly=DeRoso.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
     <UserControl.Resources>
-        <conv:TimeSpanToDoubleConverter x:Key="ToSecondsConverter" ConvertBase="Seconds"/>
+        <conv:TimeSpanToDoubleConverter x:Key="ToSecondsConverter" ConvertBase="Seconds" />
     </UserControl.Resources>
 
-    <Border 
-            Style="{StaticResource BorderBox}">
-        
-            <Grid  Margin="5">
-                
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    
-                </Grid.RowDefinitions>
+    <Border Style="{StaticResource BorderBox}">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+        <Grid Margin="5">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
 
-            <Border Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Style="{StaticResource BorderUnderline}">
+            <Border
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Style="{StaticResource BorderUnderline}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0"                                   
-                            Style="{StaticResource HeaderStyle}"
-                                   VerticalAlignment="Center"
-                                Text="ПРЕПАРАТЫ ТЕСТА"
-                                Margin="5, 5">
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="5,5"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource HeaderStyle}"
+                        Text="ПРЕПАРАТЫ ТЕСТА" />
 
-                    </TextBlock>
-
-                    <Button  Grid.Column="1" Margin="2"
-                                 Click="OnButtonClearTetsDrugs">
-                        <ContentPresenter Width="32" 
-                                  Height="32"                                   
-                                  Content="{StaticResource IconDeleteAll}"/>
+                    <Button
+                        Grid.Column="1"
+                        Margin="2"
+                        Click="OnButtonClearTetsDrugs">
+                        <ContentPresenter
+                            Width="32"
+                            Height="32"
+                            Content="{StaticResource IconDeleteAll}" />
                     </Button>
 
                 </Grid>
             </Border>
 
-            <TextBlock Grid.Column="0"
-                       Grid.Row="1"
-                       Style="{StaticResource ValueTitleStyle}"
-                           Text="Тип рассчетов"></TextBlock>
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Style="{StaticResource ValueTitleStyle}"
+                Text="Тип рассчетов" />
 
-            <ComboBox Grid.Column="1"
-                      Grid.Row="1" Margin="3"
-                      Style="{StaticResource ValueComboInputStyle}"
-                      ItemsSource="{x:Static conv:EnumItemSourceProvider.EnumCalculationTypeTemplateValues}"
-                      SelectedItem="{Binding SelectedTest.CalculationType}"></ComboBox>
+            <ComboBox
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="3"
+                ItemsSource="{x:Static conv:EnumItemSourceProvider.EnumCalculationTypeTemplateValues}"
+                SelectedItem="{Binding SelectedTest.CalculationType}"
+                Style="{StaticResource ValueComboInputStyle}" />
 
-            <ListBox Grid.Column="0"                         
-                         Grid.Row="3" Grid.ColumnSpan="2"
-                         Margin="10"
-                         AllowDrop="True"
-                         ItemsSource="{Binding SelectedTest.Drugs}"
-                         SelectedItem="{Binding SelectedDrug, Mode=TwoWay}"
-                         Button.Click="OnItemDeleteClick"
-                         ItemTemplate="{StaticResource DeletedTestDrugListBoxItemTemplate}"
-                     Drop="TestDrugsListBoxDrop"
-                     KeyDown="TestDrugsListBoxKeyDown">
-            </ListBox>
-                
+            <ListBox
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="10"
+                AllowDrop="True"
+                Button.Click="OnItemDeleteClick"
+                Drop="TestDrugsListBoxDrop"
+                ItemTemplate="{StaticResource DeletedTestDrugListBoxItemTemplate}"
+                ItemsSource="{Binding SelectedTest.Drugs}"
+                KeyDown="TestDrugsListBoxKeyDown"
+                SelectedItem="{Binding SelectedDrug, Mode=TwoWay}" />
+
         </Grid>
-     </Border>
+    </Border>
 </UserControl>

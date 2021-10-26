@@ -432,7 +432,7 @@ namespace DeRoso.Core.Device
 
 
                 /************* ОЖИДАНИЕ ПЕРЕД ВЫДАЧЕЙ *****************/
-                MakePause(drug.PauseBefore, 200, drug, EnumHealthTestStep.WaitBeforeDrugDespencing);
+                MakePause(test.PauseBeforeDrug, 200, drug, EnumHealthTestStep.WaitBeforeDrugDespencing);
 
                 /*************  ВЫДАЧА КОНКРЕТНОГО ПРЕПАРАТА **********/
                 addDrug(drug.Address, drug.Cell);
@@ -440,7 +440,7 @@ namespace DeRoso.Core.Device
                 sendCommand(DeviceCommands.SelectorOn);
                 sendCommand(DeviceCommands.OutDrugStart);
 
-                MakePause(drug.Duration, 200, drug, EnumHealthTestStep.DrugDespencing);
+                MakePause(test.DrugDuration, 200, drug, EnumHealthTestStep.DrugDespencing);
 
                 sendCommand(DeviceCommands.OutDrugStop);
                 sendCommand(DeviceCommands.SelectorOff);
@@ -448,7 +448,7 @@ namespace DeRoso.Core.Device
 
                 /************* ОЖИДАНИЕ ПОСЛЕ ВЫДАЧИ ******************/
 
-                MakePause(drug.PauseAfter, 200, drug, EnumHealthTestStep.WaitAfterDrugDespencing);
+                MakePause(test.PauseAfterDrug, 200, drug, EnumHealthTestStep.WaitAfterDrugDespencing);
 
                 /*************************************************/
                 /*             ИЗМЕРЕНИЯ ПОСЛЕ  ВЫДАЧИ ПРЕПАРАТА */

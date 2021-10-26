@@ -1,60 +1,61 @@
-﻿<UserControl x:Class="DeRoso.Controls.MainNavigationPanel"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DeRoso.Controls"
-             xmlns:models="clr-namespace:DeRoso.ViewModels"
-             mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="800">
-    
+﻿<UserControl
+    x:Class="DeRoso.Controls.MainNavigationPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:DeRoso.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:DeRoso.ViewModels"
+    d:DesignHeight="80"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
     <Grid Height="65">
         <Grid.Resources>
             <Style TargetType="Button">
 
-                <Setter Property="Margin" Value="5"></Setter>
-                <Setter Property="Height" Value="55"></Setter>
-                <Setter Property="Width" Value="55"></Setter>
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Height" Value="55" />
+                <Setter Property="Width" Value="55" />
             </Style>
 
             <Style TargetType="ContentPresenter">
-                <Setter Property="Margin"
-                        Value="1"></Setter>
+                <Setter Property="Margin" Value="1" />
             </Style>
         </Grid.Resources>
 
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
 
-            <Button 
-                Command="{x:Static models:MainWindowViewModel.HomePage}">
+            <Button Command="{x:Static models:MainWindowViewModel.HomePage}">
 
-                <ContentPresenter Width="48" 
-                                  Height="48"                                   
-                                  Content="{StaticResource IconHome}"/>
+                <ContentPresenter
+                    Width="48"
+                    Height="48"
+                    Content="{StaticResource IconHome}" />
             </Button>
 
-            <Button 
-                Command="{x:Static models:MainWindowViewModel.EditDBPage}">
+            <Button Command="{x:Static models:MainWindowViewModel.EditDBPage}">
 
-                <ContentPresenter Width="48" 
-                                  Height="48"  
-                                  Content="{StaticResource IconSettings}"/>
+                <ContentPresenter
+                    Width="48"
+                    Height="48"
+                    Content="{StaticResource IconSettings}" />
             </Button>
 
-            <Button 
-                Command="{x:Static models:MainWindowViewModel.ArchivePage}">
+            <Button Command="{x:Static models:MainWindowViewModel.ArchivePage}">
 
-                <ContentPresenter Width="48" 
-                                  Height="48"  
-                                  Content="{StaticResource IconCalendar}"/>
+                <ContentPresenter
+                    Width="48"
+                    Height="48"
+                    Content="{StaticResource IconCalendar}" />
             </Button>
 
-            <Button 
-                Command="{x:Static models:MainWindowViewModel.HelpPage}">
+            <Button Command="{x:Static models:MainWindowViewModel.HelpPage}">
 
-                <ContentPresenter Width="48" 
-                                  Height="48"  
-                                  Content="{StaticResource IconHelp}"/>
+                <ContentPresenter
+                    Width="48"
+                    Height="48"
+                    Content="{StaticResource IconHelp}" />
             </Button>
 
 

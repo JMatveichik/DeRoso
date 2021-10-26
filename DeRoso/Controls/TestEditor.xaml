@@ -1,130 +1,247 @@
-﻿<UserControl x:Class="DeRoso.Controls.TestEditor"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DeRoso.Controls"
-             xmlns:conv="clr-namespace:DeRoso.Core.Converters;assembly=DeRoso.Core"
-             xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             xmlns:sel="clr-namespace:DeRoso.Selectors"
-             mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+﻿<UserControl
+    x:Class="DeRoso.Controls.TestEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:DeRoso.Core.Converters;assembly=DeRoso.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:DeRoso.Controls"
+    xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sel="clr-namespace:DeRoso.Selectors"
+    d:DesignHeight="1000"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
 
     <UserControl.Resources>
-        <conv:TimeSpanToDoubleConverter x:Key="ToSecondsConverter" ConvertBase="Seconds"/>
+        <conv:TimeSpanToDoubleConverter x:Key="ToSecondsConverter" ConvertBase="Seconds" />
 
-        
-        
+
+
     </UserControl.Resources>
-
-      
-    
-    
-    <Border 
-            Style="{StaticResource BorderBox}">
-    <Grid>
-        <Grid  Margin="5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
+    <Border Style="{StaticResource BorderBox}">
+        <Grid>
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-
-                
-                <local:DescribedItemEditor Grid.ColumnSpan="2" DataContext="{Binding}"/>
-
-            <Border Grid.Column="0"
-                       Grid.Row="2"
-                       Grid.ColumnSpan="2"                       
-                       Style="{StaticResource BorderUnderline}">
-                
-                <TextBlock 
-                       Style="{StaticResource HeaderStyle}"
-                           Text="ПАРАМЕТРЫ HV" />
-            </Border>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
 
 
-                <CheckBox Grid.Column="0" Grid.Row="3" 
-                      Content="Использовать HV импульс после препаратов"
-                      
-                      IsChecked="{Binding UseHV}"
-                      Style="{StaticResource CheckInputStyle}">
-                </CheckBox>
-            
-                <TextBlock Grid.Column="0"
-                           Grid.Row="4"
-                           VerticalAlignment="Center"
-                           Style="{StaticResource ValueTitleStyle}"
-                           IsEnabled="{Binding UseHV}"
-                           Text="Частота импульса"></TextBlock>
+                <local:DescribedItemEditor Grid.ColumnSpan="2"/>
 
-                <mah:NumericUpDown Grid.Column="1"
-                         Grid.Row="4" Value="{Binding FrequencyHV}"
-                                   IsEnabled="{Binding UseHV}"
-                                   Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
+                <Border
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource BorderUnderline}">
 
-            <TextBlock Grid.Column="0"
-                       Grid.Row="5"
-                       Style="{StaticResource ValueTitleStyle}"
-                           Text="Задержка перед импульсом"></TextBlock>
-
-            <mah:NumericUpDown Grid.Column="1"
-                               Grid.Row="5"
-                                   Value="{Binding PauseBeforeHV, Converter={StaticResource ToSecondsConverter}}"
-                               IsEnabled="{Binding UseHV}"
-                               
-                               Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
-
-
-                <Border Grid.Column="0"
-                       Grid.Row="6"
-                       Grid.ColumnSpan="2"                       
-                       Style="{StaticResource BorderUnderline}">
-
-                    <TextBlock 
-                       Style="{StaticResource HeaderStyle}"
-                           Text="ПРЕДЕЛЫ" />
+                    <TextBlock Style="{StaticResource HeaderStyle}" Text="ПАРАМЕТРЫ HV" />
                 </Border>
 
-                <TextBlock Grid.Column="0"
-                       Grid.Row="7"
-                       Style="{StaticResource ValueTitleStyle}"
-                           Text="Минимально положительный"></TextBlock>
 
-                <mah:NumericUpDown Grid.Column="1"
-                               Grid.Row="7"
-                               Value="{Binding LowLimit}"                               
-                               Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"                    
+                    Style="{StaticResource ValueTitleStyle}"
+                    Text="Использовать HV импульс после препаратов" />
+                
+                <CheckBox
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    IsChecked="{Binding UseHV}"
+                    Style="{StaticResource PulseCheckBoxStyle}" />
 
-                <TextBlock Grid.Column="0"
-                       Grid.Row="8"
-                       Style="{StaticResource ValueTitleStyle}"
-                           Text="Максимально положительный"></TextBlock>
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    IsEnabled="{Binding UseHV}"
+                    Style="{StaticResource ValueTitleStyle}"
+                    Text="Частота импульса" />
 
-                <mah:NumericUpDown Grid.Column="1"
-                               Grid.Row="8"
-                               Value="{Binding HighLimit}"                               
-                               Style="{StaticResource ValueInputStyle}"></mah:NumericUpDown>
+                <mah:NumericUpDown
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    IsEnabled="{Binding UseHV}"
+                    Style="{StaticResource ValueInputStyle}"
+                    Value="{Binding FrequencyHV}" />
 
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Style="{StaticResource ValueTitleStyle}"
+                    Text="Задержка перед импульсом" />
 
+                <mah:NumericUpDown
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    IsEnabled="{Binding UseHV}"
+                    Style="{StaticResource ValueInputStyle}"
+                    Value="{Binding PauseBeforeHV, Converter={StaticResource ToSecondsConverter}}" />
 
+                <!--
+                <Border
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource BorderUnderline}">
 
+                    <TextBlock Style="{StaticResource HeaderStyle}" Text="ПРЕДЕЛЫ" />
+                </Border>
+
+                <TextBlock
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Style="{StaticResource ValueTitleStyle}"
+                    Text="Минимально положительный" />
+
+                <mah:NumericUpDown
+                    Grid.Row="7"
+                    Grid.Column="1"
+                    Style="{StaticResource ValueInputStyle}"
+                    Value="{Binding LowLimit}" />
+
+                <TextBlock
+                    Grid.Row="8"
+                    Grid.Column="0"
+                    Style="{StaticResource ValueTitleStyle}"
+                    Text="Максимально положительный" />
+
+                <mah:NumericUpDown
+                    Grid.Row="8"
+                    Grid.Column="1"
+                    Style="{StaticResource ValueInputStyle}"
+                    Value="{Binding HighLimit}" />
+                -->
+
+                <Border
+                    Grid.Row="9"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource BorderUnderline}">
+
+                    <TextBlock Style="{StaticResource HeaderStyle}" Text="ВВЕДЕНИЕ ПРЕПАРАТА" />
+                </Border>
+
+                <TextBlock
+                Grid.Row="10"
+                Grid.Column="0"
+                Style="{StaticResource ValueTitleStyle}"
+                Text="Пауза перед" />
+
+                <mah:NumericUpDown
+                Grid.Row="10"
+                Grid.Column="1"
+                Style="{StaticResource ValueInputStyle}"
+                Value="{Binding PauseBeforeDrug, Converter={StaticResource ToSecondsConverter}}" />
+
+                <TextBlock
+                Grid.Row="11"
+                Grid.Column="0"
+                Style="{StaticResource ValueTitleStyle}"
+                Text="Длительность" />
+
+                <mah:NumericUpDown
+                Grid.Row="11"
+                Grid.Column="1"
+                Style="{StaticResource ValueInputStyle}"
+                Value="{Binding DrugDuration, Converter={StaticResource ToSecondsConverter}}" />
+
+                <TextBlock
+                Grid.Row="12"
+                Grid.Column="0"
+                Style="{StaticResource ValueTitleStyle}"
+                Text="Пауза после" />
+
+                <mah:NumericUpDown
+                Grid.Row="12"
+                Grid.Column="1"
+                Style="{StaticResource ValueInputStyle}"
+                Value="{Binding PauseAfterDrug, Converter={StaticResource ToSecondsConverter}}" />
+
+                <TextBlock
+                Grid.Row="13"
+                Grid.Column="0"
+                Style="{StaticResource ValueTitleStyle}"
+                Text="Тип рассчетов" />
+
+                <ComboBox
+                Grid.Row="13"
+                Grid.Column="1"
+                Margin="3"
+                ItemsSource="{x:Static conv:EnumItemSourceProvider.EnumCalculationTypeTemplateValues}"
+                SelectedItem="{Binding CalculationType}"
+                Style="{StaticResource ValueComboInputStyle}" />
+                
+                <Border
+                    Grid.Column="0"
+                    Grid.Row="14"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource BorderUnderline}">   
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                        Grid.Column="0"
+                        Margin="5,5"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource HeaderStyle}"
+                        Text="ПРЕПАРАТЫ" />
+
+                        <Button
+                        Grid.Column="1"
+                        Margin="2"
+                        Click="OnButtonClearTetsDrugs">
+                            <ContentPresenter
+                            Width="32"
+                            Height="32"
+                            Content="{StaticResource IconDeleteAll}" />
+                        </Button>
+
+                    </Grid>
+                </Border>
+
+                <ListBox
+                    Grid.Row="15"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="10"
+                    AllowDrop="True"
+                    Button.Click="OnItemDeleteClick"
+                    Drop="TestDrugsListBoxDrop"
+                    ItemTemplate="{StaticResource DeletedTestDrugListBoxItemTemplate}"
+                    ItemsSource="{Binding Drugs}"
+                    KeyDown="TestDrugsListBoxKeyDown" />
+            
 
             </Grid>
-    </Grid>
-     </Border>
+        </Grid>
+    </Border>
+    
+    
 </UserControl>

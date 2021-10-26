@@ -29,63 +29,7 @@ namespace DeRoso.Controls
         }
        
 
-        private void TestDrugsListBoxDrop(object sender, DragEventArgs e)
-        {
-            ListBox parent = (ListBox)sender;
-
-            DataViewModel model = (DataViewModel)this.DataContext;
-            HealthTest test = model.SelectedTest;
-            HealthTestDrug drug = (HealthTestDrug)e.Data.GetData(typeof(HealthTestDrug));
-
-            //если пустой список препаратов создаем его
-            if (test.Drugs == null)
-                test.Drugs = new ObservableCollection<HealthTestDrug>();
-
-
-            if (test != null)
-            {
-                test.Drugs.Add(drug);
-                model.SelectedDrug = drug;
-            }
-            
-        }
-
-        private void TestDrugsListBoxKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Delete)
-            {
-                DataViewModel model = (DataViewModel)this.DataContext;
-
-                HealthTest      test = model.SelectedTest;
-                HealthTestDrug  drug = model.SelectedDrug;
-                
-                if (test!= null && drug != null)
-                {
-                    test.Drugs.Remove(drug);
-                    
-                }
-                    
-            }
-        }
-
-        private void OnButtonClearTetsDrugs(object sender, RoutedEventArgs e)
-        {
-            DataViewModel model = (DataViewModel)this.DataContext;
-            HealthTest test = model.SelectedTest;
-            test.Drugs.Clear();
-        }
-
-        private void OnItemDeleteClick(object sender, RoutedEventArgs e)
-        {
-            HealthTestDrug drug = (HealthTestDrug)((Button)e.OriginalSource).DataContext;
-
-            DataViewModel model = (DataViewModel)this.DataContext;
-            HealthTest test = model.SelectedTest;
-
-            test.Drugs.Remove(drug);
-
-            
-        }
+        
 
         
 
