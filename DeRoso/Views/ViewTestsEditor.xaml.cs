@@ -27,22 +27,35 @@ namespace DeRoso.Views
         {
             InitializeComponent();
             this.DataContext =  new DataViewModel( ((App)Application.Current).DeRossoData );
+
+            DataViewModel vm = (DataViewModel)this.DataContext;
+            vm.PropertyChanged += OnModelPropertyChanged;
+
+            
         }
 
-        private void OnDrugListBoxPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void OnModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            if ( e.PropertyName == "SelectedTest" )
             {
-                ListBox parent = (ListBox)sender;
-                object data = GetDataFromListBox(parent, e.GetPosition(parent));
+                DataViewModel vm = (DataViewModel)this.DataContext;
+                var drugs = vm.SelectedTest?.Drugs;
 
-                if (data != null)
-                {
-                    DragDrop.DoDragDrop(parent, data, DragDropEffects.All);
-                }
-                e.Handled = false;
+                if (vm.SelectedTest == null)
+                    return;
+
+                if (drugs == null)
+                    drugs = vm.SelectedTest.Drugs = new ObservableCollection<HealthTestDrug>();
+
+                drugs.CollectionChanged += DrugsCollectionChanged;
+
             }
         }
+
+        private void DrugsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {           
+            lstboxGruopTest.Items.Refresh();            
+        }       
 
         private static object GetDataFromListBox(ListBox source, Point point)
         {
@@ -128,6 +141,41 @@ namespace DeRoso.Views
                 vm.SelectedGroup = gr;
             }  
             */
+        }
+
+        private void OnDrugsListBoxMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataViewModel vm = (DataViewModel)this.DataContext;
+
+            if (e.ChangedButton == MouseButton.Left)
+            {
+
+                ListBox parent = (ListBox)sender;
+                HealthTestDrug drug = (HealthTestDrug)GetDataFromListBox(parent, e.GetPosition(parent));
+
+                if (vm.SelectedTest == null)
+                    return;
+
+                if (vm.SelectedTest.Drugs == null)
+                    vm.SelectedTest.Drugs = new ObservableCollection<HealthTestDrug>();
+
+                if (!vm.SelectedTest.Drugs.Contains(drug))
+                    vm.SelectedTest.Drugs.Add(drug);
+            }
+        }
+
+        private void OnDrugsListBoxPreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                ListBox parent = (ListBox)sender;
+                object data = GetDataFromListBox(parent, e.GetPosition(parent));
+
+                if (data != null)
+                {
+                    DragDrop.DoDragDrop(parent, data, DragDropEffects.All);
+                }
+            }
         }
     }
 }

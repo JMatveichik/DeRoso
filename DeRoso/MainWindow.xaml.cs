@@ -94,7 +94,12 @@ namespace DeRoso
         /// <param name="e"></param>
         private void StartTestCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = HealthTestSelected.Tests.Count == 0 ? false : true;
+            DeviceProvider dev = ((App)App.Current).Device;
+
+            bool hasTests = HealthTestSelected.Tests.Count == 0 ? false : true;
+            bool devIsReady = dev.IsReady;
+
+            e.CanExecute = hasTests && devIsReady;
         }
 
         /// <summary>
@@ -104,9 +109,9 @@ namespace DeRoso
         /// <param name="e"></param>
         private void StartTestExecute(object sender, ExecutedRoutedEventArgs e)
         {
-            DeviceProvider dev = ((App)App.Current).Device;            
+            HealthTestsProcessor processor = ((App)App.Current).TestProcessor;            
 
-            Task test = new Task(() => dev.Do(HealthTestSelected.Tests));
+            Task test = new Task(() => processor.Do(HealthTestSelected.Tests));
             test.Start();
         }
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeRoso.Core.Device
+namespace DeRoso.Core.Health
 {
     public class HealthTestEventArgs : EventArgs
     {

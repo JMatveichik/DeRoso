@@ -42,6 +42,8 @@ namespace DeRoso
 
             Device = new DeviceProvider();
 
+            TestProcessor = new HealthTestsProcessor(Device);
+
             //DeRossoDBTools.Instance.InitDB(DeRossoData, "db.xml", "ProfLeng.txt");
             //DeRossoDBTools.Instance.TraceDB(DeRossoData, "outtree.txt");
 
@@ -56,6 +58,12 @@ namespace DeRoso
       
 
         public DeRosoContext DeRossoData {
+            get;
+            private set;
+        }
+
+        public HealthTestsProcessor TestProcessor
+        {
             get;
             private set;
         }

@@ -17,10 +17,12 @@ namespace DeRoso.ViewModels
 
         public CurrentTestProcessViewModel(DeviceProvider device)
         {
+            /*
             device.HealthTestStarted += DeviceHealthTestStarted;
             device.HealthTestTick += DeviceHealthTestTick;
             device.HealthTestComplete += DeviceHealthTestComplete;
             device.HealthTestFailed += DeviceHealthTestFailed;
+            */
 
         }
 

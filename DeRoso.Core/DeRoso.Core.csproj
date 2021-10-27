@@ -165,8 +165,8 @@
     <Compile Include="Device\DevicePacketMaker.cs" />
     <Compile Include="Device\DeviceProvider.cs" />
     <Compile Include="Device\EnumDeviceCommands.cs" />
-    <Compile Include="Device\HealthTestEventArgs.cs" />
-    <Compile Include="Device\EnumHealthTestStep.cs" />
+    <Compile Include="Health\HealthTestEventArgs.cs" />
+    <Compile Include="Health\EnumHealthTestStep.cs" />
     <Compile Include="Health\EnumCalculationType.cs" />
     <Compile Include="Health\HealthTest.cs" />
     <Compile Include="Health\HealthTestDrug.cs" />
@@ -176,6 +176,7 @@
     <Compile Include="Health\HealthTestResult.cs" />
     <Compile Include="Health\HealthTestSection.cs" />
     <Compile Include="Health\HealthTestSelected.cs" />
+    <Compile Include="Health\HealthTestsProcessor.cs" />
     <Compile Include="IContentCreator.cs" />
     <Compile Include="IDescribed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

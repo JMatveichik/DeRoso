@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeRoso.Core.Device
+namespace DeRoso.Core.Health
 {
     public enum EnumHealthTestStep
     {
         [Description("Не активен")]
         None = 0x01,
 
-        [Description("Запущен")]
+        [Description("Тест начат")]
         Started = 0x02,
 
         [Description("Измерение перед")]

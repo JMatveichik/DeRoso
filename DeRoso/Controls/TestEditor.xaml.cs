@@ -33,36 +33,30 @@ namespace DeRoso.Controls
             HealthTest test = (HealthTest)this.DataContext;
             HealthTestDrug drug = (HealthTestDrug)e.Data.GetData(typeof(HealthTestDrug));
 
+            if (test == null)
+                return;
+
             //если пустой список препаратов создаем его
             if (test.Drugs == null)
                 test.Drugs = new ObservableCollection<HealthTestDrug>();
 
 
-            if (test != null)
-            {
-                test.Drugs.Add(drug);
-                //model.SelectedDrug = drug;
-            }
+            if (!test.Drugs.Contains(drug))
+                test.Drugs.Add(drug);               
 
         }
 
         private void TestDrugsListBoxKeyDown(object sender, KeyEventArgs e)
-        {
-            /*
+        {            
             if (e.Key == Key.Delete)
             {
-                DataViewModel model = (DataViewModel)this.DataContext;
+                HealthTestDrug drug = (HealthTestDrug)this.DataContext;
+                HealthTest test = drug.Test;
 
-                HealthTest test = model.SelectedTest;
-                HealthTestDrug drug = model.SelectedDrug;
-
-                if (test != null && drug != null)
-                {
+                if (test != null )
                     test.Drugs.Remove(drug);
 
-                }
-
-            }*/
+            }
         }
 
         private void OnButtonClearTetsDrugs(object sender, RoutedEventArgs e)

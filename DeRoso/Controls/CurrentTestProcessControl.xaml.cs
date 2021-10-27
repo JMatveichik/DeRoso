@@ -27,7 +27,7 @@ namespace DeRoso.Controls
         {
             InitializeComponent();
             App app = (App)Application.Current;
-            DataContext = new CurrentTestProcessViewModel(app.Device);
+            DataContext = app.TestProcessor;
             
         }
 

@@ -154,6 +154,11 @@ namespace DeRoso.Views
             TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;
             HealthTestSelected.Tests.Remove(vm.SelectedTargetTest);
         }
-        
+
+        private void OnItemDeleteClick(object sender, RoutedEventArgs e)
+        {
+            HealthTest test = (HealthTest)((Button)e.OriginalSource).DataContext;
+            HealthTestSelected.Tests.Remove(test);            
+        }
     }
 }

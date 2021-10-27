@@ -29,10 +29,9 @@
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/HealthTestListBoxItemTemplate.xaml" />
 
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/DeletedTestDrugListBoxItemTemplate.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/DeletedHealthTestListBoxItemTemplate.xaml" />
 
-
-
-
+        
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/BordersStyles.xaml" />
 
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/TextBlockStyles.xaml" />

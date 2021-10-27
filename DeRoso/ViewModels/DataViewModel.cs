@@ -23,6 +23,16 @@ namespace DeRoso.ViewModels
 
             SelectedSection = Sections.FirstOrDefault();
             SelectedGroup = SelectedSection?.Groups.FirstOrDefault();
+
+            PropertyChanged += DataViewModel_PropertyChanged;
+        }
+
+        private void DataViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == " ")
+            {
+
+            }
         }
 
         public DeRosoContext DeRossoData
@@ -74,10 +84,10 @@ namespace DeRoso.ViewModels
             }
             set
             {
-                if (value == _selectedGroup)
-                    return;
-
                 _selectedGroup = value;
+                if (value != null)
+                    GroupTests = SelectedGroup.Tests;
+
                 OnPropertyChanged();
                 CurrentTestPath = buildTetsPath();
             }
@@ -171,6 +181,25 @@ namespace DeRoso.ViewModels
 
         }
         private int _drugMinimalAddress = 0;
+
+        /// <summary>
+        /// Таблица тестов
+        /// </summary>
+        public ObservableCollection<HealthTest> GroupTests
+        {
+            get
+            {
+                return _groupTest;
+            }
+            private set
+            {                
+                _groupTest = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<HealthTest> _groupTest = null;
+
+
 
         private bool DrugFilter(object item)
         {

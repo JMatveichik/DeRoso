@@ -11,6 +11,7 @@ namespace DeRoso.Core.Health
     [Table ("Tests")]
     public class HealthTest : HealthTestItem
     {
+
         /// <summary>
         /// Идентификатор группы тестов
         /// </summary>
@@ -25,7 +26,22 @@ namespace DeRoso.Core.Health
         /// <summary>
         /// Набор препаратов для теста
         /// </summary>
-        public ObservableCollection<HealthTestDrug> Drugs { get; set; }        
+        public ObservableCollection<HealthTestDrug> Drugs
+        {
+            get
+            {
+                return _drugs;
+            }
+            set
+            {
+                if (value == _drugs)
+                    return;
+
+                _drugs = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<HealthTestDrug> _drugs = null;
 
 
         public bool ContainValidDrugs()
@@ -44,6 +60,8 @@ namespace DeRoso.Core.Health
 
             return true;
         }
+
+        
         /// <summary>
         /// Использовать HV после выполнения теста
         /// </summary>        
@@ -181,7 +199,6 @@ namespace DeRoso.Core.Health
                 OnPropertyChanged();
             }
         }
-
         private double _lowLimit = 0.0;
 
         /// <summary>
@@ -199,7 +216,6 @@ namespace DeRoso.Core.Health
                 OnPropertyChanged();
             }
         }
-
         private double _highLimit = 100.0;
 
         /// <summary>

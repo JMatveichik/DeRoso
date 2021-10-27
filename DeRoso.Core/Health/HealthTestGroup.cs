@@ -15,6 +15,21 @@ namespace DeRoso.Core.Health
 
         public HealthTestSection Section { get; set; }
 
-        public ObservableCollection<HealthTest> Tests { get; set; }
+        public ObservableCollection<HealthTest> Tests
+        {
+            get
+            {
+                return _tests;
+            }
+            set
+            {
+                if (value == _tests)
+                    return;
+
+                _tests = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<HealthTest> _tests = null;
     }
 }

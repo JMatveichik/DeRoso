@@ -168,11 +168,12 @@
                 </Border>
 
                 <ListBox
+                    x:Name="lstboxGruopTest"
                     Grid.Row="5"
                     Grid.Column="0"
                     Margin="10"                    
                     ItemTemplateSelector="{StaticResource TestListBoxItemTemplateSelector}"
-                    ItemsSource="{Binding SelectedGroup.Tests}"
+                    ItemsSource="{Binding GroupTests}"
                     SelectedItem="{Binding SelectedTest}" />
                    
                 
@@ -230,8 +231,9 @@
                     Grid.Column="0"
                     Margin="10,5"
                     ItemTemplate="{StaticResource DrugListBoxItemTemplate}"
-                    ItemsSource="{Binding FilteredDrugs}"
-                    PreviewMouseLeftButtonDown="OnDrugListBoxPreviewMouseLeftButtonDown"
+                    ItemsSource="{Binding FilteredDrugs}"                    
+                    MouseDoubleClick="OnDrugsListBoxMouseDoubleClick"
+                    PreviewMouseMove="OnDrugsListBoxPreviewMouseMove"
                     SelectedItem="{Binding SelectedDrug, Mode=TwoWay}" />
             </Grid>
         </Border>
@@ -246,7 +248,8 @@
             Text="{Binding CurrentTestPath}" />
         -->
         
-        <ctrl:TestEditor
+        <ctrl:TestEditor x:Name="TestEditorControl"
+                         
             Grid.Row="1"
             Grid.Column="1"
             Grid.RowSpan="3"
