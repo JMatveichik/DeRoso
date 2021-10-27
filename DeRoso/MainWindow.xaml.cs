@@ -14,11 +14,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DeRoso.Core;
+using DeRoso.Core.Data;
 using DeRoso.Core.Device;
 using DeRoso.Core.Health;
 using DeRoso.ViewModels;
 using MahApps.Metro.Controls;
-
+using MessageBox = System.Windows.MessageBox;
 
 namespace DeRoso
 {
@@ -97,9 +98,9 @@ namespace DeRoso
             DeviceProvider dev = ((App)App.Current).Device;
 
             bool hasTests = HealthTestSelected.Tests.Count == 0 ? false : true;
-            bool devIsReady = dev.IsReady;
+            //bool devIsReady = dev.IsReady;
 
-            e.CanExecute = hasTests && devIsReady;
+            e.CanExecute = hasTests;// && devIsReady;
         }
 
         /// <summary>
@@ -111,8 +112,25 @@ namespace DeRoso
         {
             HealthTestsProcessor processor = ((App)App.Current).TestProcessor;            
 
-            Task test = new Task(() => processor.Do(HealthTestSelected.Tests));
-            test.Start();
+            if (processor.Results.Count != 0)
+            {
+                MessageBoxResult res = MessageBox.Show("Начать тестирование заново? Результаты предыдщего тестировани будут удалены.", "Тестирование", MessageBoxButton.YesNo);
+                if (res == MessageBoxResult.Yes)
+                {
+                    Task test = new Task(() => processor.Do(HealthTestSelected.Tests));
+                    test.Start();
+                }
+                else
+                {
+                    SaveFileDialog fileDialog = new SaveFileDialog();
+
+                    DialogResult saveResult = fileDialog.ShowDialog();
+                    if (saveResult == System.Windows.Forms.DialogResult.OK)
+                        processor.Save(new ExcelResultsSaver(fileDialog.FileName));
+                }
+            }
+
+            
         }
 
 

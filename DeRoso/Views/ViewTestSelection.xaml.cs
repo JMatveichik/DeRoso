@@ -157,7 +157,12 @@ namespace DeRoso.Views
 
         private void OnItemDeleteClick(object sender, RoutedEventArgs e)
         {
-            HealthTest test = (HealthTest)((Button)e.OriginalSource).DataContext;
+            Button btn = e.OriginalSource as Button;
+
+            if (btn == null)
+                return;
+
+            HealthTest test = (HealthTest)btn.DataContext;
             HealthTestSelected.Tests.Remove(test);            
         }
     }

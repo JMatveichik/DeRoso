@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DeRoso.Core.Health
 {
@@ -252,14 +253,19 @@ namespace DeRoso.Core.Health
         /// <returns></returns>
         public void Do(IEnumerable<HealthTest> tests)
         {
+            var dispatcher = Application.Current.Dispatcher;
+
             //очищаем список результатов
-            Results.Clear();
+            dispatcher.BeginInvoke(new Action(
+                () => Results.Clear())
+            );
+           
 
             //сбрасываем прибор
             Device.Reset();
 
             //Тестирование устройства
-            if (!Device.IsReady)
+            //if (!Device.IsReady)
                 Device.Test();
 
 
@@ -268,6 +274,8 @@ namespace DeRoso.Core.Health
             {
                 HealthTestStarted?.Invoke(this, new HealthTestEventArgs(test, EnumHealthTestStep.Started, TimeSpan.FromSeconds(0)));
                 CurrentOperation = EnumHelper.GetDescription(EnumHealthTestStep.Started);
+                CurrentTest = test;
+
                 Thread.Sleep(1000);
 
                 HealthTestResult res = Do(test);
@@ -282,6 +290,8 @@ namespace DeRoso.Core.Health
                     break;
                 }
             }
+
+            CurrentOperation = "Тестирование завершено...";
         }
 
         /// <summary>
@@ -291,6 +301,7 @@ namespace DeRoso.Core.Health
         /// <returns></returns>
         public HealthTestResult Do(HealthTest test)
         {
+            var dispatcher = Application.Current.Dispatcher;
             Random rnd = new Random(DateTime.Now.Millisecond);
 
             //готовим объект результата теста
@@ -302,7 +313,10 @@ namespace DeRoso.Core.Health
             //HealthTestTick?.Invoke(this, new HealthTestEventArgs(resTest, EnumHealthTestStep.MeassureBefore, TimeSpan.FromSeconds(0)));
 
             //добавляем новый результат теста
-            Results.Add(resTest);
+            dispatcher.BeginInvoke(new Action(
+                () => Results.Add(resTest))
+            );
+            
             CurrentOperation = EnumHelper.GetDescription(EnumHealthTestStep.MeassureBefore);
             Thread.Sleep(1000);
 
@@ -330,7 +344,11 @@ namespace DeRoso.Core.Health
 
                 //устанавливаем значение измерения до для текущего препарата
                 res.MeassurmentBefore = MeassureBeforeHV;
-                resTest.Meassurments.Add(res);
+                
+
+                dispatcher.BeginInvoke(new Action(
+                    () => resTest.Meassurments.Add(res))
+                );
 
                 HealthTestTick?.Invoke(this, new HealthTestEventArgs(res, EnumHealthTestStep.AddDrug, TimeSpan.FromSeconds(0)));
 

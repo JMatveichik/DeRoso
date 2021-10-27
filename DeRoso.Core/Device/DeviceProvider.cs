@@ -31,12 +31,12 @@ namespace DeRoso.Core.Device
 
         public DeviceProvider()
         {
-            /*
+           
             this.USB.OnSpecifiedDeviceArrived += new System.EventHandler(this.OnSpecifiedDeviceArrived);
             this.USB.OnSpecifiedDeviceRemoved += new System.EventHandler(this.OnSpecifiedDeviceRemoved);
             this.USB.OnDeviceArrived += new System.EventHandler(this.OnDeviceArrived);
             this.USB.OnDeviceRemoved += new System.EventHandler(this.OnDeviceRemoved);
-            */
+           
 
             this.USB.OnDataRecieved += new UsbLibrary.DataRecievedEventHandler(this.OnDataRecieved);
             this.USB.OnDataSend += new System.EventHandler(this.OnDataSend);
@@ -131,6 +131,46 @@ namespace DeRoso.Core.Device
             //throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Обработчик отключения устройства от USB порта
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDeviceRemoved(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Обработчик подключения устройства к USB порту
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDeviceArrived(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Обработчик события отключения конкретного устройства от USB порта
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSpecifiedDeviceRemoved(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Обработчик события подключения конкретного устройства к  USB порту
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSpecifiedDeviceArrived(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
         private void TraceRecivedData(byte[] data)
         {
             Debug.WriteLine(BitConverter.ToString(data));
@@ -143,7 +183,7 @@ namespace DeRoso.Core.Device
         /// <param name="args"></param>
         private void OnDataRecieved(object sender, DataRecievedEventArgs args)
         {
-            //TraceRecivedData(args.data);
+            TraceRecivedData(args.data);
 
             for (int i = 0; i < 16; i++)        //проверка на наличие 0 в данных
             {

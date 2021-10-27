@@ -67,7 +67,12 @@ namespace DeRoso.Controls
 
         private void OnItemDeleteClick(object sender, RoutedEventArgs e)
         {
-            HealthTestDrug drug = (HealthTestDrug)((Button)e.OriginalSource).DataContext;           
+            Button btn = e.OriginalSource as Button;
+
+            if (btn == null)
+                return;
+
+            HealthTestDrug drug = (HealthTestDrug)btn.DataContext;           
             HealthTest test = (HealthTest)this.DataContext;
 
             test.Drugs.Remove(drug);
