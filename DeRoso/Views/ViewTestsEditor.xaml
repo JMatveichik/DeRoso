@@ -14,9 +14,9 @@
     <UserControl.Resources>
         <sel:TestListBoxItemTemplateSelector
             x:Key="TestListBoxItemTemplateSelector"
-            NonValidTestDrugsDataTemplate="{StaticResource NonValidTestListBoxItemTemplate}"
+            NonValidTestDrugsDataTemplate="{StaticResource NormalTestListBoxItemTemplate}"
             ValidTestDrugsDataTemplate="{StaticResource NormalTestListBoxItemTemplate}" />
-
+        
     </UserControl.Resources>
 
     <Grid>
@@ -253,6 +253,7 @@
             Grid.Row="1"
             Grid.Column="1"
             Grid.RowSpan="3"
+                         
             DataContext="{Binding SelectedTest}" />
     
         

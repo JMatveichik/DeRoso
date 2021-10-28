@@ -121,6 +121,7 @@ namespace DeRoso.Views
         private void OnButtonAddAllSectionTests(object sender, RoutedEventArgs e)
         {
             TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;
+            HealthTestSelected.Tests.Clear();
 
             foreach (HealthTestGroup gr in vm.SelectedSection.Groups)
             {

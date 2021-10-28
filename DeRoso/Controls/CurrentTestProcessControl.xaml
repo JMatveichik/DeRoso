@@ -103,14 +103,7 @@
                 </TreeView.Resources>
             </TreeView>
 
-            <CheckBox 
-                Grid.Column="0"
-                    Grid.Row="5"
-                Grid.ColumnSpan="2"
-                IsChecked="{Binding IsUsedMeassureAsRandom}"
-                Style="{StaticResource CheckInputStyle}">
-                Использовать случайные данные
-            </CheckBox>
+            
         </Grid>
     </Border>
 </UserControl>

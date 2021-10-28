@@ -64,10 +64,20 @@ namespace DeRoso.ViewModels
         } = new RoutedUICommand("Test device", "Testing device", typeof(MainWindowViewModel), null);
 
 
+
         public static RoutedUICommand SelectTestsPage
         {
             get;
         } = new RoutedUICommand("Select tests", "Select test for process", typeof(MainWindowViewModel), null);
+
+
+        public static RoutedUICommand PatientEditPage
+        {
+            get;
+        } = new RoutedUICommand("Edit patients", "Go to patient editing page", typeof(MainWindowViewModel), null);
+
+
+
 
         public static RoutedUICommand StartTest
         {

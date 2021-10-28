@@ -150,6 +150,7 @@
     <Compile Include="Converters\EnumHelper.cs" />
     <Compile Include="Converters\EnumItemSourceProvider.cs" />
     <Compile Include="Converters\TimeSpanToDoubleConverter.cs" />
+    <Compile Include="Data\DeRossoDataWorker.cs" />
     <Compile Include="Data\DeRossoDBTools.cs" />
     <Compile Include="Data\DeRosoContext.cs" />
     <Compile Include="Data\ExcelDataSaver.cs" />
@@ -173,12 +174,15 @@
     <Compile Include="Health\HealthTestDrugResult.cs" />
     <Compile Include="Health\HealthTestGroup.cs" />
     <Compile Include="Health\HealthTestItem.cs" />
+    <Compile Include="Health\HealthTestReciept.cs" />
     <Compile Include="Health\HealthTestResult.cs" />
     <Compile Include="Health\HealthTestSection.cs" />
     <Compile Include="Health\HealthTestSelected.cs" />
     <Compile Include="Health\HealthTestsProcessor.cs" />
     <Compile Include="IContentCreator.cs" />
     <Compile Include="IDescribed.cs" />
+    <Compile Include="Health\EnumPatientGender.cs" />
+    <Compile Include="Health\Patient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModelBase.cs" />
   </ItemGroup>

@@ -159,12 +159,14 @@
     <Compile Include="Controls\TestEditor.xaml.cs">
       <DependentUpon>TestEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Selectors\PatientGenderItemTemplateSelector.cs" />
     <Compile Include="Selectors\TestDrugTemplateSelector.cs" />
     <Compile Include="Selectors\TestListBoxItemTemplateSelector.cs" />
     <Compile Include="ViewModels\CurrentTestProcessViewModel.cs" />
     <Compile Include="ViewModels\DataViewModel.cs" />
     <Compile Include="ViewModels\DeviceTestingViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\PatientsViewModel.cs" />
     <Compile Include="ViewModels\TestSelectionViewModel.cs" />
     <Compile Include="Views\CreatorViewArchive.cs" />
     <Compile Include="Views\CreatorViewHelp.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="Views\CreatorViewTesting.cs" />
     <Compile Include="Views\CreatorViewTestsEditor.cs" />
     <Compile Include="Views\CreatorViewTestSelection.cs" />
+    <Compile Include="Views\CreatorViewPatientEditor.cs" />
     <Compile Include="Views\ViewArchive.xaml.cs">
       <DependentUpon>ViewArchive.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,9 @@
     </Compile>
     <Compile Include="Views\ViewTestSelection.xaml.cs">
       <DependentUpon>ViewTestSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewPatientEditor.xaml.cs">
+      <DependentUpon>ViewPatientEditor.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\CurrentTestProcessControl.xaml">
       <SubType>Designer</SubType>
@@ -255,6 +261,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewTestSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewPatientEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

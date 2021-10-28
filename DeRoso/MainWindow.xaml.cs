@@ -43,11 +43,23 @@ namespace DeRoso
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.TestingPage, TestingPageExecute, TestingPageCanExecute));
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.SelectTestsPage, SelectTestsPagesExecute, SelectTestsPageCanExecute));
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.StartTestDevice, StartTestDeviceExecute, StartTestDeviceCanExecute));
+            this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.PatientEditPage, PatientEditPageExecute, PatientEditPageCanExecute));
 
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.StartTest, StartTestExecute, StartTestCanExecute));
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.StopTest, StopTestExecute, StopTestCanExecute));
             this.CommandBindings.Add(new CommandBinding(MainWindowViewModel.PauseTest, PauseTestExecute, PauseTestCanExecute));
 
+        }
+
+        private void PatientEditPageCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true; ;
+        }
+
+        private void PatientEditPageExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
+            vm.CurrentContent = ContentManager.Instance.GetContent("EDITPATIENTS");
         }
 
         /// <summary>
@@ -114,23 +126,41 @@ namespace DeRoso
 
             if (processor.Results.Count != 0)
             {
-                MessageBoxResult res = MessageBox.Show("Начать тестирование заново? Результаты предыдщего тестировани будут удалены.", "Тестирование", MessageBoxButton.YesNo);
+                MessageBoxResult res = MessageBox.Show("Хотите сохранить результаты тестирования?", "Тестирование", MessageBoxButton.YesNo);
                 if (res == MessageBoxResult.Yes)
                 {
-                    Task test = new Task(() => processor.Do(HealthTestSelected.Tests));
-                    test.Start();
-                }
-                else
-                {
                     SaveFileDialog fileDialog = new SaveFileDialog();
+                    fileDialog.AddExtension = true;
+                    fileDialog.Filter = "Файлы Excel (*.xls; *.xlsx)|*.xls;*.xlsx|Текстовые файлы (*.txt)|*.txt|Файлы JSON (*.json)|*.json|Файлы данных XML (*.xml)|*.xml";
 
                     DialogResult saveResult = fileDialog.ShowDialog();
+
                     if (saveResult == System.Windows.Forms.DialogResult.OK)
-                        processor.Save(new ExcelResultsSaver(fileDialog.FileName));
-                }
+                    {
+                        switch(fileDialog.FilterIndex)
+                        {
+                            case 0:
+                                processor.Save(new ExcelResultsSaver(fileDialog.FileName));
+                                break;
+                            case 3:
+                                processor.Save(new XmlResultsSaver(fileDialog.FileName));
+                                break;
+
+                            default:
+                                processor.Save(new ExcelResultsSaver(fileDialog.FileName));
+                                break;
+
+                        }
+                        
+
+                    }
+                        
+                }                
             }
 
-            
+            Task test = new Task(() => processor.Do(HealthTestSelected.Tests));
+            test.Start();
+
         }
 
 
@@ -291,88 +321,7 @@ namespace DeRoso
         }
 
 
-        /*
-        private void SelectTestsCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void SelectTestsExecute(object sender, ExecutedRoutedEventArgs e)
-        {
-            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
-            vm.CurrentContent = ContentManager.Instance.GetContent("SELECTION");
-        }
-
-        private void TestDeviceCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void TestDeviceExecute(object sender, ExecutedRoutedEventArgs e)
-        {
-            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
-            vm.CurrentContent = ContentManager.Instance.GetContent("TESTING");
-
-           
-        }
-
-        private void TestingCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void TestingExecute(object sender, ExecutedRoutedEventArgs e)
-        {
-            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
-            vm.CurrentContent = ContentManager.Instance.GetContent("TESTING");
-
-            
-        }
-
-        private void EditDBCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void EditDBExecute(object sender, ExecutedRoutedEventArgs e)
-        {
-            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
-            vm.CurrentContent = ContentManager.Instance.GetContent("EDIT");
-        }
-
-        private void ArchiveCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = false;
-        }
-
-        private void ArchiveExecute(object sender, ExecutedRoutedEventArgs e)
-        {
-            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
-            vm.CurrentContent = ContentManager.Instance.GetContent("ARCHIVE");
-        }
-
-        private void HomeExecute(object sender, ExecutedRoutedEventArgs e)
-        {
-            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
-            vm.CurrentContent = ContentManager.Instance.GetContent("HOME");
-        }
-
-        private void HomeCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void HelpExecute(object sender, ExecutedRoutedEventArgs e)
-        {
-            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
-            vm.CurrentContent = ContentManager.Instance.GetContent("HELP");
-        }
-        private void HelpCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = false;
-        }
-
-        */
+        
 
 
         /*

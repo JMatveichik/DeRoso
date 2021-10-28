@@ -1,0 +1,61 @@
+﻿using DeRoso.Core;
+using DeRoso.Core.Data;
+using DeRoso.Core.Health;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DeRoso.ViewModels
+{
+    public class PatientsViewModel : ViewModelBase
+    {
+        public PatientsViewModel(DeRosoContext db)
+        {
+            DeRossoData = db;
+            DeRossoData.Patients.Load();
+            Patients = DeRossoData.Patients.Local.ToBindingList();
+        }
+
+        public DeRosoContext DeRossoData
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Таблица пациентов
+        /// </summary>
+        public BindingList <Patient> Patients
+        {
+            get;
+            private set;
+        }
+        
+
+
+        /// <summary>
+        /// Выбранный пациент
+        /// </summary>
+        public Patient SelectedPatient
+        {
+            get { return _selectedPatient; }
+            set
+            {
+                if (_selectedPatient == value)
+                    return;
+
+                _selectedPatient = value;
+                OnPropertyChanged();
+            }
+        }
+        private Patient _selectedPatient;
+
+        
+
+    }
+}

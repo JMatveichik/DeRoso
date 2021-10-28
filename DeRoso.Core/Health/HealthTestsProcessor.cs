@@ -17,6 +17,7 @@ namespace DeRoso.Core.Health
         public HealthTestsProcessor(DeviceProvider dev)
         {
             Device = dev;
+            Patients = Patient.All();
         }
 
         public DeviceProvider Device
@@ -130,6 +131,30 @@ namespace DeRoso.Core.Health
         }
         private HealthTest _currentTest = null;
 
+        
+        /// <summary>
+        /// Выбранный пациент
+        /// </summary>
+        public Patient CurrentPatient
+        {
+            get { return _currentPatient; }
+            set
+            {
+                if (_currentPatient == value)
+                    return;
+
+                _currentPatient = value;
+                OnPropertyChanged();
+            }
+        }
+        private Patient _currentPatient;
+
+
+        public ObservableCollection<Patient> Patients
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Делегат для событий текущих тестов

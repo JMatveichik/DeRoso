@@ -20,5 +20,10 @@ namespace DeRoso.Core.Converters
         {
             get { return Enum.GetValues(typeof(DeviceInitializationTestState)).Cast<DeviceInitializationTestState>(); }
         }
+
+        public static IEnumerable<EnumPatientGender> GenderValues
+        {
+            get { return Enum.GetValues(typeof(EnumPatientGender)).Cast<EnumPatientGender>(); }
+        }
     }
 }

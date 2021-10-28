@@ -50,12 +50,12 @@
                     Content="{StaticResource IconCalendar}" />
             </Button>
 
-            <Button Command="{x:Static models:MainWindowViewModel.HelpPage}">
+            <Button Command="{x:Static models:MainWindowViewModel.PatientEditPage}">
 
                 <ContentPresenter
                     Width="48"
                     Height="48"
-                    Content="{StaticResource IconHelp}" />
+                    Content="{StaticResource IconUsers}" />
             </Button>
 
 

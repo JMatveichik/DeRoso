@@ -6,10 +6,19 @@
              xmlns:local="clr-namespace:DeRoso.Views"
               xmlns:ctrl="clr-namespace:DeRoso.Controls"
              xmlns:cmd ="clr-namespace:DeRoso.ViewModels"
+             xmlns:sel ="clr-namespace:DeRoso.Selectors"
              xmlns:health="clr-namespace:DeRoso.Core.Health;assembly=DeRoso.Core"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <UserControl.Resources>
+        <sel:PatientGenderItemTemplateSelector x:Key="GenderTemplateSelector"
+                MalePatientDataTemplate="{StaticResource PatientMaleListBoxItemTemplate}"
+                FemalePatientDataTemplate="{StaticResource PatientFemaleListBoxItemTemplate}">
+
+        </sel:PatientGenderItemTemplateSelector>
+
+    </UserControl.Resources>
 
     <Grid>
 
@@ -57,10 +66,11 @@
                     </TextBlock>
                 </Border>
 
+                
+                
                 <ListBox Grid.Column="0"
-                 Grid.Row="1"
-                 
-                 SelectedItem="{Binding CurrentTest, Mode=OneWay}"
+                 Grid.Row="1"                 
+                 SelectedItem="{Binding CurrentTest, Mode=OneWayToSource}"
                  Margin="10,5" 
                  ItemsSource="{x:Static health:HealthTestSelected.Tests}"
                  ItemTemplate="{StaticResource HealthTestListBoxItemTemplate}"/>
@@ -68,14 +78,107 @@
             </Grid>
         </Border>
 
+        <Border Grid.Column="2"
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Style="{StaticResource BorderBox}">
+            
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0"
+                         Grid.Row="0"
+                        Grid.ColumnSpan="2"
+                        Style="{StaticResource BorderUnderline}">
+                    
+                    <TextBlock 
+                        Style="{StaticResource HeaderStyle}"
+                        Text="ПАЦИЕНТ"
+                        Margin="5, 5">
+                    </TextBlock>
+                    
+                </Border>
+
+                <ComboBox 
+                    Grid.Column="0" 
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    MinHeight="40"
+                                     
+                    SelectedItem="{Binding CurrentPatient, Mode=TwoWay}"
+                    Margin="10,5" 
+                    ItemsSource="{Binding Patients}"
+                    ItemTemplateSelector="{StaticResource GenderTemplateSelector}"/>
+
+                <TextBlock 
+                        Grid.Column="0" 
+                        Grid.Row="2"
+                        Style="{StaticResource ValueTitleStyle}"
+                        Text="Фамилия :"
+                        >
+                </TextBlock>
+                <TextBlock 
+                        Grid.Column="0" 
+                        Grid.Row="3"
+                        Style="{StaticResource ValueTitleStyle}"
+                        Text="Имя :"
+                       >
+                </TextBlock>
+                <TextBlock 
+                        Grid.Column="0" 
+                        Grid.Row="4"
+                        Style="{StaticResource ValueTitleStyle}"
+                        Text="Отчество :"
+                       >
+                </TextBlock>
+
+                <TextBlock 
+                        Grid.Column="1" 
+                        Grid.Row="2"
+                        Style="{StaticResource ValueTitleStyle}"
+                        Text="{Binding CurrentPatient.FamilyName}"
+                        >
+                </TextBlock>
+                <TextBlock 
+                        Grid.Column="2" 
+                        Grid.Row="3"
+                        Style="{StaticResource ValueTitleStyle}"
+                        Text="{Binding CurrentPatient.FirstName}"
+                       >
+                </TextBlock>
+                <TextBlock 
+                        Grid.Column="3" 
+                        Grid.Row="4"
+                        Style="{StaticResource ValueTitleStyle}"
+                        Text="{Binding CurrentPatient.SecondName}"
+                       >
+                </TextBlock>
+
+            </Grid>
+        </Border>
+
         <ctrl:HeathTestNavigationPanel Grid.Column="1" 
             Grid.Row="3"/>
         
+        <!--
         <ctrl:DeviceTestingControl            
             Grid.Column="2" 
             Grid.Row="1"
             HorizontalAlignment="Right" VerticalAlignment="Top"/>
-
+        -->
+        
         <ctrl:CurrentTestProcessControl
             Grid.Column="1" Grid.Row="1" 
              Grid.RowSpan="2" 

@@ -34,6 +34,12 @@ namespace DeRoso.Core.Data
         public DbSet<HealthTest> Tests { get; set; }
 
 
+        /// <summary>
+        /// Таблица пциентов
+        /// </summary>
+        public DbSet<Patient> Patients { get; set; }
+
+
         public DeRosoContext()
         {
            // Database.EnsureDeleted();
@@ -41,12 +47,23 @@ namespace DeRoso.Core.Data
            
         }
 
+        /// <summary>
+        /// Загрузка таблиц
+        /// </summary>
         public void Load()
         {
-            Drugs.Load();
-            Tests.Load();
-            Groups.Load();
-            Sections.Load();
+            try
+            {
+                Drugs.Load();
+                Tests.Load();
+                Groups.Load();
+                Sections.Load();
+                Patients.Load();
+            }
+            catch(Exception e)
+            {
+                
+            }
         }
 
         public DeRosoContext(DbContextOptions<DeRosoContext> options)

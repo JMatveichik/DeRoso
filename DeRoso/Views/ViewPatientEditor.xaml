@@ -1,0 +1,209 @@
+﻿<UserControl x:Class="DeRoso.Views.ViewPatientEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:conv="clr-namespace:DeRoso.Core.Converters;assembly=DeRoso.Core"
+             xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:ctrl ="clr-namespace:DeRoso.Controls"
+             xmlns:sel ="clr-namespace:DeRoso.Selectors"
+             xmlns:local="clr-namespace:DeRoso.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <sel:PatientGenderItemTemplateSelector x:Key="GenderTemplateSelector"
+                MalePatientDataTemplate="{StaticResource DeletedPatientMaleListBoxItemTemplate}"
+                FemalePatientDataTemplate="{StaticResource DeletedPatientFemaleListBoxItemTemplate}">
+
+        </sel:PatientGenderItemTemplateSelector>
+
+    </UserControl.Resources>
+    
+    
+    
+    <Grid >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="Auto"/>
+
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="РЕДАКТИРОВАНИЕ ПАЦИЕНТОВ"
+                    Grid.ColumnSpan="2"
+                   Grid.Column="0"
+                   Style="{StaticResource PageTitleStyle}">
+        </TextBlock>
+        <ctrl:MainNavigationPanel Grid.Column="2" HorizontalAlignment="Right"></ctrl:MainNavigationPanel>
+
+        <Border Grid.Column="0"
+                 Grid.Row="1" 
+               
+                Style="{StaticResource BorderBox}">
+            <Grid  >
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Style="{StaticResource BorderUnderline}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0"                                   
+                            Style="{StaticResource HeaderStyle}"
+                                   VerticalAlignment="Center"
+                                Text="ВСЕ ПАЦИЕНТЫ"
+                                Margin="5, 5">
+
+                        </TextBlock>
+
+                        <Button  Grid.Column="1" Margin="2" Click="OnAddPatientButtonClick">
+                            <ContentPresenter Width="32"
+                                              
+                                  Height="32"                                   
+                                  Content="{StaticResource IconAddUser}"/>
+                        </Button>
+
+                    </Grid>
+                </Border>
+
+                <ListBox x:Name ="lstPacients"
+                    Grid.Column="0"
+                 Grid.Row="1"                 
+                 SelectedItem="{Binding SelectedPatient, Mode=TwoWay}"
+                         ItemsSource="{Binding Patients}"
+                         ItemTemplateSelector="{StaticResource GenderTemplateSelector}"
+                         Button.Click="OnPatientListBoxButtonClick"
+                 Margin="10,5"
+                 />
+
+            </Grid>
+        </Border>
+
+
+
+        <Border Grid.Column="1"
+                 Grid.Row="1"                
+                 Style="{StaticResource BorderBox}">
+            
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>                    
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" 
+                        Grid.Column="0" 
+                        Style="{StaticResource BorderUnderline}">
+
+                    <TextBlock                                   
+                            Style="{StaticResource HeaderStyle}"
+                            VerticalAlignment="Center"
+                            Text="ДАННЫЕ ПАЦИЕНТА"
+                            Margin="5, 5">
+                    </TextBlock>
+                    
+
+                </Border>
+
+                <Grid DataContext="{Binding SelectedPatient}"
+                    Grid.Row="1" Margin="50">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column='0'
+                        Style="{StaticResource ValueTitleStyle}"
+                        Text="Фамилия" />
+                    <TextBox
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Style="{StaticResource ValueInputTextBoxStyle}"
+                        Text="{Binding FamilyName}" />
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column='0'
+                        Style="{StaticResource ValueTitleStyle}"
+                        Text="Имя" />
+                    <TextBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Style="{StaticResource ValueInputTextBoxStyle}"
+                        Text="{Binding FirstName}" />
+                    
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column='0'
+                        Style="{StaticResource ValueTitleStyle}"
+                        Text="Отчество" />
+                    <TextBox
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Style="{StaticResource ValueInputTextBoxStyle}"
+                        Text="{Binding SecondName}" />
+
+                    <TextBlock
+                        Grid.Row="3"
+                        Grid.Column='0'
+                        Style="{StaticResource ValueTitleStyle}"
+                        Text="Пол" />
+                    
+                    <ComboBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Style="{StaticResource ValueComboInputStyle}"
+                        SelectedItem="{Binding Gender}" 
+                        ItemsSource="{x:Static conv:EnumItemSourceProvider.GenderValues}"
+                        />
+
+                    <TextBlock
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Style="{StaticResource ValueTitleStyle}"
+                        Text="День рождения" />
+
+                    <mah:DateTimePicker 
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        DisplayDate=""
+                        SelectedDateFormat="Short"
+                        FontFamily="Roboto Condensed Light"
+                        FontSize="16"
+                        SelectedDateTime="{Binding BirthDay, Mode=TwoWay}"
+                        >
+                        
+                    </mah:DateTimePicker>
+
+                </Grid>
+                
+                
+
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

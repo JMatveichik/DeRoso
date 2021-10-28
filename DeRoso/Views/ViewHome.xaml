@@ -39,9 +39,10 @@
             
             <StackPanel>
                 <ContentPresenter Width="48" Height="48"  
+                                  HorizontalAlignment="Center"
                                   Content="{StaticResource IconLaunch}"/>
-                <TextBlock>ТЕСТИРОВАНИЕ</TextBlock>
-                <TextBlock FontSize="12">Выбор и запуск тестов</TextBlock>
+                <TextBlock HorizontalAlignment="Center">ТЕСТИРОВАНИЕ</TextBlock>
+                <TextBlock HorizontalAlignment="Center" FontSize="12">Выбор и запуск тестов</TextBlock>
 
             </StackPanel>
         </Button>
@@ -53,9 +54,10 @@
             <StackPanel>
                 <ContentPresenter Width="48"
                                   Height="48"
+                                  HorizontalAlignment="Center"
                                   Content="{StaticResource IconSettings}" />
-                <TextBlock>НАСТРОЙКА</TextBlock>
-                <TextBlock FontSize="12">Редактирование базы данных</TextBlock>
+                <TextBlock HorizontalAlignment="Center" >НАСТРОЙКА</TextBlock>
+                <TextBlock HorizontalAlignment="Center" FontSize="12">Редактирование базы данных</TextBlock>
             </StackPanel>
 
         </Button>
@@ -67,23 +69,27 @@
             <StackPanel>
                 <ContentPresenter Width="48"
                                   Height="48"
+                                  HorizontalAlignment="Center"
                                   Content="{StaticResource IconCalendar}" />
-                <TextBlock>АРХИВ</TextBlock>
+                <TextBlock HorizontalAlignment="Center">АРХИВ</TextBlock>
+                <TextBlock FontSize="12">Просмотр архива тестов</TextBlock>
             </StackPanel>
 
         </Button>
 
         <Button Grid.Row="1"
                 Grid.Column="1"
-                Command="{Binding HelpPage}">
+                Command="{Binding PatientEditPage}">
 
-            <StackPanel>
+            <StackPanel >
                 <ContentPresenter Width="48"
                                   Height="48"
-                                  Content="{StaticResource IconHelp}" />
-                <TextBlock>ПОМОЩЬ</TextBlock>
+                                  HorizontalAlignment="Center"
+                                  Content="{StaticResource IconUsers}" />
+                <TextBlock HorizontalAlignment="Center">ПАЦИЕНТЫ</TextBlock>
+                <TextBlock HorizontalAlignment="Center" FontSize="12">Редактирование базы данных пациентов</TextBlock>
             </StackPanel>
-
+            
         </Button>
     </Grid>
 </UserControl>

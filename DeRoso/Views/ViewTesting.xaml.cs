@@ -23,6 +23,8 @@ namespace DeRoso.Views
         public ViewTesting()
         {
             InitializeComponent();
+            App app = (App)Application.Current;
+            DataContext = app.TestProcessor;
         }
         
     }
