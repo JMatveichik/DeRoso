@@ -11,6 +11,15 @@ namespace DeRoso.Core.Health
     [Table ("Tests")]
     public class HealthTest : HealthTestItem
     {
+        public HealthTest()
+        {
+            Reciepts.CollectionChanged += OnRecieptChanged;
+        }
+
+        private void OnRecieptChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            rebuildOrders();
+        }
 
         /// <summary>
         /// Идентификатор группы тестов
@@ -26,42 +35,51 @@ namespace DeRoso.Core.Health
         /// <summary>
         /// Набор препаратов для теста
         /// </summary>
-        public ObservableCollection<HealthTestDrug> Drugs
+        public ObservableCollection<HealthTestReciept> Reciepts
         {
             get
             {
-                return _drugs;
+                return _reciepts;
             }
             set
             {
-                if (value == _drugs)
+                if (value == _reciepts)
                     return;
 
-                _drugs = value;
+                _reciepts = value;
                 OnPropertyChanged();
             }
         }
-        private ObservableCollection<HealthTestDrug> _drugs = null;
+        private ObservableCollection<HealthTestReciept> _reciepts = new ObservableCollection<HealthTestReciept>();
 
-
-        public bool ContainValidDrugs()
+        /// <summary>
+        /// Проверка на валидность рецепта
+        /// </summary>
+        /// <returns></returns>
+        public bool ContainValidReciepts()
         {
-            if (Drugs == null)
+            if (Reciepts == null)
                 return false;
 
-            if (Drugs.Count == 0)
+            if (Reciepts.Count == 0)
                 return false;
 
-            foreach(HealthTestDrug d in Drugs)
+            foreach(HealthTestReciept r in Reciepts)
             {
-                if (d.Title.Contains("Нет"))
+                if (r.Drug.Title.Contains("Нет"))
                     return false;
             }
 
             return true;
         }
 
-        
+        private void rebuildOrders()
+        {
+            int order = 1;
+            foreach (HealthTestReciept r in Reciepts)
+                r.Order = order++;
+        }
+
         /// <summary>
         /// Использовать HV после выполнения теста
         /// </summary>        

@@ -39,13 +39,13 @@ namespace DeRoso.Views
             if ( e.PropertyName == "SelectedTest" )
             {
                 DataViewModel vm = (DataViewModel)this.DataContext;
-                var drugs = vm.SelectedTest?.Drugs;
+                var drugs = vm.SelectedTest?.Reciepts;
 
                 if (vm.SelectedTest == null)
                     return;
 
                 if (drugs == null)
-                    drugs = vm.SelectedTest.Drugs = new ObservableCollection<HealthTestDrug>();
+                    drugs = vm.SelectedTest.Reciepts = new ObservableCollection<HealthTestReciept>();
 
                 drugs.CollectionChanged += DrugsCollectionChanged;
 
@@ -153,14 +153,7 @@ namespace DeRoso.Views
                 ListBox parent = (ListBox)sender;
                 HealthTestDrug drug = (HealthTestDrug)GetDataFromListBox(parent, e.GetPosition(parent));
 
-                if (vm.SelectedTest == null)
-                    return;
-
-                if (vm.SelectedTest.Drugs == null)
-                    vm.SelectedTest.Drugs = new ObservableCollection<HealthTestDrug>();
-
-                if (!vm.SelectedTest.Drugs.Contains(drug))
-                    vm.SelectedTest.Drugs.Add(drug);
+                vm.AddDrug(vm.SelectedTest, drug);
             }
         }
 

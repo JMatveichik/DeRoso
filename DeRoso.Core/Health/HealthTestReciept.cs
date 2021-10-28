@@ -18,5 +18,33 @@ namespace DeRoso.Core.Health
             get;
             set;
         }
+
+        /// <summary>
+        /// Идентификатор препарата
+        /// </summary>
+        public int HealthTestDrugId
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Навигационное свойство препарата
+        /// </summary>
+        public HealthTestDrug Drug
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Порядковый номер препарата в ячейке
+        /// </summary>
+        public int Order
+        {
+            get;
+            set;
+        } 
+        
     }
 }

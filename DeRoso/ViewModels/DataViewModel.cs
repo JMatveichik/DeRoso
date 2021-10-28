@@ -51,6 +51,31 @@ namespace DeRoso.ViewModels
             return res;
         }
 
+        public void AddDrug(HealthTest test, HealthTestDrug drug)
+        {
+            if (test == null)
+                return;
+
+            if (test.Reciepts == null)
+                test.Reciepts = new ObservableCollection<HealthTestReciept>();
+
+            var drugs = test.Reciepts.Select(d => d.Drug);
+
+            if (drugs.Contains(drug))
+                return;
+
+            HealthTestReciept reciept = new HealthTestReciept()
+            {
+                Drug = drug,
+                HealthTestDrugId = drug.Id,
+                Order = test.Reciepts.Count + 1
+            };
+
+            test.Reciepts.Add(reciept);
+
+            
+        }
+
         /// <summary>
         /// Текущий разделов тестов
         /// </summary>
@@ -239,6 +264,17 @@ namespace DeRoso.ViewModels
             get
             {
                 return new ObservableCollection<HealthTestDrug>(DeRossoData.Drugs.ToList()); 
+            }
+        }
+
+        /// <summary>
+        /// Таблица препаратов
+        /// </summary>
+        public ObservableCollection<HealthTestReciept> Reciepts
+        {
+            get
+            {
+                return new ObservableCollection<HealthTestReciept>(DeRossoData.Reciepts.ToList());
             }
         }
 

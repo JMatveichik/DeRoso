@@ -159,12 +159,12 @@ namespace DeRoso.Core.Data
                     {
 
 
-                        if (t.Drugs == null)
-                            t.Drugs = new ObservableCollection<HealthTestDrug>();
+                        if (t.Reciepts == null)
+                            t.Reciepts = new ObservableCollection<HealthTestReciept>();
                         else
-                            t.Drugs.Clear();
+                            t.Reciepts.Clear();
 
-                        int cnt = rnd.Next(1, 4);
+                        int cnt = rnd.Next(1, 6);
 
                         for (int i = 0; i < cnt; i++ )
                         {                           
@@ -172,8 +172,15 @@ namespace DeRoso.Core.Data
                             int di = rnd.Next(10000, maxID);
                             var drug = db.Drugs.Select(d => d).Where(d => d.Id == di).FirstOrDefault();
 
-                            drug.HealthTestId = t.Id;
-                            t.Drugs.Add(drug);                           
+                            HealthTestReciept reciept = new HealthTestReciept()
+                            {
+                                HealthTestDrugId = t.Id,
+                                Order = i + 1,
+                                Drug = drug
+                            };
+
+                            
+                            t.Reciepts.Add(reciept);                           
 
                         }
                     }
@@ -197,9 +204,9 @@ namespace DeRoso.Core.Data
                     foreach (HealthTest t in gr.Tests)
                     {
                         sw.WriteLine($"\t\t\t\t{t.Id}|--{t.Title} ({t.Description})");
-                        foreach (HealthTestDrug d in t.Drugs)
+                        foreach (HealthTestReciept d in t.Reciepts)
                         {
-                            sw.WriteLine($"\t\t\t\t\t\t{d.Id}|-- ({d.Address} : {d.Cell} ) {d.Title} ({d.Description})");
+                            sw.WriteLine($"\t\t\t\t\t\t{d.Id}|-- ({d.Order} {d.Drug.Address} : {d.Drug.Cell} ) {d.Drug.Title} ({d.Drug.Description})");
                         }
                     }
                 }

@@ -231,7 +231,7 @@
                     </Grid>
                 </Border>
 
-                <ListBox
+                <ListBox x:Name="lbxReciepts"
                     Grid.Row="15"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
@@ -240,7 +240,7 @@
                     Button.Click="OnItemDeleteClick"
                     Drop="TestDrugsListBoxDrop"
                     ItemTemplate="{StaticResource DeletedTestDrugListBoxItemTemplate}"
-                    ItemsSource="{Binding Drugs}"
+                    ItemsSource="{Binding Reciepts}"
                     KeyDown="TestDrugsListBoxKeyDown" />
             
 

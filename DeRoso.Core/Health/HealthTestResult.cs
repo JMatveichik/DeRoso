@@ -39,6 +39,26 @@ namespace DeRoso.Core.Health
         /// </summary>
         public HealthTestDrug Drug { get; set; }
 
+        /// <summary>
+        /// Шкала лекарства
+        /// </summary>
+        public float Scale
+        {
+            get
+            {
+                return _scale;
+            }
+            private set
+            {
+                if (value == _scale)
+                    return;
+
+                _scale = value;
+                OnPropertyChanged();
+            }
+        }
+        private float _scale = float.PositiveInfinity;
+
 
         /// <summary>
         /// Значение измеряемого параметра перед выдачей препарата

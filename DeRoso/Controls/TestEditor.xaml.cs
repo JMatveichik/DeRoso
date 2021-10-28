@@ -37,24 +37,37 @@ namespace DeRoso.Controls
                 return;
 
             //если пустой список препаратов создаем его
-            if (test.Drugs == null)
-                test.Drugs = new ObservableCollection<HealthTestDrug>();
+            if (test.Reciepts == null)
+                test.Reciepts = new ObservableCollection<HealthTestReciept>();
 
+            //выборр препаратов из рецептов
+            var drugs = test.Reciepts.Select(d => d.Drug);
 
-            if (!test.Drugs.Contains(drug))
-                test.Drugs.Add(drug);               
+            if (drugs == null)
+                return;
 
+            if (drugs.Contains(drug))
+                return;
+
+            HealthTestReciept reciept = new HealthTestReciept()
+            {
+                Drug = drug,
+                HealthTestDrugId = drug.Id,
+                Order = test.Reciepts.Count + 1
+            };            
+
+            test.Reciepts.Add(reciept);          
         }
 
         private void TestDrugsListBoxKeyDown(object sender, KeyEventArgs e)
         {            
             if (e.Key == Key.Delete)
             {
-                HealthTestDrug drug = (HealthTestDrug)this.DataContext;
-                HealthTest test = drug.Test;
+                HealthTestReciept reciept = (HealthTestReciept)this.DataContext;
+                HealthTest test = reciept.Drug.Test;
 
                 if (test != null )
-                    test.Drugs.Remove(drug);
+                    test.Reciepts.Remove(reciept);
 
             }
         }
@@ -62,7 +75,7 @@ namespace DeRoso.Controls
         private void OnButtonClearTetsDrugs(object sender, RoutedEventArgs e)
         {
             HealthTest test = (HealthTest)this.DataContext;
-            test.Drugs.Clear();
+            test.Reciepts.Clear();
         }
 
         private void OnItemDeleteClick(object sender, RoutedEventArgs e)
@@ -72,10 +85,11 @@ namespace DeRoso.Controls
             if (btn == null)
                 return;
 
-            HealthTestDrug drug = (HealthTestDrug)btn.DataContext;           
+            HealthTestReciept reciept = (HealthTestReciept)btn.DataContext;           
             HealthTest test = (HealthTest)this.DataContext;
 
-            test.Drugs.Remove(drug);
+            test.Reciepts.Remove(reciept);
+            lbxReciepts.Items?.Refresh();
         }
     }
 }

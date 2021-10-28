@@ -39,28 +39,39 @@ namespace DeRoso
             var options = optionsBuilder.UseSqlite("Filename=DeRoso.db").Options;
 
             DeRossoData = new DeRosoContext(options);
-
-            DeRossoData.Load();
-
             Device = new DeviceProvider();
 
             TestProcessor = new HealthTestsProcessor(Device);
 
-           /* DeRossoDBTools.Instance.InitDB(DeRossoData, "db.xml", "ProfLeng.txt");
-            DeRossoDBTools.Instance.TraceDB(DeRossoData, "outtree.txt");
+            bool init = false;
+            if (init)
+            {
+                DeRossoDBTools.Instance.InitDB(DeRossoData, "db.xml", "ProfLeng.txt");
+                DeRossoDBTools.Instance.TraceDB(DeRossoData, "outtree.txt");
 
-            DeRossoData.Patients.Add(
-                new Patient()
-                {
-                    FirstName = "Евгений",
-                    SecondName = "Альфредович",
-                    FamilyName = "Матвейчик",
-                    Gender = EnumPatientGender.Male,
-                    BirthDay = new DateTime(1975, 06, 28)
-                }
-            );
-            DeRossoData.SaveChanges();
-            */
+                DeRossoData.Patients.Add(
+                    new Patient()
+                    {
+                        FirstName = "Евгений",
+                        SecondName = "Альфредович",
+                        FamilyName = "Матвейчик",
+                        Gender = EnumPatientGender.Male,
+                        BirthDay = new DateTime(1975, 06, 28)
+                    }
+                );
+                DeRossoData.SaveChanges();
+         
+            }
+            else
+            {
+                DeRossoData.Load();
+            }
+            
+
+            
+
+            
+            
         }
 
         protected override void OnExit(ExitEventArgs e)

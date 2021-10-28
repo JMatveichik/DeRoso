@@ -17,7 +17,7 @@ namespace DeRoso.Selectors
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             HealthTest test = (HealthTest)item;
-            if (test.ContainValidDrugs())
+            if (test.ContainValidReciepts())
                 return ValidTestDrugsDataTemplate;
 
             return NonValidTestDrugsDataTemplate;

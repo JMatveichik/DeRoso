@@ -76,7 +76,7 @@ namespace DeRoso.Views
             if (test == null)
                 return false;
             
-            if (!test.ContainValidDrugs())
+            if (!test.ContainValidReciepts())
                 return false;
 
             if (HealthTestSelected.Tests.Contains(test))

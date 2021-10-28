@@ -358,11 +358,13 @@ namespace DeRoso.Core.Health
             /*              ВЫДАЧА ПРЕПАРАТОВ               */
             /************************************************/
 
-            foreach (HealthTestDrug drug in test.Drugs)
+            foreach (HealthTestReciept r in test.Reciepts)
             {
                 //создаем результат для конкретного препарата и добавляем к результату теста
                 HealthTestDrugResult res = new HealthTestDrugResult();
-                res.HealthTestDrugId = drug.Id;
+                HealthTestDrug drug = r.Drug;
+
+                res.HealthTestDrugId = r.Id;
                 res.HealthTestId = test.Id;
                 res.Test = test;
                 res.Drug = drug;

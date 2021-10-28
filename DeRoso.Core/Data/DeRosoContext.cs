@@ -35,6 +35,11 @@ namespace DeRoso.Core.Data
 
 
         /// <summary>
+        /// Таблица рецептов
+        /// </summary>
+        public DbSet<HealthTestReciept> Reciepts { get; set; }
+
+        /// <summary>
         /// Таблица пциентов
         /// </summary>
         public DbSet<Patient> Patients { get; set; }
@@ -42,7 +47,7 @@ namespace DeRoso.Core.Data
 
         public DeRosoContext()
         {
-           // Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();  
            
         }
@@ -59,6 +64,7 @@ namespace DeRoso.Core.Data
                 Groups.Load();
                 Sections.Load();
                 Patients.Load();
+                Reciepts.Load();
             }
             catch(Exception e)
             {

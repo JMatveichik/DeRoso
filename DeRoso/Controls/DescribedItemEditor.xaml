@@ -43,8 +43,7 @@
             Text="Описание" />
         <TextBox
             Grid.Row="4"
-            Height="60"
-            MaxHeight="60"
+            
             AcceptsReturn="True"
             Style="{StaticResource ValueInputTextBoxStyle}"
             Text="{Binding Description}"
