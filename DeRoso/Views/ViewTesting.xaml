@@ -91,6 +91,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -165,6 +167,27 @@
                         Text="{Binding CurrentPatient.SecondName}"
                        >
                 </TextBlock>
+
+                <Border Grid.Column="0"
+                         Grid.Row="5"
+                        Grid.ColumnSpan="2"
+                        Style="{StaticResource BorderUnderline}">
+
+                    <TextBlock 
+                        Style="{StaticResource HeaderStyle}"
+                        Text="ДАННЫЕ"
+                        Margin="5, 5">
+                    </TextBlock>
+
+                </Border>
+
+                <CheckBox Grid.Column="0"
+                         Grid.Row="6"
+                         Grid.ColumnSpan="2" 
+                          IsChecked="{Binding IsUsedMeassureAsRandom}"
+                         Style="{StaticResource CheckInputStyle}">
+                        Использовать случайные данные
+                </CheckBox>
 
             </Grid>
         </Border>

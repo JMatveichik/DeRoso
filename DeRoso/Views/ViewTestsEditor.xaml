@@ -14,7 +14,7 @@
     <UserControl.Resources>
         <sel:TestListBoxItemTemplateSelector
             x:Key="TestListBoxItemTemplateSelector"
-            NonValidTestDrugsDataTemplate="{StaticResource NormalTestListBoxItemTemplate}"
+            NonValidTestDrugsDataTemplate="{StaticResource NonValidTestListBoxItemTemplate}"
             ValidTestDrugsDataTemplate="{StaticResource NormalTestListBoxItemTemplate}" />
         
     </UserControl.Resources>
