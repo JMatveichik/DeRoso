@@ -25,24 +25,27 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
 
-                <mah:RangeSlider
-                    Grid.Row="0"
+                
+                <mah:MetroProgressBar
+                    Grid.Row="3"
                     Grid.Column="0"
-                    Grid.ColumnSpan="5"
-                    LowerValue="0"
-                    UpperValue="{cb:Binding Test.Recipts.Count}"
-                    Value="{Binding Scale}"
+                    Grid.ColumnSpan="6"
+                    Minimum="0"
+                    Maximum="{cb:Binding Test.Reciepts.Count}"
+                    Value="{Binding Scale, Mode=OneWay}"   
                     
-                    Visibility="{cb:Binding 'Test.Recipts.Count > 0',FalseToVisibility=Collapsed}">                    
-                </mah:RangeSlider>
+                    Visibility="{cb:Binding !IsSingle, FalseToVisibility=Collapsed}">
+                    
+                </mah:MetroProgressBar>
+                
                 
                 <TextBlock
                     Grid.Row="0"
@@ -58,7 +61,7 @@
                     Style="{StaticResource ItemDescriptionStyle}"
                     Text="{Binding Test.Description}" />
 
-                
+                <!--
                 <TextBlock
                     Grid.Row="0"
                     Grid.RowSpan="2"
@@ -68,7 +71,8 @@
                     FontSize="28"
                     Style="{StaticResource ValueTitleStyle}"
                     Text="{Binding MeassurmentBefore, StringFormat={}{0:0.0}}" />
-
+                -->
+                
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="2"
@@ -109,7 +113,19 @@
                     HorizontalAlignment="Center"
                     FontSize="28"
                     Style="{StaticResource ValueTitleStyle}"
+                    Visibility="{cb:Binding IsSingle, FalseToVisibility=Collapsed}"
                     Text="{Binding MeassurmentAfter, StringFormat={}{0:0.0}}" />
+
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="4"
+                    MaxWidth="300"
+                    HorizontalAlignment="Center"
+                    FontSize="28"
+                    Style="{StaticResource ValueTitleStyle}"
+                    Visibility="{cb:Binding !IsSingle, FalseToVisibility=Collapsed}"
+                    Text="{Binding Scale, StringFormat={}{0:0}}" />
 
                 <ContentPresenter
                     Grid.Row="0"

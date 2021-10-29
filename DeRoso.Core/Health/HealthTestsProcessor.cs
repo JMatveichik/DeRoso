@@ -18,6 +18,15 @@ namespace DeRoso.Core.Health
         {
             Device = dev;
             Patients = Patient.All();
+
+            Device.DeviceTestStarted += OnDeviceTestEvent;
+            Device.DeviceTestFailed += OnDeviceTestEvent;
+            Device.DeviceTestComplete += OnDeviceTestEvent;
+        }
+
+        private void OnDeviceTestEvent(object sender, DeviceInitializationTestEventArgs args)
+        {
+            CurrentOperation = args.TestDescription;
         }
 
         public DeviceProvider Device

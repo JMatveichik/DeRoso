@@ -183,7 +183,7 @@ namespace DeRoso.Core.Device
         /// <param name="args"></param>
         private void OnDataRecieved(object sender, DataRecievedEventArgs args)
         {
-            TraceRecivedData(args.data);
+            //TraceRecivedData(args.data);
 
             for (int i = 0; i < 16; i++)        //проверка на наличие 0 в данных
             {
