@@ -33,16 +33,18 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <mah:RangeSlider
+                <mah:MetroProgressBar
                     Grid.Row="0"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
-                    LowerValue="0"
-                    UpperValue="{cb:Binding Test.Recipts.Count}"
-                    Value="{Binding Scale}"
+                    
+                    Style="{DynamicResource FlatSlider}"
+                    Minimum="0"
+                    Maximum="{cb:Binding Test.Recipts.Count}"
+                    Value="{Binding Scale, }"   
                     
                     Visibility="{cb:Binding 'Test.Recipts.Count > 0',FalseToVisibility=Collapsed}">                    
-                </mah:RangeSlider>
+                </mah:MetroProgressBar>
                 
                 <TextBlock
                     Grid.Row="0"
