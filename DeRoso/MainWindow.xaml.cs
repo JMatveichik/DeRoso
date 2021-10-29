@@ -107,12 +107,12 @@ namespace DeRoso
         /// <param name="e"></param>
         private void StartTestCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            DeviceProvider dev = ((App)App.Current).Device;
+            //DeviceProvider dev = ((App)App.Current).Device;
+            HealthTestsProcessor processor = ((App)App.Current).TestProcessor;
+            bool hasTests = processor.Tests.Count > 0;
+            bool devIsReady = true; //dev.IsReady;
 
-            bool hasTests = !DeRossoDataWorker.IsEmptySelectedTests();
-            //bool devIsReady = dev.IsReady;
-
-            e.CanExecute = hasTests;// && devIsReady;
+            e.CanExecute = hasTests && devIsReady;
         }
 
         /// <summary>

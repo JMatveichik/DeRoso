@@ -25,12 +25,12 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
 
                 <mah:MetroProgressBar
@@ -60,7 +60,7 @@
                     Style="{StaticResource ItemDescriptionStyle}"
                     Text="{Binding Test.Description}" />
 
-                
+                <!--
                 <TextBlock
                     Grid.Row="0"
                     Grid.RowSpan="2"
@@ -70,7 +70,8 @@
                     FontSize="28"
                     Style="{StaticResource ValueTitleStyle}"
                     Text="{Binding MeassurmentBefore, StringFormat={}{0:0.0}}" />
-
+                -->
+                
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="2"
@@ -111,7 +112,19 @@
                     HorizontalAlignment="Center"
                     FontSize="28"
                     Style="{StaticResource ValueTitleStyle}"
+                    Visibility="{cb:Binding IsSingle, FalseToVisibility=Collapsed}"
                     Text="{Binding MeassurmentAfter, StringFormat={}{0:0.0}}" />
+
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="4"
+                    MaxWidth="300"
+                    HorizontalAlignment="Center"
+                    FontSize="28"
+                    Style="{StaticResource ValueTitleStyle}"
+                    Visibility="{cb:Binding !IsSingle, FalseToVisibility=Collapsed}"
+                    Text="{Binding Scale, StringFormat={}{0:0}}" />
 
                 <ContentPresenter
                     Grid.Row="0"

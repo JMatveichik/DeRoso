@@ -57,7 +57,7 @@ namespace DeRoso.Core.Health
                 OnPropertyChanged();
             }
         }
-        private float _scale = float.PositiveInfinity;
+        private float _scale = 0.0f;
 
 
         /// <summary>
@@ -114,6 +114,16 @@ namespace DeRoso.Core.Health
         } = new ObservableCollection<HealthTestDrugResult>();
 
         /// <summary>
+        /// Простой тест содержащий один рецепт
+        /// </summary>
+        public bool IsSingle
+        {
+            get {
+                return Test.Reciepts.Count == 1;
+            }
+        }
+
+        /// <summary>
         /// Выбор оптимального препарата для теста
         /// </summary>
         public void SelectOptimalResult()
@@ -161,7 +171,7 @@ namespace DeRoso.Core.Health
                             }
 
                             ///шкала как индекс оптимального препарата
-                            Scale = scale;
+                            Scale = scale + 1;
                         }
 
                         
@@ -218,7 +228,7 @@ namespace DeRoso.Core.Health
                             }
 
                             ///шкала как индекс оптимального препарата
-                            Scale = scale;
+                            Scale = scale + 1;
                         }
 
 
@@ -288,7 +298,7 @@ namespace DeRoso.Core.Health
                             }
 
                             ///шкала как индекс оптимального препарата
-                            Scale = scale;
+                            Scale = scale + 1;
                         }
 
 
