@@ -109,7 +109,7 @@ namespace DeRoso
         {
             DeviceProvider dev = ((App)App.Current).Device;
 
-            bool hasTests = HealthTestSelected.Tests.Count == 0 ? false : true;
+            bool hasTests = !DeRossoDataWorker.IsEmptySelectedTests();
             //bool devIsReady = dev.IsReady;
 
             e.CanExecute = hasTests;// && devIsReady;
@@ -158,7 +158,7 @@ namespace DeRoso
                 }                
             }
 
-            Task test = new Task(() => processor.Do(HealthTestSelected.Tests));
+            Task test = new Task(() => processor.Do( DeRossoDataWorker.GetLastSelectedTests() ));
             test.Start();
 
         }

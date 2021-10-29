@@ -226,7 +226,7 @@
                  SelectedItem="{Binding SelectedTargetTest, Mode=TwoWay}"
                  Margin="10,5"
                  Button.Click="OnItemDeleteClick"        
-                 ItemsSource="{x:Static health:HealthTestSelected.Tests}"
+                 ItemsSource="{Binding SelectedTargetTests}"
                  ItemTemplate="{StaticResource DeletedHealthTestListBoxItemTemplate}"
                          Drop="SelectedTestsListBoxDrop"
                          KeyDown="SelectedTargetTestsListKeyDown">

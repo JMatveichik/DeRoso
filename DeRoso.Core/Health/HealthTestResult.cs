@@ -32,7 +32,7 @@ namespace DeRoso.Core.Health
         /// <summary>
         /// Идентификатор оптимального препарата теста
         /// </summary>
-        public int HealthDrugId { get; set; }
+        public int HealthTestDrugId { get; set; }
 
         /// <summary>
         /// Оптимальный препарат теста
@@ -123,24 +123,112 @@ namespace DeRoso.Core.Health
                 case EnumCalculationType.Maximum:
                     {
                         //упорядочиваие по убыванию разницы в измерениях и выбор последнего элемента
-                        var res = Meassurments.OrderBy(d => Math.Abs(d.MeassurmentBefore - d.MeassurmentAfter)).Last();
+                        /*var res = Meassurments.OrderBy(d => Math.Abs(d.MeassurmentBefore - d.MeassurmentAfter)).Last();
 
-                        HealthDrugId = res.HealthTestDrugId;
+                        HealthTestDrugId = res.HealthTestDrugId;
                         Drug = res.Drug;
                         res.IsOptimal = true;
-                        MeassurmentAfter = res.MeassurmentAfter;
+                        MeassurmentAfter = res.MeassurmentAfter;*/
+
+                        //оптимальный препарат
+                        HealthTestDrugResult optimal = Meassurments.FirstOrDefault();
+
+                        //тетс с одним препаратом
+                        if (Meassurments.Count == 1)
+                        {
+                            optimal = Meassurments[0];
+                            ///шкала как результат измерения после
+                            Scale = Meassurments[0].MeassurmentAfter;
+                        }
+                        ///тест с несколькими прапаратами
+                        else
+                        { 
+                            int scale = 0;
+                            double maxDiff = double.MinValue;
+                            int ind = 0;
+
+                            ///перебор всех измерений
+                            foreach (HealthTestDrugResult dr in Meassurments)
+                            {
+                                double diff = Math.Abs(dr.MeassurmentBefore - dr.MeassurmentAfter);
+                                if (diff > maxDiff)
+                                {
+                                    maxDiff = diff;
+                                    scale = ind;
+                                    optimal = dr;
+                                }
+                                ind++;
+                            }
+
+                            ///шкала как индекс оптимального препарата
+                            Scale = scale;
+                        }
+
+                        
+                        ///на будущее для сохранения в базу данных
+                        HealthTestDrugId = optimal.HealthTestDrugId;
+                        Drug = optimal.Drug;
+                        
+                        //для текущего теста
+                        MeassurmentAfter = optimal.MeassurmentAfter;
+                        optimal.IsOptimal = true;
+                        
+                        
                     }
                     break;
 
                 case EnumCalculationType.Minimum:
                     {
                         //упорядочиваие по возрастанию разницы в измерениях и выбор первого элемента
-                        var res = Meassurments.OrderBy(d => Math.Abs(d.MeassurmentBefore - d.MeassurmentAfter)).First();
+                        /*var res = Meassurments.OrderBy(d => Math.Abs(d.MeassurmentBefore - d.MeassurmentAfter)).First();
 
                         HealthDrugId = res.HealthTestDrugId;
                         Drug = res.Drug;
                         res.IsOptimal = true;
-                        MeassurmentAfter = res.MeassurmentAfter;
+                        MeassurmentAfter = res.MeassurmentAfter;*/
+
+                        //оптимальный препарат
+                        HealthTestDrugResult optimal = Meassurments.FirstOrDefault();
+
+                        //тетс с одним препаратом
+                        if (Meassurments.Count == 1)
+                        {
+                            optimal = Meassurments[0];
+                            ///шкала как результат измерения после
+                            Scale = Meassurments[0].MeassurmentAfter;
+                        }
+                        ///тест с несколькими прапаратами
+                        else
+                        {
+                            int scale = 0;
+                            double maxDiff = double.MaxValue;
+                            int ind = 0;
+
+                            ///перебор всех измерений
+                            foreach (HealthTestDrugResult dr in Meassurments)
+                            {
+                                double diff = Math.Abs(dr.MeassurmentBefore - dr.MeassurmentAfter);
+                                if (diff < maxDiff)
+                                {
+                                    maxDiff = diff;
+                                    scale = ind;
+                                    optimal = dr;
+                                }
+                                ind++;
+                            }
+
+                            ///шкала как индекс оптимального препарата
+                            Scale = scale;
+                        }
+
+
+                        ///на будущее для сохранения в базу данных
+                        HealthTestDrugId = optimal.HealthTestDrugId;
+                        Drug = optimal.Drug;
+
+                        //для текущего теста
+                        MeassurmentAfter = optimal.MeassurmentAfter;
+                        optimal.IsOptimal = true;
                     }
                     break;
 
@@ -148,9 +236,9 @@ namespace DeRoso.Core.Health
                     {
                         //среднее отклонение для всех измерений
                         var averageGlobal = Meassurments.Select(d => Math.Abs(d.MeassurmentBefore - d.MeassurmentAfter)).Average();
-                       
+
                         //первая разница она же минимальная
-                        HealthTestDrugResult res = Meassurments.First();
+                        /*HealthTestDrugResult res = Meassurments.First();
                         double minDiff = Math.Abs(res.MeassurmentBefore - res.MeassurmentAfter);
 
                         foreach (HealthTestDrugResult r in Meassurments)
@@ -166,7 +254,52 @@ namespace DeRoso.Core.Health
                         HealthDrugId = res.HealthTestDrugId;
                         Drug = res.Drug;
                         res.IsOptimal = true;
-                        MeassurmentAfter = res.MeassurmentAfter;
+                        MeassurmentAfter = res.MeassurmentAfter;*/
+
+                        //оптимальный препарат
+                        HealthTestDrugResult optimal = Meassurments.FirstOrDefault();
+
+                        //тетс с одним препаратом
+                        if (Meassurments.Count == 1)
+                        {
+                            optimal = Meassurments[0];
+                            ///шкала как результат измерения после
+                            Scale = Meassurments[0].MeassurmentAfter;
+                        }
+                        ///тест с несколькими прапаратами
+                        else
+                        {
+                            int scale = 0;
+                            double maxDiff = double.MaxValue;
+                            int ind = 0;
+
+                            ///перебор всех измерений
+                            foreach (HealthTestDrugResult dr in Meassurments)
+                            {
+                                //отклонение от среднего
+                                double diff = Math.Abs(averageGlobal - Math.Abs(dr.MeassurmentBefore - dr.MeassurmentAfter));
+                                if (diff < maxDiff)
+                                {
+                                    maxDiff = diff;
+                                    scale = ind;
+                                    optimal = dr;
+                                }
+                                ind++;
+                            }
+
+                            ///шкала как индекс оптимального препарата
+                            Scale = scale;
+                        }
+
+
+                        ///на будущее для сохранения в базу данных
+                        HealthTestDrugId = optimal.HealthTestDrugId;
+                        Drug = optimal.Drug;
+
+                        //для текущего теста
+                        MeassurmentAfter = optimal.MeassurmentAfter;
+                        optimal.IsOptimal = true;
+
                     }
                     break;
             }

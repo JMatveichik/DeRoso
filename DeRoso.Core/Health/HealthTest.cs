@@ -253,5 +253,15 @@ namespace DeRoso.Core.Health
         }
         private EnumCalculationType _calcType = EnumCalculationType.Medium;
 
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(string.Format("{0} : {1}", Id, Title));
+            sb.AppendLine("_________________________________________________");
+            foreach (HealthTestReciept r in Reciepts)
+                sb.AppendLine(string.Format("{0} : {1} : {2}", r.HealthTestId, r.HealthTestDrugId, r.Drug.Title));
+
+            return sb.ToString();
+        }
     }
 }

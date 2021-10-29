@@ -39,6 +39,8 @@ namespace DeRoso.Core.Data
         /// </summary>
         public DbSet<HealthTestReciept> Reciepts { get; set; }
 
+        public DbSet<HealthTestSelected> LastSelected { get; set; }
+
         /// <summary>
         /// Таблица пциентов
         /// </summary>
@@ -65,6 +67,7 @@ namespace DeRoso.Core.Data
                 Sections.Load();
                 Patients.Load();
                 Reciepts.Load();
+                LastSelected.Load();
             }
             catch(Exception e)
             {
@@ -72,10 +75,12 @@ namespace DeRoso.Core.Data
             }
         }
 
-        public DeRosoContext(DbContextOptions<DeRosoContext> options)
+        public DeRosoContext(DbContextOptions<DeRosoContext> options, bool recreate)
             : base(options)
         {
-            //Database.EnsureDeleted();
+            if (recreate)
+                Database.EnsureDeleted();
+
             Database.EnsureCreated();
         }
        

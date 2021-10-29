@@ -1,4 +1,5 @@
-﻿using DeRoso.Core.Health;
+﻿using DeRoso.Core.Data;
+using DeRoso.Core.Health;
 using DeRoso.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -69,30 +70,15 @@ namespace DeRoso.Views
 
             return null;
         }
-
-        private bool  CanAddToSelectedTests(HealthTest test)
-        {           
-
-            if (test == null)
-                return false;
-            
-            if (!test.ContainValidReciepts())
-                return false;
-
-            if (HealthTestSelected.Tests.Contains(test))
-                return false;
-
-            return true;
-        }
+        
 
         private void SelectedTestsListBoxDrop(object sender, DragEventArgs e)
         {
             ListBox parent = (ListBox)sender;
             HealthTest test = (HealthTest)e.Data.GetData(typeof(HealthTest));
-            
-            if (CanAddToSelectedTests(test))
-                HealthTestSelected.Tests.Add (test);
-        }
+
+            DeRossoDataWorker.AddToLastSelectedTests(test);
+         }
 
         private void OnTestsListBoxMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -101,8 +87,7 @@ namespace DeRoso.Views
                 ListBox parent = (ListBox)sender;
                 HealthTest test = (HealthTest)GetDataFromListBox(parent, e.GetPosition(parent));
                 
-                if (CanAddToSelectedTests(test))
-                    HealthTestSelected.Tests.Add(test);
+                DeRossoDataWorker.AddToLastSelectedTests(test); 
             }
             e.Handled = false;
         }
@@ -110,50 +95,41 @@ namespace DeRoso.Views
         private void OnButtonAddAllAvailableTests(object sender, RoutedEventArgs e)
         {
             TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;
+            DeRossoDataWorker.AddToLastSelectedTests(vm.SelectedGroup.Tests);
             
-            foreach (HealthTest t in vm.SelectedGroup.Tests)
-            {
-                if (CanAddToSelectedTests(t))
-                    HealthTestSelected.Tests.Add(t);
-            }
+            vm.Update();
         }
 
         private void OnButtonAddAllSectionTests(object sender, RoutedEventArgs e)
         {
             TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;
-            HealthTestSelected.Tests.Clear();
+            DeRossoDataWorker.ClearLastSelectedTests();
 
             foreach (HealthTestGroup gr in vm.SelectedSection.Groups)
-            {
-                foreach (HealthTest t in gr.Tests)
-                {
-                    if (CanAddToSelectedTests(t))
-                        HealthTestSelected.Tests.Add(t);
-                }
-            }
+                DeRossoDataWorker.AddToLastSelectedTests(gr.Tests);
             
+            vm.Update();
         }
 
         private void OnButtonAddAllGroupTests(object sender, RoutedEventArgs e)
         {
-            TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;                        
-            foreach (HealthTest t in vm.SelectedGroup.Tests)
-            {
-                if (CanAddToSelectedTests(t))
-                    HealthTestSelected.Tests.Add(t);
-            }            
+            TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;
+            DeRossoDataWorker.AddToLastSelectedTests(vm.SelectedGroup.Tests);            
+            vm.Update();
         }
 
 
         private void OnButtonClearTargetTests(object sender, RoutedEventArgs e)
         {
-            HealthTestSelected.Tests.Clear();
+            TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;
+            DeRossoDataWorker.ClearLastSelectedTests();
+            vm.Update();
         }
 
         private void SelectedTargetTestsListKeyDown(object sender, KeyEventArgs e)
         {
             TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;
-            HealthTestSelected.Tests.Remove(vm.SelectedTargetTest);
+            DeRossoDataWorker.RemoveFromLastSelectedTests(vm.SelectedTargetTest);
         }
 
         private void OnItemDeleteClick(object sender, RoutedEventArgs e)
@@ -163,8 +139,12 @@ namespace DeRoso.Views
             if (btn == null)
                 return;
 
+            TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;
+
             HealthTest test = (HealthTest)btn.DataContext;
-            HealthTestSelected.Tests.Remove(test);            
+            DeRossoDataWorker.RemoveFromLastSelectedTests(test);
+
+            vm.Update();
         }
     }
 }

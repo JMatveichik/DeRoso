@@ -21,6 +21,10 @@ namespace DeRoso.ViewModels
 
         }
 
+        public void Update()
+        {
+            SelectedTargetTests = DeRossoDataWorker.GetLastSelectedTests();
+        }
         public DeRosoContext DeRossoData
         {
             get;
@@ -105,11 +109,22 @@ namespace DeRoso.ViewModels
         /// <summary>
         /// Выбранные тесты
         /// </summary>
-        public ObservableCollection<HealthTest> SelectedTargetTests
+        public List<HealthTest> SelectedTargetTests
         {
-            get;
-            private set;
-        } = new ObservableCollection<HealthTest>();
+            get
+            {
+                return _selectedTargetTests;
+            }
+            private set
+            {
+                if (value == _selectedTargetTests)
+                    return;
+
+                _selectedTargetTests = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<HealthTest> _selectedTargetTests = DeRossoDataWorker.GetLastSelectedTests();
 
         /// <summary>
         /// Выбранный тест  в целевой группе

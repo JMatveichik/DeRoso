@@ -3,13 +3,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cb="clr-namespace:CalcBinding;assembly=CalcBinding"
     xmlns:health="clr-namespace:DeRoso.Core.Health;assembly=DeRoso.Core"
-    xmlns:local="clr-namespace:DeRoso.UI.Templates">
+    xmlns:local="clr-namespace:DeRoso.UI.Templates"
+    xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
 
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../Styles/TextBlockStyles.xaml" />
         <ResourceDictionary Source="../Styles/BordersStyles.xaml" />
         <ResourceDictionary Source="../Icons/Icons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.FlatSlider.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <HierarchicalDataTemplate x:Key="HierarchicalTestResultsDataTemplate" ItemsSource="{Binding Meassurments}">
@@ -18,6 +20,7 @@
 
             <Grid MinWidth="800" Margin="5">
                 <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
@@ -30,6 +33,17 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
+                <mah:RangeSlider
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="5"
+                    LowerValue="0"
+                    UpperValue="{cb:Binding Test.Recipts.Count}"
+                    Value="{Binding Scale}"
+                    
+                    Visibility="{cb:Binding 'Test.Recipts.Count > 0',FalseToVisibility=Collapsed}">                    
+                </mah:RangeSlider>
+                
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="0"
@@ -44,6 +58,7 @@
                     Style="{StaticResource ItemDescriptionStyle}"
                     Text="{Binding Test.Description}" />
 
+                
                 <TextBlock
                     Grid.Row="0"
                     Grid.RowSpan="2"
@@ -84,7 +99,7 @@
                     MaxWidth="300"
                     HorizontalAlignment="Center"
                     Style="{StaticResource ItemDescriptionStyle}"
-                    Text="{Binding Test.Drugs.Count}" />
+                    Text="{Binding Test.Reciepts.Count}" />
 
                 <TextBlock
                     Grid.Row="0"

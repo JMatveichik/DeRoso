@@ -1,23 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace DeRoso.Core.Health
 {
-    static public class HealthTestSelected
+    /// <summary>
+    /// Таблица выбранных тестов
+    /// </summary>
+    [Table("Selected")]
+    public class HealthTestSelected
     {
-        static HealthTestSelected()
-        {
+        /// <summary>
+        /// Идентификатор записи
+        /// </summary>
+        public int Id { get; set; }
 
-        }
 
-        static public ObservableCollection<HealthTest> Tests
+        public int HealthTestId
         {
             get;
-            private set;
-        } = new ObservableCollection<HealthTest>();
+            set;
+        }
+
+        public HealthTest Test { get; set; }
+
+        
     }
 }

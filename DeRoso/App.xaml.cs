@@ -38,12 +38,17 @@ namespace DeRoso
             var optionsBuilder = new DbContextOptionsBuilder<DeRosoContext>();
             var options = optionsBuilder.UseSqlite("Filename=DeRoso.db").Options;
 
-            DeRossoData = new DeRosoContext(options);
-            Device = new DeviceProvider();
-
-            TestProcessor = new HealthTestsProcessor(Device);
 
             bool init = false;
+
+           
+
+            DeRossoDataWorker.DB = new DeRosoContext(options, init); 
+
+            Device = new DeviceProvider();
+            TestProcessor = new HealthTestsProcessor(Device);
+
+            
             if (init)
             {
                 DeRossoDBTools.Instance.InitDB(DeRossoData, "db.xml", "ProfLeng.txt");
@@ -64,14 +69,10 @@ namespace DeRoso
             }
             else
             {
-                DeRossoData.Load();
+                DeRossoDataWorker.DB.Load();
             }
-            
 
-            
-
-            
-            
+            DeRossoData = DeRossoDataWorker.DB;
         }
 
         protected override void OnExit(ExitEventArgs e)

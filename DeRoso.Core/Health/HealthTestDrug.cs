@@ -10,17 +10,7 @@ namespace DeRoso.Core.Health
     [Table("Drugs")]
     public class HealthTestDrug : HealthTestItem
     {
-        /// <summary>
-        /// Идентификатор теста
-        /// </summary>
-        public int? HealthTestId { get; set; }
-
-        /// <summary>
-        /// Тест которому принадлежит препарат
-        /// </summary>
-        public HealthTest Test { get; set; }
-
-
+       
         /// <summary>
         /// Адрес препарата в устройстве
         /// </summary>        

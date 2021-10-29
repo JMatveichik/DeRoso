@@ -129,7 +129,7 @@ namespace DeRoso.Core.Data
 
                 db.Drugs.Add(new HealthTestDrug()
                     {
-                        HealthTestId = null,
+                        
                         Id = i + 10000,
                         Title = drug.Name,
                         Address = drug.Address,

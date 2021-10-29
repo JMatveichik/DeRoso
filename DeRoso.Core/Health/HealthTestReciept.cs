@@ -27,6 +27,7 @@ namespace DeRoso.Core.Health
             get;
             set;
         }
+        
 
         /// <summary>
         /// Навигационное свойство препарата
@@ -36,6 +37,18 @@ namespace DeRoso.Core.Health
             get;
             set;
         }
+
+        public int HealthTestId
+        {
+            get;
+            set;
+        }
+
+        public HealthTest Test
+        {
+            get;
+            set;
+        } 
 
         /// <summary>
         /// Порядковый номер препарата в ячейке

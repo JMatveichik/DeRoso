@@ -64,7 +64,7 @@ namespace DeRoso.Controls
             if (e.Key == Key.Delete)
             {
                 HealthTestReciept reciept = (HealthTestReciept)this.DataContext;
-                HealthTest test = reciept.Drug.Test;
+                HealthTest test = reciept.Test;
 
                 if (test != null )
                     test.Reciepts.Remove(reciept);

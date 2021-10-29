@@ -156,6 +156,12 @@ namespace DeRoso.Core.Health
             private set;
         }
 
+        public List<HealthTest> Tests
+        {
+            get;
+            private set;
+        } = DeRossoDataWorker.GetLastSelectedTests();
+
         /// <summary>
         /// Делегат для событий текущих тестов
         /// </summary>

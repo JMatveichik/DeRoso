@@ -53,7 +53,7 @@ namespace DeRoso.ViewModels
 
         public void AddDrug(HealthTest test, HealthTestDrug drug)
         {
-            if (test == null)
+            if (test == null || drug == null )
                 return;
 
             if (test.Reciepts == null)
