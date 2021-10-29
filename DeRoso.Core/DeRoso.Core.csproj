@@ -156,6 +156,7 @@
     <Compile Include="Data\ExcelDataSaver.cs" />
     <Compile Include="Data\FileOutputResultSaver.cs" />
     <Compile Include="Data\IResultsSaver.cs" />
+    <Compile Include="Data\JSONResultSaver.cs" />
     <Compile Include="Data\XmlResultsSaver.cs" />
     <Compile Include="DeviceProgram.cs" />
     <Compile Include="DevicePrograms.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Health\HealthTestGroup.cs" />
     <Compile Include="Health\HealthTestItem.cs" />
     <Compile Include="Health\HealthTestReciept.cs" />
+    <Compile Include="Health\HealthTestReport.cs" />
     <Compile Include="Health\HealthTestResult.cs" />
     <Compile Include="Health\HealthTestSection.cs" />
     <Compile Include="Health\HealthTestSelected.cs" />

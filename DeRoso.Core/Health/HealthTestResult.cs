@@ -13,12 +13,7 @@ namespace DeRoso.Core.Health
     [Table("Results")]
     public class HealthTestResult : HealthTestItem
     {
-
-        public HealthTestResult()
-        {
-            Date = DateTime.Now;
-        }
-
+      
         /// <summary>
         /// Идентификатор теста
         /// </summary>
@@ -59,7 +54,6 @@ namespace DeRoso.Core.Health
         }
         private float _scale = 0.0f;
 
-
         /// <summary>
         /// Значение измеряемого параметра перед выдачей препарата
         /// </summary>
@@ -75,7 +69,6 @@ namespace DeRoso.Core.Health
                 OnPropertyChanged();
             }
         }
-
         private float _meassurmentBefore;
 
         /// <summary>
@@ -93,16 +86,8 @@ namespace DeRoso.Core.Health
                 OnPropertyChanged();
             }
         }
-
         private float _meassurmentAfter;
-
-
-        public DateTime Date
-        {
-            get;
-            private set;
-        }
-
+       
         [NotMapped]
         /// <summary>
         /// Буфер измерений
@@ -113,8 +98,9 @@ namespace DeRoso.Core.Health
             private set;
         } = new ObservableCollection<HealthTestDrugResult>();
 
+        [NotMapped]
         /// <summary>
-        /// Простой тест содержащий один рецепт
+        /// Данный тест простой т.е. содержащит один рецепт
         /// </summary>
         public bool IsSingle
         {
@@ -124,9 +110,9 @@ namespace DeRoso.Core.Health
         }
 
         /// <summary>
-        /// Выбор оптимального препарата для теста
+        /// Выбор оптимального препарата послепроведения теста
         /// </summary>
-        public void SelectOptimalResult()
+        public void SelectOptimalDrug()
         {
             switch(Test.CalculationType)
             {

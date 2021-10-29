@@ -33,6 +33,8 @@
 
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Templates/PatientListBoxItemTemplate.xaml" />
 
+
+        <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/ProgessBarStyle.xaml" />
         
         
         <ResourceDictionary Source="pack://application:,,,/DeRoso.UI;component/Styles/BordersStyles.xaml" />

@@ -162,7 +162,6 @@
     <Compile Include="Selectors\PatientGenderItemTemplateSelector.cs" />
     <Compile Include="Selectors\TestDrugTemplateSelector.cs" />
     <Compile Include="Selectors\TestListBoxItemTemplateSelector.cs" />
-    <Compile Include="ViewModels\CurrentTestProcessViewModel.cs" />
     <Compile Include="ViewModels\DataViewModel.cs" />
     <Compile Include="ViewModels\DeviceTestingViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

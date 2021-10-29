@@ -129,7 +129,7 @@ namespace DeRoso
                 MessageBoxResult res = MessageBox.Show("Хотите сохранить результаты тестирования?", "Тестирование", MessageBoxButton.YesNo);
                 if (res == MessageBoxResult.Yes)
                 {
-                    SaveFileDialog fileDialog = new SaveFileDialog();
+                    /*SaveFileDialog fileDialog = new SaveFileDialog();
                     fileDialog.AddExtension = true;
                     fileDialog.Filter = "Файлы Excel (*.xls; *.xlsx)|*.xls;*.xlsx|Текстовые файлы (*.txt)|*.txt|Файлы JSON (*.json)|*.json|Файлы данных XML (*.xml)|*.xml";
 
@@ -154,7 +154,7 @@ namespace DeRoso
                         
 
                     }
-                        
+                    */                        
                 }                
             }
 

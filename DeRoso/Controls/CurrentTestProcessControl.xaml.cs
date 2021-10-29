@@ -25,14 +25,7 @@ namespace DeRoso.Controls
     {
         public CurrentTestProcessControl()
         {
-            InitializeComponent();          
-            
-        }
-
-        private void ButtonSaveResultsClick(object sender, RoutedEventArgs e)
-        {
-            CurrentTestProcessViewModel vm = (CurrentTestProcessViewModel)DataContext;
-            vm.Save(new ExcelResultsSaver("res.xls"));
+            InitializeComponent();
         }
     }
 }

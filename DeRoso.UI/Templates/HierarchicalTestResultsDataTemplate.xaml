@@ -11,6 +11,8 @@
         <ResourceDictionary Source="../Styles/TextBlockStyles.xaml" />
         <ResourceDictionary Source="../Styles/BordersStyles.xaml" />
         <ResourceDictionary Source="../Icons/Icons.xaml" />
+        <ResourceDictionary Source="../Styles/ProgessBarStyle.xaml" />
+         
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.FlatSlider.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -25,30 +27,30 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
 
                 <mah:MetroProgressBar
-                    Grid.Row="0"
+                    Grid.Row="2"
                     Grid.Column="0"
-                    Grid.ColumnSpan="5"
-                    
-                    Style="{DynamicResource FlatSlider}"
+                    Grid.ColumnSpan="6"
                     Minimum="0"
-                    Maximum="{cb:Binding Test.Recipts.Count}"
-                    Value="{Binding Scale, }"   
+                    Maximum="{cb:Binding Test.Reciepts.Count}"
+                    Value="{Binding Scale, Mode=OneWay}"  
+                    Style="{StaticResource ScaleProgressBar}"
+                    Visibility="{cb:Binding !IsSingle, FalseToVisibility=Collapsed}">      
                     
-                    Visibility="{cb:Binding 'Test.Recipts.Count > 0',FalseToVisibility=Collapsed}">                    
                 </mah:MetroProgressBar>
                 
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="0"
+                    HorizontalAlignment="Left"
                     Style="{StaticResource ItemTitleStyle}"
                     Text="{Binding Test.Title}" />
 
@@ -75,7 +77,7 @@
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="2"
-                    MaxWidth="300"
+                    
                     HorizontalAlignment="Center"
                     Style="{StaticResource ItemDescriptionStyle}"
                     Text="Метод расчета" />
@@ -83,15 +85,14 @@
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="2"
-                    MaxWidth="300"
+                    FontFamily="Roboto Condenced"
                     HorizontalAlignment="Center"
                     Style="{StaticResource ItemDescriptionStyle}"
                     Text="{Binding Test.CalculationType}" />
 
                 <TextBlock
                     Grid.Row="0"
-                    Grid.Column="3"
-                    MaxWidth="300"
+                    Grid.Column="3"                    
                     HorizontalAlignment="Center"
                     Style="{StaticResource ItemDescriptionStyle}"
                     Text="Количество пепаратов" />
@@ -99,7 +100,7 @@
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="3"
-                    MaxWidth="300"
+                    FontFamily="Roboto Condenced"
                     HorizontalAlignment="Center"
                     Style="{StaticResource ItemDescriptionStyle}"
                     Text="{Binding Test.Reciepts.Count}" />
@@ -108,22 +109,22 @@
                     Grid.Row="0"
                     Grid.RowSpan="2"
                     Grid.Column="4"
-                    MaxWidth="300"
+                   
                     HorizontalAlignment="Center"
                     FontSize="28"
                     Style="{StaticResource ValueTitleStyle}"
-                    Visibility="{cb:Binding IsSingle, FalseToVisibility=Collapsed}"
+                    Visibility="{cb:Binding IsSingle, FalseToVisibility=Hidden}"
                     Text="{Binding MeassurmentAfter, StringFormat={}{0:0.0}}" />
 
                 <TextBlock
                     Grid.Row="0"
                     Grid.RowSpan="2"
                     Grid.Column="4"
-                    MaxWidth="300"
+                    
                     HorizontalAlignment="Center"
                     FontSize="28"
                     Style="{StaticResource ValueTitleStyle}"
-                    Visibility="{cb:Binding !IsSingle, FalseToVisibility=Collapsed}"
+                    Visibility="{cb:Binding !IsSingle, FalseToVisibility=Hidden}"
                     Text="{Binding Scale, StringFormat={}{0:0}}" />
 
                 <ContentPresenter
@@ -147,16 +148,17 @@
                 <Grid MinWidth="800" Margin="5">
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="10*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="60" />
                     </Grid.ColumnDefinitions>
 
                     <ContentPresenter
                         Grid.Column="0"
                         Width="32"
                         Height="32"
+                        HorizontalAlignment="Center"
                         Content="{StaticResource IconChecked}"
                         Visibility="{cb:Binding IsOptimal,
                                                 FalseToVisibility=Hidden}" />
@@ -168,7 +170,7 @@
                         Style="{StaticResource ValueTitleStyle}"
                         Text="{Binding MeassurmentBefore, StringFormat={}{0:0.0}}" />
 
-                    <Grid Grid.Column="2" HorizontalAlignment="Center">
+                    <Grid Grid.Column="2" HorizontalAlignment="Stretch" Margin="50 , 0, 0, 0">
 
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -184,6 +186,7 @@
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="0"
+                            HorizontalAlignment="Left"
                             Style="{StaticResource ItemTitleStyle}"
                             Text="{Binding Drug.Address}" />
 
@@ -191,6 +194,7 @@
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="1"
+                            HorizontalAlignment="Center"
                             Style="{StaticResource ItemTitleStyle}"
                             Text="{Binding Drug.Cell}" />
 
@@ -198,8 +202,7 @@
                             Grid.Row="0"
                             Grid.Column="2"
                             Style="{StaticResource ItemTitleStyle}"
-                            Text="{Binding Drug.Title}"
-                            TextAlignment="Left" />
+                            Text="{Binding Drug.Title}"/>
 
                         <TextBlock
                             Grid.Row="1"

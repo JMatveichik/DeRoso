@@ -7,9 +7,9 @@ using DeRoso.Core.Health;
 
 namespace DeRoso.Core.Data
 {
-    public class XmlResultsSaver : FileOutputResultSaver
+    public class JSONResultSaver : FileOutputResultSaver
     {
-        public XmlResultsSaver (string targetPath) : base(targetPath)
+        public JSONResultSaver(string targetPath) : base(targetPath)
         {
 
         }

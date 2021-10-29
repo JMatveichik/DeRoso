@@ -238,7 +238,7 @@ namespace DeRoso.Core.Health
             //throw new NotImplementedException();
         }
         
-
+        /*
         /// <summary>
         ///  Сохранить результаты тестирования
         /// </summary>
@@ -247,6 +247,7 @@ namespace DeRoso.Core.Health
         {
             sp.Save(Results);
         }
+        */
 
         /// <summary>
         /// Функция ожидания заданного времени с выдачей сообщений с заданным интервалом
@@ -423,7 +424,7 @@ namespace DeRoso.Core.Health
             }
 
 
-            resTest.SelectOptimalResult();
+            resTest.SelectOptimalDrug();
 
 
             /************************************************/

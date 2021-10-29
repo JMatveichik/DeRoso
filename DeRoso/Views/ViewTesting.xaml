@@ -93,6 +93,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -188,6 +190,18 @@
                          Style="{StaticResource CheckInputStyle}">
                         Использовать случайные данные
                 </CheckBox>
+
+                <Button  Grid.Column="0"
+                        Grid.Row="8"
+                         Grid.ColumnSpan="2" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        Margin="3">
+
+                    <ContentPresenter   Width="48" 
+                                        Height="48"                                  
+                                        Content="{StaticResource IconSave}"/>
+                </Button>
 
             </Grid>
         </Border>

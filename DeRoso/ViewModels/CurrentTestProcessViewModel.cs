@@ -130,8 +130,6 @@ namespace DeRoso.ViewModels
             get;
             private set;
         } = new ObservableCollection<HealthTestResult>();
-
-
        
         
         public void Save(IResultsSaver sp)

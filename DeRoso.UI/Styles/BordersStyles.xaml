@@ -5,6 +5,11 @@
 
     <SolidColorBrush x:Key="BordersBrush" Color="{StaticResource MahApps.Colors.Accent2}" />
     <SolidColorBrush x:Key="BordersSuccsessBrush" Color="Green" />
+    <LinearGradientBrush x:Key ="TestScaleBrush">
+        <GradientStop Color="#FFC71515"/>
+        <GradientStop Color="#FF4EA26D" Offset="1.0"/>
+
+    </LinearGradientBrush>
 
     <Style x:Key="BorderUnderline" TargetType="Border">
 

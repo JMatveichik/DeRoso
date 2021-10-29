@@ -23,8 +23,11 @@ namespace DeRoso.Core.Data
         /// Сохранение результатов 
         /// </summary>
         /// <param name="results"></param>
-        public override bool Save(IEnumerable<HealthTestResult> results)
+        public override bool Save(HealthTestReport report)
         {
+            return false;
+
+            /*
             Excel.Application ExcelApp = new Microsoft.Office.Interop.Excel.Application();
 
 
@@ -80,6 +83,7 @@ namespace DeRoso.Core.Data
             }
 
             return true;
+            */
         }
 
         private int SaveTestResult(int startrow, HealthTestResult testres, Excel.Worksheet sheet)
