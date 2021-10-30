@@ -25,11 +25,7 @@ namespace DeRoso.Core.Data
         /// <param name="results"></param>
         public override bool Save(HealthTestReport report)
         {
-            return false;
-
-            /*
             Excel.Application ExcelApp = new Microsoft.Office.Interop.Excel.Application();
-
 
             //Отобразить Excel
             ExcelApp.Visible = true;
@@ -45,34 +41,52 @@ namespace DeRoso.Core.Data
 
             //Получаем первый лист документа (счет начинается с 1)
             Excel.Worksheet sheet = (Excel.Worksheet)ExcelApp.Worksheets.get_Item(1);
+            sheet.Columns[1].ColumnWidth = 80;
+            sheet.Columns[2].ColumnWidth = 20;
+            sheet.Columns[3].ColumnWidth = 20;
 
             //Название листа (вкладки снизу)
-            sheet.Name = string.Format("Отчет за {0}", DateTime.Now.ToShortDateString());
+            sheet.Name = string.Format("{0}-{1}", report.Patient.ShortName, report.ReportDate.ToShortDateString());
 
-            //Заголовок
-            Excel.Range rangeHeader = (Excel.Range)sheet.get_Range("A1", "I1").Cells;
-            rangeHeader.Merge(Type.Missing);
-            rangeHeader.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
-            rangeHeader.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+            //ДАТА
+            Excel.Range rng = (Excel.Range)sheet.get_Range("A1").Cells;
+            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, true);
+            rng.Value = string.Format("ДАТА");
 
-            rangeHeader.Value = string.Format("Отчет за {0} - {1}", DateTime.Now.ToShortDateString(), DateTime.Now.ToShortDateString());
+            rng = (Excel.Range)sheet.get_Range("B1").Cells;
+            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, false);
+            rng.Value = report.ReportDate.ToShortDateString();
 
+            ///ВРЕМЯ
+            rng = (Excel.Range)sheet.get_Range("A2").Cells;
+            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, true);
+            rng.Value = string.Format("ВРЕМЯ");
+
+            rng = (Excel.Range)sheet.get_Range("B2").Cells;
+            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, false);
+            rng.Value = report.ReportDate.ToShortTimeString();
+
+            ///ПАЦИЕНТ
+            rng = (Excel.Range)sheet.get_Range("A3").Cells;
+            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, true);
+            rng.Value = string.Format("ПАЦИЕНТ");
+
+            rng = (Excel.Range)sheet.get_Range("B3").Cells;
+            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, false);
+            rng.Value = report.Patient.ShortName;
 
             //СЕКЦИЯ 
-            string section = results.FirstOrDefault().Test.Group.Section.Title;
+            var res = report.Results.FirstOrDefault();
+            string section = (res == null) ? "ОШИБКА ПОЛУЧЕНИЯ СЕКЦИИ" : res.Test.Group.Section.Title;
 
-            Excel.Range rangeSection = (Excel.Range)sheet.get_Range("A2", "I2").Cells;
-            rangeSection.Merge(Type.Missing);
-            rangeHeader.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
-            rangeHeader.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
-            rangeSection.Value = section;
+            rng = (Excel.Range)sheet.get_Range("A6").Cells;
+            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 22, true);
+            rng.Value = section;
 
-
-            /////////////////////////////////////////////////////////////////
-           
+            
             //начальная строка вывода.
-            int startRow = 4;
-            foreach (HealthTestResult r in results)
+            int startRow = 8;
+            foreach (HealthTestResult r in report.Results)
             {
                 startRow = SaveTestResult(startRow, r, sheet);
 
@@ -82,84 +96,106 @@ namespace DeRoso.Core.Data
                 }
             }
 
+
+            workBook.SaveAs(TargetFilePath);
+            //Отобразить Excel
+            ExcelApp.Visible = true;
+
             return true;
-            */
+            
         }
+
 
         private int SaveTestResult(int startrow, HealthTestResult testres, Excel.Worksheet sheet)
         {
+            HealthTest test = testres.Test;
+
             //Заголовок теста
-            string strAddress = string.Format("A{0}:B{1}", startrow, startrow + 1);
+            string strAddress = string.Format("A{0}", startrow);
             Excel.Range currentOutRange = (Excel.Range)sheet.get_Range(strAddress).Cells;
-            currentOutRange.Merge(Type.Missing);
-            currentOutRange.Value = testres.Test.Title;
-
-            //измерение до
-            strAddress = string.Format("C{0}:E{0}", startrow);
+            currentOutRange.Value = test.Title;
+            currentOutRange.RowHeight = 35;
+            FormatRange(currentOutRange, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 20, true);
+            
+            //ШКАЛА
+            strAddress = string.Format("B{0}", startrow);
             currentOutRange = (Excel.Range)sheet.get_Range(strAddress).Cells;
-            currentOutRange.Merge(Type.Missing);
-            currentOutRange.Value = "ИЗМЕРЕНИЕ ДО";
+            currentOutRange.Value2 = testres.Scale;
+            FormatRange(currentOutRange, Excel.XlHAlign.xlHAlignCenter, Excel.XlVAlign.xlVAlignCenter, 18, true);
+            if (test.Reciepts.Count > 1)
+            {
+                currentOutRange.NumberFormat = "#";
+            }
+            else
+            {
+                currentOutRange.NumberFormat = "##.##";
+            }                
 
-            strAddress = string.Format("C{0}:E{0}", startrow + 1);
+            //ТИП РАСЧЕТА
+            strAddress = string.Format("C{0}", startrow);
             currentOutRange = (Excel.Range)sheet.get_Range(strAddress).Cells;
-            currentOutRange.Merge(Type.Missing);
-            currentOutRange.Value = "0.0";
+            currentOutRange.Value = EnumHelper.GetDescription( testres.Test.CalculationType );
+            FormatRange(currentOutRange, Excel.XlHAlign.xlHAlignCenter, Excel.XlVAlign.xlVAlignCenter, 16, false);
 
-            //измерение после
-            strAddress = string.Format("F{0}:H{0}", startrow);
+            strAddress = string.Format("A{0}:C{0}", startrow);
             currentOutRange = (Excel.Range)sheet.get_Range(strAddress).Cells;
-            currentOutRange.Merge(Type.Missing);
-            currentOutRange.Value = "ИЗМЕРЕНИЕ ДО";
-
-            strAddress = string.Format("F{0}:H{0}", startrow + 1);
-            currentOutRange = (Excel.Range)sheet.get_Range(strAddress).Cells;
-            currentOutRange.Merge(Type.Missing);
-            currentOutRange.Value = "100.0";
-
-            //Тип вычислений
-            strAddress = string.Format("I{0}", startrow);
-            currentOutRange = (Excel.Range)sheet.get_Range(strAddress).Cells;
-            currentOutRange.Value = "ТИП ВЫЧИСЛЕНИЙ";
-
-            strAddress = string.Format("I{0}", startrow + 1);
-            currentOutRange = (Excel.Range)sheet.get_Range(strAddress).Cells;
-            currentOutRange.Value = testres.Test.CalculationType.ToString();
-
-            return startrow + 2;
+            currentOutRange.Borders[Excel.XlBordersIndex.xlEdgeBottom].Weight = 1;
+            currentOutRange.Borders[Excel.XlBordersIndex.xlEdgeBottom].LineStyle = Excel.XlLineStyle.xlContinuous;
+            return startrow + 1;
         }
 
         private void FormatRange(Excel.Range rng, Excel.XlHAlign halign, Excel.XlVAlign valign, int  fontsize, bool bold)
         {
             rng.VerticalAlignment = valign;
             rng.HorizontalAlignment = halign;
-            rng.Font.Name = "Roboto Condenced Light";
+            rng.Font.Name = bold  ? "Roboto Condensed" : "Roboto Condensed Light";
             rng.Font.Size = fontsize;
-            rng.Font.Bold = bold;
+            //rng.Font.Bold = bold;
         }
+
         
         private int  SaveDrugResult(int startrow, HealthTestDrugResult drugres, Excel.Worksheet sheet )
         {
-            //Измерение до
-            string strAddress = string.Format("B{0}:C{1}", startrow, startrow + 1);
+            HealthTestDrug drug = drugres.Drug;
+
+            //Заголовок
+            string strAddress = string.Format("A{0}", startrow);
             Excel.Range currentOutRange = (Excel.Range)sheet.get_Range(strAddress).Cells;
-            currentOutRange.Merge(Type.Missing);
-            currentOutRange.Value = drugres.MeassurmentBefore;
-            FormatRange(currentOutRange, Excel.XlHAlign.xlHAlignCenter, Excel.XlVAlign.xlVAlignCenter, 20, true);            
+            string drugString = string.Format("{0}:{1} : {2}", drug.Address, drug.Cell, drug.Title);
+            currentOutRange.Value = drugString;
+            currentOutRange.IndentLevel = 1;
+            FormatRange(currentOutRange, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 18, false);            
 
 
-            //Измерение после
-            strAddress = string.Format("I{0}:I{1}", startrow, startrow + 1);
+            //Измерение  после
+            strAddress = string.Format("B{0}", startrow);
             currentOutRange = (Excel.Range)sheet.get_Range(strAddress).Cells;
-            currentOutRange.Merge(Type.Missing);
-            currentOutRange.Value = drugres.MeassurmentAfter;
-            FormatRange(currentOutRange, Excel.XlHAlign.xlHAlignCenter, Excel.XlVAlign.xlVAlignCenter, 20, true);
+            currentOutRange.Value2 = drugres.MeassurmentBefore;
+            currentOutRange.NumberFormat = "0.00";
+            FormatRange(currentOutRange, Excel.XlHAlign.xlHAlignCenter, Excel.XlVAlign.xlVAlignCenter, 18, false);
 
+            //Измерение  после
+            strAddress = string.Format("C{0}", startrow);
+            currentOutRange = (Excel.Range)sheet.get_Range(strAddress).Cells;
+            currentOutRange.Value2 = drugres.MeassurmentAfter;
+            currentOutRange.NumberFormat = "0.00";
+            FormatRange(currentOutRange, Excel.XlHAlign.xlHAlignCenter, Excel.XlVAlign.xlVAlignCenter, 18, false);
+
+            if (drugres.IsOptimal)
+            {
+                strAddress = string.Format("A{0}:C{0}", startrow);
+                currentOutRange = (Excel.Range)sheet.get_Range(strAddress).Cells;
+                currentOutRange.Font.Color = Excel.XlRgbColor.rgbForestGreen;
+            }
+                
+            
+
+            /*
             //Адрес препарата
             strAddress = string.Format("D{0}", startrow);
             currentOutRange = (Excel.Range)sheet.get_Range(strAddress).Cells;
-            currentOutRange.Merge(Type.Missing);
-            currentOutRange.Value = drugres.Drug.Address;
-            FormatRange(currentOutRange, Excel.XlHAlign.xlHAlignCenter, Excel.XlVAlign.xlVAlignCenter, 16, false);
+            currentOutRange.Value = .Address;
+            FormatRange(currentOutRange, Excel.XlHAlign.xlHAlignCenter, Excel.XlVAlign.xlVAlignCenter, 18, false);
 
             //Ячейка препарата
             strAddress = string.Format("E{0}", startrow);
@@ -188,9 +224,9 @@ namespace DeRoso.Core.Data
                 currentOutRange = (Excel.Range)sheet.get_Range(strAddress).Cells;
                 currentOutRange.Interior.Color = Excel.XlRgbColor.rgbAquamarine;
             }
-            
+            */
 
-            return startrow + 2;
+            return startrow + 1;
         }
         
     }

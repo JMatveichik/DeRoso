@@ -62,13 +62,14 @@
             <TextBlock Grid.Column="2"
                        Grid.Row="2" 
                        Style="{StaticResource PageTitleStyle}"
-                           Text="{Binding TimeLeft, StringFormat= {}{0:0.0} сек}" Margin="5,5,-5,5"></TextBlock>
+                       Visibility="{cb:Binding 'CurrentTest != null', FalseToVisibility=Hidden}"
+                       Text="{Binding TimeLeft, StringFormat= {}{0:0.0} сек}" Margin="5,5,-5,5"></TextBlock>
 
             <TreeView Grid.Column="0"
                      Grid.Row="4" 
                      Grid.ColumnSpan="3"                      
                      Margin="10"
-                     ItemsSource="{Binding Results}"
+                     ItemsSource="{Binding Report.Results}"
                      ItemTemplate="{StaticResource HierarchicalTestResultsDataTemplate}">
 
                 <TreeView.Resources>

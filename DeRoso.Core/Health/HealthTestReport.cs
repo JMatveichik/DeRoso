@@ -1,6 +1,8 @@
-﻿using System;
+﻿using DeRoso.Core.Data;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,8 +10,7 @@ using System.Threading.Tasks;
 namespace DeRoso.Core.Health
 {
     public class HealthTestReport : ViewModelBase
-    {
-        
+    {        
         /// <summary>
         /// Тестируемый пациент
         /// </summary>
@@ -37,9 +38,26 @@ namespace DeRoso.Core.Health
         {
             get;
             private set;
-        } = new ObservableCollection<HealthTestResult>();
+        } = new ObservableCollection<HealthTestResult>();        
+
+        /// <summary>
+        /// Очистить список результатов
+        /// </summary>
+        public void Clear()
+        {
+            Results.Clear();
+        }
         
-        
+        /// <summary>
+        /// Флаг наполнения результатов
+        /// </summary>
+        public bool IsEmpty
+        {
+            get { return Results.Count > 0; }
+            
+        }
+
+
         /// <summary>
         /// Дата и время отчета
         /// </summary>
@@ -85,6 +103,30 @@ namespace DeRoso.Core.Health
         {
             Results.Add(tr);
             IsModified = true;
+        }
+
+
+        /// <summary>
+        /// Сохранение по умолчанию в файл excel
+        /// </summary>
+        public void Save()
+        {
+            string patientDir = Directory.GetCurrentDirectory() + "\\" + Patient.ShortName;
+            Directory.CreateDirectory(patientDir);
+
+            string fileName = ReportDate.ToShortDateString() + ".xlsx";
+            string path = patientDir + "\\" + fileName;
+            
+            Save(new ExcelResultsSaver(path));
+        }
+
+        /// <summary>
+        /// Сохранением с использованием конкретного интерфейса
+        /// </summary>
+        /// <param name="sp"></param>
+        public void Save(IResultsSaver sp)
+        {
+            sp.Save(this);
         }
     }
 }

@@ -7,9 +7,10 @@
               xmlns:ctrl="clr-namespace:DeRoso.Controls"
              xmlns:cmd ="clr-namespace:DeRoso.ViewModels"
              xmlns:sel ="clr-namespace:DeRoso.Selectors"
+             xmlns:cb ="clr-namespace:CalcBinding;assembly=CalcBinding"
              xmlns:health="clr-namespace:DeRoso.Core.Health;assembly=DeRoso.Core"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800">
 
     <UserControl.Resources>
         <sel:PatientGenderItemTemplateSelector x:Key="GenderTemplateSelector"
@@ -35,7 +36,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <ctrl:MainNavigationPanel Grid.Column="2" HorizontalAlignment="Right"></ctrl:MainNavigationPanel>
+        <ctrl:MainNavigationPanel Grid.Column="2" HorizontalAlignment="Right">
+            
+        </ctrl:MainNavigationPanel>
         
         <TextBlock Text="ПРОВЕДЕНИЕ ТЕСТОВ"
                    Grid.ColumnSpan="2"
@@ -121,7 +124,7 @@
                     Grid.ColumnSpan="2"
                     MinHeight="40"
                                      
-                    SelectedItem="{Binding CurrentPatient, Mode=TwoWay}"
+                    SelectedItem="{Binding Report.Patient, Mode=TwoWay}"
                     Margin="10,5" 
                     ItemsSource="{Binding Patients}"
                     ItemTemplateSelector="{StaticResource GenderTemplateSelector}"/>
@@ -152,21 +155,21 @@
                         Grid.Column="1" 
                         Grid.Row="2"
                         Style="{StaticResource ValueTitleStyle}"
-                        Text="{Binding CurrentPatient.FamilyName}"
+                        Text="{Binding Report.Patient.FamilyName}"
                         >
                 </TextBlock>
                 <TextBlock 
                         Grid.Column="2" 
                         Grid.Row="3"
                         Style="{StaticResource ValueTitleStyle}"
-                        Text="{Binding CurrentPatient.FirstName}"
+                        Text="{Binding Report.Patient.FirstName}"
                        >
                 </TextBlock>
                 <TextBlock 
                         Grid.Column="3" 
                         Grid.Row="4"
                         Style="{StaticResource ValueTitleStyle}"
-                        Text="{Binding CurrentPatient.SecondName}"
+                        Text="{Binding Report.Patient.SecondName}"
                        >
                 </TextBlock>
 
@@ -189,6 +192,14 @@
                           IsChecked="{Binding IsUsedMeassureAsRandom}"
                          Style="{StaticResource CheckInputStyle}">
                         Использовать случайные данные
+                </CheckBox>
+
+                <CheckBox Grid.Column="0"
+                         Grid.Row="7"
+                         Grid.ColumnSpan="2" 
+                          IsChecked="{Binding IsAutoSave}"
+                         Style="{StaticResource CheckInputStyle}">
+                    Автосохранение после тестирования
                 </CheckBox>
 
                 <Button  Grid.Column="0"
@@ -221,7 +232,52 @@
              Grid.RowSpan="2" 
            />
 
+        <Grid Grid.Column="1" Grid.Row="1" 
+              Visibility="{cb:Binding IsStoped}"
+              Margin="15"
+              HorizontalAlignment="Center">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <ContentPresenter   
+                Width="32" 
+                Height="32"
+                Content="{StaticResource IconStop}"/>
+            <TextBlock Grid.Column="1"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource ItemDescriptionStyle}">
+                Остановка после теста...
+            </TextBlock>
+            
+        </Grid>
+
+
+        <Grid Grid.Column="1" Grid.Row="1" 
+              Visibility="{cb:Binding IsPaused}"
+              Margin="15"
+              HorizontalAlignment="Center">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <ContentPresenter   
+                Width="32" 
+                Height="32"
+                Content="{StaticResource IconPause}"/>
+            <TextBlock Grid.Column="1"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource ItemDescriptionStyle}">
+                Пауза после теста...
+            </TextBlock>
+        </Grid>
         
+        
+
 
     </Grid>
     

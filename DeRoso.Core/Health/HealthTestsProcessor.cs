@@ -17,8 +17,6 @@ namespace DeRoso.Core.Health
         public HealthTestsProcessor(DeviceProvider dev)
         {
             Device = dev;
-            Patients = Patient.All();
-
             Device.DeviceTestStarted += OnDeviceTestEvent;
             Device.DeviceTestFailed += OnDeviceTestEvent;
             Device.DeviceTestComplete += OnDeviceTestEvent;
@@ -34,6 +32,13 @@ namespace DeRoso.Core.Health
             get;
             private set;
         }
+
+        public HealthTestReport Report
+        {
+            get;
+            private set;
+        } = new HealthTestReport();
+
 
         public ObservableCollection<HealthTestResult> Results
         {
@@ -61,8 +66,99 @@ namespace DeRoso.Core.Health
                 OnPropertyChanged();
             }
         }
-
         private bool _isUsedMeassureAsRandom = false;
+
+        
+        /// <summary>
+        /// Автосохранение результатовпосле окончвния тестирования
+        /// </summary>
+        public bool IsAutoSave
+        {
+            get { return _isAutoSave; }
+            set
+            {
+                if (_isAutoSave == value)
+                    return;
+
+                _isAutoSave = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _isAutoSave = true;
+
+
+        /// <summary>
+        /// Приостановить процесс тестирования после выполнения текущего теста
+        /// </summary>
+        public void Pause()
+        {
+            IsPaused = !IsPaused;
+            IsStoped = false;
+        }
+
+        /// <summary>
+        /// Остановить процесс тестирования после выполнения текущего теста
+        /// </summary>
+        public void Stop()
+        {
+            IsStoped = true;
+            IsPaused = false;
+        }
+
+        
+        /// <summary>
+        /// Флаг запуска тестирования
+        /// </summary>
+        public bool IsStarted
+        {
+            get { return _isStarted; }
+            private set
+            {
+                if (_isStarted == value)
+                    return;
+
+                _isStarted = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _isStarted = false;
+             
+
+        /// <summary>
+        /// Флаг приостановки процесса тестирования
+        /// </summary>
+        public bool IsPaused
+        {
+            get { return _isPaused; }
+            private set
+            {
+                if (_isPaused == value)
+                    return;
+
+                _isPaused = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _isPaused = false;
+
+         
+        /// <summary>
+        /// Флаг остановки процесса тастирования
+        /// </summary>
+        public bool IsStoped
+        {
+            get { return _isStoped; }
+            private set
+            {
+                if (_isStoped == value)
+                    return;
+
+                _isStoped = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _isStoped = false;
+
 
         public bool IsUsedHV
         {
@@ -159,17 +255,21 @@ namespace DeRoso.Core.Health
         private Patient _currentPatient;
 
 
-        public ObservableCollection<Patient> Patients
+        /// <summary>
+        /// Доступные пациенты
+        /// </summary>
+        public List<Patient> Patients
         {
-            get;
-            private set;
-        }
+            get { return DeRossoDataWorker.GetAllPatients(); }
+         }
 
+        /// <summary>
+        /// Выбранные тесты 
+        /// </summary>
         public List<HealthTest> Tests
         {
-            get;
-            private set;
-        } = DeRossoDataWorker.GetLastSelectedTests();
+            get { return DeRossoDataWorker.GetLastSelectedTests(); }
+        } 
 
         /// <summary>
         /// Делегат для событий текущих тестов
@@ -236,18 +336,8 @@ namespace DeRoso.Core.Health
         private void OnSpecifiedDeviceArrived(object sender, EventArgs e)
         {
             //throw new NotImplementedException();
-        }
+        }       
         
-        /*
-        /// <summary>
-        ///  Сохранить результаты тестирования
-        /// </summary>
-        /// <param name="sp"></param>
-        public void Save(IResultsSaver sp)
-        {
-            sp.Save(Results);
-        }
-        */
 
         /// <summary>
         /// Функция ожидания заданного времени с выдачей сообщений с заданным интервалом
@@ -294,20 +384,27 @@ namespace DeRoso.Core.Health
         /// <returns></returns>
         public void Do(IEnumerable<HealthTest> tests)
         {
+            IsStoped  = false;
+            IsPaused  = false;
+            IsStarted = false;
+
+
+            
+
             var dispatcher = Application.Current.Dispatcher;
 
             //очищаем список результатов
             dispatcher.BeginInvoke(new Action(
-                () => Results.Clear())
-            );
-           
+                () => Report.Clear())
+            );           
 
             //сбрасываем прибор
             Device.Reset();
 
             //Тестирование устройства
             //if (!Device.IsReady)
-                Device.Test();
+
+            Device.Test();
 
 
             //запускаем тесты в цикле
@@ -319,20 +416,57 @@ namespace DeRoso.Core.Health
 
                 Thread.Sleep(1000);
 
+                ///выполняем тест и получаем результат 
                 HealthTestResult res = Do(test);
 
+                //если тест выполнен и получены результаты
                 if (res != null)
                 {
+                    
                     HealthTestComplete?.Invoke(this, new HealthTestEventArgs(test, EnumHealthTestStep.Complete, TimeSpan.FromSeconds(0)));
                 }
                 else
                 {
+                    IsStoped = true;
                     HealthTestFailed?.Invoke(this, new HealthTestEventArgs(test, EnumHealthTestStep.Failed, TimeSpan.FromSeconds(0)));
+                    CurrentOperation = "Ошибка при проведении теста...";
                     break;
+                }
+                
+                ///если прервали тестирование
+                if ( IsStoped )
+                {
+                    IsStarted = false;
+                    IsPaused = false;
+                    CurrentOperation = "Тестирование остановлено...";
+                    return;
+                }
+                
+                ///если тестирование поставили на паузу 
+                while ( IsPaused )
+                {
+                    CurrentOperation = "Тестирование приостановлено...";
+                    Thread.Sleep(500);
                 }
             }
 
+            
+
+            IsStarted = false;
+            IsPaused = false;
+            IsStoped = true;
+
             CurrentOperation = "Тестирование завершено...";
+            Thread.Sleep(2000);
+
+            if (IsAutoSave)
+            {
+                CurrentOperation = "Сохранение результатов...";
+                Report.Save();
+            }
+            
+            Thread.Sleep(2000);
+
         }
 
         /// <summary>
@@ -355,7 +489,7 @@ namespace DeRoso.Core.Health
 
             //добавляем новый результат теста
             dispatcher.BeginInvoke(new Action(
-                () => Results.Add(resTest))
+                () => Report.AddTestResult(resTest))
             );
             
             CurrentOperation = EnumHelper.GetDescription(EnumHealthTestStep.MeassureBefore);
@@ -363,7 +497,7 @@ namespace DeRoso.Core.Health
 
             //если был использван HV импульс заново начинаем измерение ДО
             if (IsUsedHV)
-                MeassureBeforeHV = IsUsedMeassureAsRandom ? rnd.Next(20, 98) : Device.Meassure(); 
+                MeassureBeforeHV = IsUsedMeassureAsRandom ? (rnd.Next(20, 98) + (float)rnd.NextDouble()) : Device.Meassure(); 
                 
             
             //устанавливаем значение измерения до для всего теста
@@ -420,7 +554,7 @@ namespace DeRoso.Core.Health
                 /*************************************************/                
 
                 //схраняем результаты измерений после выдачи препарата
-                res.MeassurmentAfter = IsUsedMeassureAsRandom ? rnd.Next(20, 98) : Device.Meassure();                
+                res.MeassurmentAfter = IsUsedMeassureAsRandom ? (rnd.Next(20, 98) + (float)rnd.NextDouble()) : Device.Meassure();
             }
 
 

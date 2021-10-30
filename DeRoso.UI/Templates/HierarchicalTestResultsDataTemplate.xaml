@@ -186,7 +186,7 @@
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="0"
-                            HorizontalAlignment="Left"
+                            TextAlignment="Left"
                             Style="{StaticResource ItemTitleStyle}"
                             Text="{Binding Drug.Address}" />
 
@@ -194,13 +194,14 @@
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="1"
-                            HorizontalAlignment="Center"
+                            TextAlignment="Left"
                             Style="{StaticResource ItemTitleStyle}"
                             Text="{Binding Drug.Cell}" />
 
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="2"
+                            TextAlignment="Left"
                             Style="{StaticResource ItemTitleStyle}"
                             Text="{Binding Drug.Title}"/>
 

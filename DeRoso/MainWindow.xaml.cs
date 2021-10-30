@@ -74,10 +74,8 @@ namespace DeRoso
 
         private void PauseTestExecute(object sender, ExecutedRoutedEventArgs e)
         {
-            DeviceProvider dev = ((App)App.Current).Device;
-
-            //Task test = new Task(() => dev.Do(HealthTestSelected.Tests));
-            //test.Start();
+            HealthTestsProcessor processor = ((App)App.Current).TestProcessor;
+            processor.Pause();
         }
 
         /// <summary>
@@ -92,10 +90,8 @@ namespace DeRoso
 
         private void StopTestExecute(object sender, ExecutedRoutedEventArgs e)
         {
-            DeviceProvider dev = ((App)App.Current).Device;
-
-            //Task test = new Task(() => dev.Do(HealthTestSelected.Tests));
-            //test.Start();
+            HealthTestsProcessor processor = ((App)App.Current).TestProcessor;
+            processor.Stop();
         }
 
 
@@ -107,8 +103,13 @@ namespace DeRoso
         /// <param name="e"></param>
         private void StartTestCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            //DeviceProvider dev = ((App)App.Current).Device;
             HealthTestsProcessor processor = ((App)App.Current).TestProcessor;
+            if (processor.IsStarted)
+            {
+                e.CanExecute = false;
+                return;
+            }
+
             bool hasTests = processor.Tests.Count > 0;
             bool devIsReady = true; //dev.IsReady;
 
