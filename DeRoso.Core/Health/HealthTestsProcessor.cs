@@ -261,15 +261,17 @@ namespace DeRoso.Core.Health
         public List<Patient> Patients
         {
             get { return DeRossoDataWorker.GetAllPatients(); }
-         }
+        }
 
         /// <summary>
         /// Выбранные тесты 
         /// </summary>
         public List<HealthTest> Tests
         {
-            get { return DeRossoDataWorker.GetLastSelectedTests(); }
-        } 
+            get;
+            private set;
+
+        } = DeRossoDataWorker.GetLastSelectedTests(); 
 
         /// <summary>
         /// Делегат для событий текущих тестов
