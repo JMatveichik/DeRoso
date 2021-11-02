@@ -14,7 +14,7 @@ namespace DeRoso.Core.Data
         /// Сохранение результатов тесирования
         /// </summary>
         /// <param name="results"></param>
-        bool Save(HealthTestReport report);
+        bool Save(HealthTestReport report, bool showResults);
 
     }
 }

@@ -107,26 +107,38 @@ namespace DeRoso.Core.Health
 
 
         /// <summary>
-        /// Сохранение по умолчанию в файл excel
+        /// Сохранение по умолчанию в файл Excel
         /// </summary>
-        public void Save()
+        public bool Save(bool showResults = true)
         {
-            string patientDir = Directory.GetCurrentDirectory() + "\\" + Patient.ShortName;
+            string patientDir = Directory.GetCurrentDirectory() + "\\";
+
+            if (Patient != null)
+                patientDir += Patient.ShortName;
+            else
+                patientDir += "Незарегистрированные";
+
             Directory.CreateDirectory(patientDir);
 
-            string fileName = ReportDate.ToShortDateString() + ".xlsx";
+            string fileName = string.Format("{0}_{1}_{2}{3}", ReportDate.ToShortDateString(), ReportDate.Hour, ReportDate.Minute, ".xlsx");
             string path = patientDir + "\\" + fileName;
             
-            Save(new ExcelResultsSaver(path));
+            if (Save(new ExcelResultsSaver(path), showResults))
+            {
+                IsModified = false;
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
         /// Сохранением с использованием конкретного интерфейса
         /// </summary>
         /// <param name="sp"></param>
-        public void Save(IResultsSaver sp)
+        public bool Save(IResultsSaver sp, bool showResults)
         {
-            sp.Save(this);
+            return sp.Save(this, showResults);
         }
     }
 }

@@ -123,14 +123,19 @@ namespace DeRoso
         /// <param name="e"></param>
         private void StartTestExecute(object sender, ExecutedRoutedEventArgs e)
         {
-            HealthTestsProcessor processor = ((App)App.Current).TestProcessor;            
+            var processor = ((App)App.Current).TestProcessor;
+            var report    = ((App)App.Current).TestProcessor.Report;
 
-            if (processor.Results.Count != 0)
+            //не сохранены результаты тестирования
+            if (report.IsModified)
             {
-                MessageBoxResult res = MessageBox.Show("Хотите сохранить результаты тестирования?", "Тестирование", MessageBoxButton.YesNo);
+                MessageBoxResult res = MessageBox.Show("Результаты предыдущего теста не были сохранены." +
+                    "\nХотите их сохранить перед началом нового тестирования?\n " +
+                    "(В случае отказа данные предыдущего тестирования будут потеряны...)", "Тестирование", MessageBoxButton.YesNo);
+
                 if (res == MessageBoxResult.Yes)
                 {
-                    /*SaveFileDialog fileDialog = new SaveFileDialog();
+                    SaveFileDialog fileDialog = new SaveFileDialog();
                     fileDialog.AddExtension = true;
                     fileDialog.Filter = "Файлы Excel (*.xls; *.xlsx)|*.xls;*.xlsx|Текстовые файлы (*.txt)|*.txt|Файлы JSON (*.json)|*.json|Файлы данных XML (*.xml)|*.xml";
 
@@ -141,21 +146,18 @@ namespace DeRoso
                         switch(fileDialog.FilterIndex)
                         {
                             case 0:
-                                processor.Save(new ExcelResultsSaver(fileDialog.FileName));
+                                report.Save(new ExcelResultsSaver(fileDialog.FileName), true );
                                 break;
                             case 3:
-                                processor.Save(new XmlResultsSaver(fileDialog.FileName));
+                                //report.Save(new XmlResultsSaver(fileDialog.FileName), true);
                                 break;
 
                             default:
-                                processor.Save(new ExcelResultsSaver(fileDialog.FileName));
+                                report.Save(new ExcelResultsSaver(fileDialog.FileName), true);
                                 break;
 
                         }
-                        
-
-                    }
-                    */                        
+                    }                   
                 }                
             }
 

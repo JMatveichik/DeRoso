@@ -32,7 +32,7 @@ namespace DeRoso.Core.Data
         /// Сохранение результатов
         /// </summary>
         /// <param name="results"></param>
-        abstract public bool Save(HealthTestReport report);
+        abstract public bool Save(HealthTestReport report, bool showResults);
         
     }
 }

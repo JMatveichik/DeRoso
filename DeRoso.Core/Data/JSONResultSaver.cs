@@ -14,7 +14,7 @@ namespace DeRoso.Core.Data
 
         }
 
-        public override bool Save(HealthTestReport report)
+        public override bool Save(HealthTestReport report, bool showResults)
         {
             throw new NotImplementedException();
         }

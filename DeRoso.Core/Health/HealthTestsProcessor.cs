@@ -87,6 +87,25 @@ namespace DeRoso.Core.Health
         private bool _isAutoSave = true;
 
 
+        
+        /// <summary>
+        /// Показать результаты автосохранения
+        /// </summary>
+        public bool IsShowSaveResults
+        {
+            get { return _isShowSaveResults; }
+            set
+            {
+                if (_isShowSaveResults == value)
+                    return;
+
+                _isShowSaveResults = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _isShowSaveResults = true;
+
+
         /// <summary>
         /// Приостановить процесс тестирования после выполнения текущего теста
         /// </summary>
@@ -260,9 +279,25 @@ namespace DeRoso.Core.Health
         /// </summary>
         public List<Patient> Patients
         {
-            get { return DeRossoDataWorker.GetAllPatients(); }
-        }
+            get
+            {
+                return _patients;
+            }
+            private set
+            {
+                if (value == _patients)
+                    return;
 
+                _patients = value;
+                OnPropertyChanged();
+            }
+        }
+        private List<Patient> _patients = DeRossoDataWorker.GetAllPatients(); 
+
+        public void Update()
+        {
+            Patients =  DeRossoDataWorker.GetAllPatients();
+        }
         /// <summary>
         /// Выбранные тесты 
         /// </summary>
@@ -464,7 +499,7 @@ namespace DeRoso.Core.Health
             if (IsAutoSave)
             {
                 CurrentOperation = "Сохранение результатов...";
-                Report.Save();
+                Report.Save(IsShowSaveResults);
             }
             
             Thread.Sleep(2000);

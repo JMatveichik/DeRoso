@@ -167,6 +167,9 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\PatientsViewModel.cs" />
     <Compile Include="ViewModels\TestSelectionViewModel.cs" />
+    <Compile Include="Views\AddNewPacientWindow.xaml.cs">
+      <DependentUpon>AddNewPacientWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreatorViewArchive.cs" />
     <Compile Include="Views\CreatorViewHelp.cs" />
     <Compile Include="Views\CreatorViewHome.cs" />
@@ -222,6 +225,10 @@
     <Page Include="Controls\TestEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AddNewPacientWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewArchive.xaml">
       <SubType>Designer</SubType>

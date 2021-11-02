@@ -18,8 +18,21 @@ namespace DeRoso.Core.Data
         }
 
         public static List<Patient> GetAllPatients()
-        {     
-              return DB.Patients.ToList();          
+        {
+            return DB.Patients.ToList();
+        }
+
+        public static void AddPatient(Patient newPatient)
+        {
+            //если уже присутствует в списке не добавляем
+            /*
+            var result = DB.Patients.Select(l => l.Id).ToList();
+            if (result.Contains(newPatient.Id))
+                return;
+            */
+
+            DB.Patients.Add(newPatient);
+            DB.SaveChanges();
         }
 
         #region РАБОТА С ТАБЛИЦЕЙ ПОСЛЕДНИХ ВЫБРАННВХ ТЕСТОВ

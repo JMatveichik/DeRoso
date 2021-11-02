@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using DeRoso.Core.Health;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -23,83 +24,96 @@ namespace DeRoso.Core.Data
         /// Сохранение результатов 
         /// </summary>
         /// <param name="results"></param>
-        public override bool Save(HealthTestReport report)
+        public override bool Save(HealthTestReport report, bool showResults)
         {
-            Excel.Application ExcelApp = new Microsoft.Office.Interop.Excel.Application();
+            
+            try {
+                Excel.Application ExcelApp = new Microsoft.Office.Interop.Excel.Application();
 
-            //Отобразить Excel
-            ExcelApp.Visible = true;
+                //Отобразить Excel
+                ExcelApp.Visible = false;
 
-            //Количество листов в рабочей книге
-            ExcelApp.SheetsInNewWorkbook = 1;
+                //Количество листов в рабочей книге
+                ExcelApp.SheetsInNewWorkbook = 1;
 
-            //Добавить рабочую книгу
-            Excel.Workbook workBook = ExcelApp.Workbooks.Add(Type.Missing);
+                //Добавить рабочую книгу
+                Excel.Workbook workBook = ExcelApp.Workbooks.Add(Type.Missing);
 
-            //Отключить отображение окон с сообщениями
-            ExcelApp.DisplayAlerts = false;
+                //Отключить отображение окон с сообщениями
+                ExcelApp.DisplayAlerts = false;
 
-            //Получаем первый лист документа (счет начинается с 1)
-            Excel.Worksheet sheet = (Excel.Worksheet)ExcelApp.Worksheets.get_Item(1);
-            sheet.Columns[1].ColumnWidth = 80;
-            sheet.Columns[2].ColumnWidth = 20;
-            sheet.Columns[3].ColumnWidth = 20;
+                //Получаем первый лист документа (счет начинается с 1)
+                Excel.Worksheet sheet = (Excel.Worksheet)ExcelApp.Worksheets.get_Item(1);
+                sheet.Columns[1].ColumnWidth = 80;
+                sheet.Columns[2].ColumnWidth = 20;
+                sheet.Columns[3].ColumnWidth = 20;
 
-            //Название листа (вкладки снизу)
-            sheet.Name = string.Format("{0}-{1}", report.Patient.ShortName, report.ReportDate.ToShortDateString());
+                //Название листа (вкладки снизу)
+                sheet.Name = string.Format("{0}-{1}", report.Patient.ShortName, report.ReportDate.ToShortDateString());
 
-            //ДАТА
-            Excel.Range rng = (Excel.Range)sheet.get_Range("A1").Cells;
-            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, true);
-            rng.Value = string.Format("ДАТА");
+                //ДАТА
+                Excel.Range rng = (Excel.Range)sheet.get_Range("A1").Cells;
+                FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, true);
+                rng.Value = string.Format("ДАТА");
 
-            rng = (Excel.Range)sheet.get_Range("B1").Cells;
-            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, false);
-            rng.Value = report.ReportDate.ToShortDateString();
+                rng = (Excel.Range)sheet.get_Range("B1").Cells;
+                FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, false);
+                rng.Value = report.ReportDate.ToShortDateString();
 
-            ///ВРЕМЯ
-            rng = (Excel.Range)sheet.get_Range("A2").Cells;
-            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, true);
-            rng.Value = string.Format("ВРЕМЯ");
+                ///ВРЕМЯ
+                rng = (Excel.Range)sheet.get_Range("A2").Cells;
+                FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, true);
+                rng.Value = string.Format("ВРЕМЯ");
 
-            rng = (Excel.Range)sheet.get_Range("B2").Cells;
-            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, false);
-            rng.Value = report.ReportDate.ToShortTimeString();
+                rng = (Excel.Range)sheet.get_Range("B2").Cells;
+                FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, false);
+                rng.Value = report.ReportDate.ToShortTimeString();
 
-            ///ПАЦИЕНТ
-            rng = (Excel.Range)sheet.get_Range("A3").Cells;
-            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, true);
-            rng.Value = string.Format("ПАЦИЕНТ");
+                ///ПАЦИЕНТ
+                rng = (Excel.Range)sheet.get_Range("A3").Cells;
+                FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, true);
+                rng.Value = string.Format("ПАЦИЕНТ");
 
-            rng = (Excel.Range)sheet.get_Range("B3").Cells;
-            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, false);
-            rng.Value = report.Patient.ShortName;
+                rng = (Excel.Range)sheet.get_Range("B3").Cells;
+                FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 16, false);
+                rng.Value = report.Patient.ShortName;
 
-            //СЕКЦИЯ 
-            var res = report.Results.FirstOrDefault();
-            string section = (res == null) ? "ОШИБКА ПОЛУЧЕНИЯ СЕКЦИИ" : res.Test.Group.Section.Title;
+                //СЕКЦИЯ 
+                var res = report.Results.FirstOrDefault();
+                string section = (res == null) ? "ОШИБКА ПОЛУЧЕНИЯ СЕКЦИИ" : res.Test.Group.Section.Title;
 
-            rng = (Excel.Range)sheet.get_Range("A6").Cells;
-            FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 22, true);
-            rng.Value = section;
+                rng = (Excel.Range)sheet.get_Range("A6").Cells;
+                FormatRange(rng, Excel.XlHAlign.xlHAlignLeft, Excel.XlVAlign.xlVAlignCenter, 22, true);
+                rng.Value = section;
 
             
-            //начальная строка вывода.
-            int startRow = 8;
-            foreach (HealthTestResult r in report.Results)
-            {
-                startRow = SaveTestResult(startRow, r, sheet);
-
-                foreach(HealthTestDrugResult d in r.Meassurments)
+                //начальная строка вывода.
+                int startRow = 8;
+                foreach (HealthTestResult r in report.Results)
                 {
-                    startRow = SaveDrugResult(startRow, d, sheet);
+                    startRow = SaveTestResult(startRow, r, sheet);
+
+                    foreach(HealthTestDrugResult d in r.Meassurments)
+                    {
+                        startRow = SaveDrugResult(startRow, d, sheet);
+                    }
                 }
+
+
+                workBook.SaveAs(TargetFilePath);
+
+                if (showResults)
+                    //Отобразить Excel
+                    ExcelApp.Visible = true;
+                else
+                    ExcelApp.Quit();
             }
-
-
-            workBook.SaveAs(TargetFilePath);
-            //Отобразить Excel
-            ExcelApp.Visible = true;
+            catch(Exception e)
+            {
+                string message = string.Format(" Ошибка при опытке сохранения данных в Microsoft Excel. /n Возможно программа не установлена либо не активирована.\n\t{0}", e.Message);
+                MessageBox.Show(message, "Ошибка Excel", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
 
             return true;
             
