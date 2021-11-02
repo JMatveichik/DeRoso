@@ -73,5 +73,11 @@ namespace DeRoso.Views
             PrFolder.StartInfo = psi;
             PrFolder.Start();
         }
+
+        private void OnTestingViewIsVisible(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            HealthTestsProcessor pr = (HealthTestsProcessor)this.DataContext;
+            pr.Update();
+        }
     }
 }

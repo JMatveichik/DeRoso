@@ -112,15 +112,22 @@ namespace DeRoso.Core.Health
         public bool Save(bool showResults = true)
         {
             string patientDir = Directory.GetCurrentDirectory() + "\\";
+            string patientName = null;
 
             if (Patient != null)
+            {
                 patientDir += Patient.ShortName;
+                patientName = Patient.FamilyName;
+            }
             else
+            {
                 patientDir += "Незарегистрированные";
-
+                patientName = "Пациент";
+            }
+            
             Directory.CreateDirectory(patientDir);
 
-            string fileName = string.Format("{0}_{1}_{2}{3}", ReportDate.ToShortDateString(), ReportDate.Hour, ReportDate.Minute, ".xlsx");
+            string fileName = string.Format("{0}_{1}_{2}_{3}{4}", patientName, ReportDate.ToShortDateString(), ReportDate.Hour, ReportDate.Minute, ".xlsx");
             string path = patientDir + "\\" + fileName;
             
             if (Save(new ExcelResultsSaver(path), showResults))

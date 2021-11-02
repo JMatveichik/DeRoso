@@ -49,7 +49,8 @@ namespace DeRoso.Core.Data
                 sheet.Columns[3].ColumnWidth = 20;
 
                 //Название листа (вкладки снизу)
-                sheet.Name = string.Format("{0}-{1}", report.Patient.ShortName, report.ReportDate.ToShortDateString());
+                string pacientName = (report.Patient == null) ? "Новый пциент" : report.Patient.ShortName;
+                sheet.Name = string.Format("{0}-{1}-{2}:{3}", pacientName, report.ReportDate.ToShortDateString(), report.ReportDate.Hour, report.ReportDate.Minute);
 
                 //ДАТА
                 Excel.Range rng = (Excel.Range)sheet.get_Range("A1").Cells;
@@ -110,7 +111,7 @@ namespace DeRoso.Core.Data
             }
             catch(Exception e)
             {
-                string message = string.Format(" Ошибка при опытке сохранения данных в Microsoft Excel. /n Возможно программа не установлена либо не активирована.\n\t{0}", e.Message);
+                string message = string.Format(" Ошибка при опытке сохранения данных в Microsoft Excel. \n Возможно программа не установлена либо не активирована.\n\t{0}", e.Message);
                 MessageBox.Show(message, "Ошибка Excel", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }

@@ -10,7 +10,7 @@
              xmlns:cb ="clr-namespace:CalcBinding;assembly=CalcBinding"
              xmlns:health="clr-namespace:DeRoso.Core.Health;assembly=DeRoso.Core"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800" IsVisibleChanged="OnTestingViewIsVisible">
 
     <UserControl.Resources>
         <sel:PatientGenderItemTemplateSelector x:Key="GenderTemplateSelector"

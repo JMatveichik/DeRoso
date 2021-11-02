@@ -126,12 +126,18 @@ namespace DeRoso
             var processor = ((App)App.Current).TestProcessor;
             var report    = ((App)App.Current).TestProcessor.Report;
 
+            if (processor.CurrentPatient == null)
+            {
+                MessageBoxResult res = MessageBox.Show("Выберите пациента для тестирования либо добавьте нового." , "Тестирование", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                return;
+            }
+
             //не сохранены результаты тестирования
             if (report.IsModified)
             {
                 MessageBoxResult res = MessageBox.Show("Результаты предыдущего теста не были сохранены." +
                     "\nХотите их сохранить перед началом нового тестирования?\n " +
-                    "(В случае отказа данные предыдущего тестирования будут потеряны...)", "Тестирование", MessageBoxButton.YesNo);
+                    "(В случае отказа данные предыдущего тестирования будут потеряны...)", "Тестирование", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
                 if (res == MessageBoxResult.Yes)
                 {

@@ -297,18 +297,33 @@ namespace DeRoso.Core.Health
         public void Update()
         {
             Patients =  DeRossoDataWorker.GetAllPatients();
+            Tests = DeRossoDataWorker.GetLastSelectedTests();
         }
         /// <summary>
         /// Выбранные тесты 
         /// </summary>
         public List<HealthTest> Tests
         {
-            get;
-            private set;
+            get
+            {
+                return _tests;
+            }
+            private set
+            {
+                if (value == _tests)
+                    return;
 
-        } = DeRossoDataWorker.GetLastSelectedTests(); 
+                _tests = value;
+                OnPropertyChanged();
+            }
+
+        }
+
+        public List<HealthTest> _tests = DeRossoDataWorker.GetLastSelectedTests();
+
 
         /// <summary>
+        /// 
         /// Делегат для событий текущих тестов
         /// </summary>
         /// <param name="sennder">Отправитель сообщения (устройство)</param>
