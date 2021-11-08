@@ -9,35 +9,52 @@ namespace UsbLibrary
     /// <summary>
     /// Generic HID device exception
     /// </summary>
-    public class HIDDeviceException : ApplicationException
+    public class HidDeviceException : ApplicationException
     {
-        public HIDDeviceException(string strMessage) : base(strMessage) { }
-
-        public static HIDDeviceException GenerateWithWinError(string strMessage)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="strMessage"></param>
+        public HidDeviceException(string strMessage) : base(strMessage)
         {
-            return new HIDDeviceException(string.Format("Msg:{0} WinEr:{1:X8}", strMessage, Marshal.GetLastWin32Error()));
+
         }
 
-        public static HIDDeviceException GenerateError(string strMessage)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="strMessage"></param>
+        /// <returns></returns>
+        public static HidDeviceException GenerateWithWinError(string strMessage)
         {
-            return new HIDDeviceException(string.Format("Msg:{0}", strMessage));
+            return new HidDeviceException(string.Format("Msg:{0} WinEr:{1:X8}", strMessage, Marshal.GetLastWin32Error()));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="strMessage"></param>
+        /// <returns></returns>
+        public static HidDeviceException GenerateError(string strMessage)
+        {
+            return new HidDeviceException(string.Format("Msg:{0}", strMessage));
         }
     }
     #endregion
     /// <summary>
     /// Abstract HID device : Derive your new device controller class from this
     /// </summary>
-    public abstract class HIDDevice : Win32Usb, IDisposable
+    public abstract class HidDevice : Win32Usb, IDisposable
     {
         #region Privates variables
         /// <summary>Filestream we can use to read/write from</summary>
-        private FileStream m_oFile;
+        private FileStream _mOFile;
         /// <summary>Length of input report : device gives us this</summary>
-        private int m_nInputReportLength;
+        private int _mNInputReportLength;
         /// <summary>Length if output report : device gives us this</summary>
-        private int m_nOutputReportLength;
+        private int _mNOutputReportLength;
         /// <summary>Handle to the device</summary>
-        private IntPtr m_hHandle;
+        private IntPtr _mHHandle;
         #endregion
 
         #region IDisposable Members
@@ -59,16 +76,16 @@ namespace UsbLibrary
             {
                 if (bDisposing)	// if we are disposing, need to close the managed resources
                 {
-                    if (m_oFile != null)
+                    if (_mOFile != null)
                     {
-                        m_oFile.Close();
-                        m_oFile = null;
+                        _mOFile.Close();
+                        _mOFile = null;
                     }
                 }
-                if (m_hHandle != IntPtr.Zero)	// Dispose and finalize, get rid of unmanaged resources
+                if (_mHHandle != IntPtr.Zero)	// Dispose and finalize, get rid of unmanaged resources
                 {
 
-                    CloseHandle(m_hHandle);
+                    CloseHandle(_mHHandle);
                 }
             }
             catch (Exception ex)
@@ -86,28 +103,28 @@ namespace UsbLibrary
         private void Initialise(string strPath)
         {
             // Create the file from the device path
-            m_hHandle = CreateFile(strPath, GENERIC_READ | GENERIC_WRITE, 0, IntPtr.Zero, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, IntPtr.Zero);
+            _mHHandle = CreateFile(strPath, GenericRead | GenericWrite, 0, IntPtr.Zero, OpenExisting, FileFlagOverlapped, IntPtr.Zero);
 
-            if (m_hHandle != InvalidHandleValue || m_hHandle == null)   // if the open worked...
+            if (_mHHandle != InvalidHandleValue || _mHHandle == null)   // if the open worked...
             {
                 IntPtr lpData;
-                if (HidD_GetPreparsedData(m_hHandle, out lpData))   // get windows to read the device data into an internal buffer
+                if (HidD_GetPreparsedData(_mHHandle, out lpData))   // get windows to read the device data into an internal buffer
                 {
                     try
                     {
                         HidCaps oCaps;
                         HidP_GetCaps(lpData, out oCaps);	// extract the device capabilities from the internal buffer
-                        m_nInputReportLength = oCaps.InputReportByteLength;	// get the input...
-                        m_nOutputReportLength = oCaps.OutputReportByteLength;	// ... and output report lengths
+                        _mNInputReportLength = oCaps.InputReportByteLength;	// get the input...
+                        _mNOutputReportLength = oCaps.OutputReportByteLength;	// ... and output report lengths
 
                         //m_oFile = new FileStream(m_hHandle, FileAccess.Read | FileAccess.Write, true, m_nInputReportLength, true);
-                        m_oFile = new FileStream(new SafeFileHandle(m_hHandle, false), FileAccess.Read | FileAccess.Write, m_nInputReportLength, true);
+                        _mOFile = new FileStream(new SafeFileHandle(_mHHandle, false), FileAccess.Read | FileAccess.Write, _mNInputReportLength, true);
 
                         BeginAsyncRead();	// kick off the first asynchronous read                              
                     }
                     catch (Exception ex)
                     {
-                        throw HIDDeviceException.GenerateWithWinError("Failed to get the detailed data from the hid.");
+                        throw HidDeviceException.GenerateWithWinError("Failed to get the detailed data from the hid.");
                     }
                     finally
                     {
@@ -116,13 +133,13 @@ namespace UsbLibrary
                 }
                 else    // GetPreparsedData failed? Chuck an exception
                 {
-                    throw HIDDeviceException.GenerateWithWinError("GetPreparsedData failed");
+                    throw HidDeviceException.GenerateWithWinError("GetPreparsedData failed");
                 }
             }
             else    // File open failed? Chuck an exception
             {
-                m_hHandle = IntPtr.Zero;
-                throw HIDDeviceException.GenerateWithWinError("Failed to create device file");
+                _mHHandle = IntPtr.Zero;
+                throw HidDeviceException.GenerateWithWinError("Failed to create device file");
             }
         }
         /// <summary>
@@ -131,10 +148,10 @@ namespace UsbLibrary
         /// </summary>
         private void BeginAsyncRead()
         {
-            byte[] arrInputReport = new byte[m_nInputReportLength];
+            byte[] arrInputReport = new byte[_mNInputReportLength];
             // put the buff we used to receive the stuff as the async state then we can get at it when the read completes
 
-            m_oFile.BeginRead(arrInputReport, 0, m_nInputReportLength, new AsyncCallback(ReadCompleted), arrInputReport);
+            _mOFile.BeginRead(arrInputReport, 0, _mNInputReportLength, new AsyncCallback(ReadCompleted), arrInputReport);
         }
         /// <summary>
         /// Callback for above. Care with this as it will be called on the background thread from the async read
@@ -145,7 +162,7 @@ namespace UsbLibrary
             byte[] arrBuff = (byte[])iResult.AsyncState;	// retrieve the read buffer
             try
             {
-                m_oFile.EndRead(iResult);	// call end read : this throws any exceptions that happened during the read
+                _mOFile.EndRead(iResult);	// call end read : this throws any exceptions that happened during the read
                 try
                 {
                     InputReport oInRep = CreateInputReport();   // Create the input report for the device
@@ -175,13 +192,13 @@ namespace UsbLibrary
         {
             try
             {
-                m_oFile.Write(oOutRep.Buffer, 0, oOutRep.BufferLength);
+                _mOFile.Write(oOutRep.Buffer, 0, oOutRep.BufferLength);
             }
             catch (IOException ex)
             {
                 //Console.WriteLine(ex.ToString());
                 // The device was removed!
-                throw new HIDDeviceException("Probbaly the device was removed");
+                throw new HidDeviceException("Probbaly the device was removed");
             }
             catch (Exception exx)
             {
@@ -233,13 +250,13 @@ namespace UsbLibrary
         /// <param name="nPid">Product id for device (PID)</param>
         /// <param name="oType">Type of device class to create</param>
         /// <returns>A new device class of the given type or null</returns>
-        public static HIDDevice FindDevice(int nVid, int nPid, Type oType)
+        public static HidDevice FindDevice(int nVid, int nPid, Type oType)
         {
             string strPath = string.Empty;
             string strSearch = string.Format("vid_{0:x4}&pid_{1:x4}", nVid, nPid); // first, build the path search string
-            Guid gHid = HIDGuid;
+            Guid gHid = HidGuid;
             //HidD_GetHidGuid(out gHid);	// next, get the GUID from Windows that it uses to represent the HID USB interface
-            IntPtr hInfoSet = SetupDiGetClassDevs(ref gHid, null, IntPtr.Zero, DIGCF_DEVICEINTERFACE | DIGCF_PRESENT);	// this gets a list of all HID devices currently connected to the computer (InfoSet)
+            IntPtr hInfoSet = SetupDiGetClassDevs(ref gHid, null, IntPtr.Zero, DigcfDeviceinterface | DigcfPresent);	// this gets a list of all HID devices currently connected to the computer (InfoSet)
             try
             {
                 DeviceInterfaceData oInterface = new DeviceInterfaceData();	// build up a device interface data block
@@ -252,7 +269,7 @@ namespace UsbLibrary
                     string strDevicePath = GetDevicePath(hInfoSet, ref oInterface);	// get the device path (see helper method 'GetDevicePath')
                     if (strDevicePath.IndexOf(strSearch) >= 0)	// do a string search, if we find the VID/PID string then we found our device!
                     {
-                        HIDDevice oNewDevice = (HIDDevice)Activator.CreateInstance(oType);	// create an instance of the class for this device
+                        HidDevice oNewDevice = (HidDevice)Activator.CreateInstance(oType);	// create an instance of the class for this device
                         oNewDevice.Initialise(strDevicePath);	// initialise it with the device path
                         return oNewDevice;	// and return it
                     }
@@ -261,7 +278,7 @@ namespace UsbLibrary
             }
             catch (Exception ex)
             {
-                throw HIDDeviceException.GenerateError(ex.ToString());
+                throw HidDeviceException.GenerateError(ex.ToString());
                 //Console.WriteLine(ex.ToString());
             }
             finally
@@ -285,7 +302,7 @@ namespace UsbLibrary
         {
             get
             {
-                return m_nOutputReportLength;
+                return _mNOutputReportLength;
             }
         }
         /// <summary>
@@ -295,7 +312,7 @@ namespace UsbLibrary
         {
             get
             {
-                return m_nInputReportLength;
+                return _mNInputReportLength;
             }
         }
         /// <summary>

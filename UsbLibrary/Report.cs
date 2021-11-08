@@ -7,16 +7,16 @@ namespace UsbLibrary
     {
         #region Member variables
         /// <summary>Buffer for raw report bytes</summary>
-        private byte[] m_arrBuffer;
+        private byte[] _mArrBuffer;
         /// <summary>Length of the report</summary>
-        private int m_nLength;
+        private int _mNLength;
         #endregion
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="oDev">Constructing device</param>
-        public Report(HIDDevice oDev)
+        public Report(HidDevice oDev)
         {
             // Do nothing
         }
@@ -27,8 +27,8 @@ namespace UsbLibrary
         /// <param name="arrBytes">Raw report bytes</param>
         protected void SetBuffer(byte[] arrBytes)
         {
-            m_arrBuffer = arrBytes;
-            m_nLength = m_arrBuffer.Length;
+            _mArrBuffer = arrBytes;
+            _mNLength = _mArrBuffer.Length;
         }
 
         /// <summary>
@@ -36,8 +36,8 @@ namespace UsbLibrary
         /// </summary>
         public byte[] Buffer
         {
-            get { return m_arrBuffer; }
-            set { this.m_arrBuffer = value; }
+            get { return _mArrBuffer; }
+            set { this._mArrBuffer = value; }
         }
         /// <summary>
         /// Accessor for the buffer length
@@ -46,7 +46,7 @@ namespace UsbLibrary
         {
             get
             {
-                return m_nLength;
+                return _mNLength;
             }
         }
     }
@@ -59,7 +59,7 @@ namespace UsbLibrary
         /// Construction. Setup the buffer with the correct output report length dictated by the device
         /// </summary>
         /// <param name="oDev">Creating device</param>
-        public OutputReport(HIDDevice oDev) : base(oDev)
+        public OutputReport(HidDevice oDev) : base(oDev)
         {
             SetBuffer(new byte[oDev.OutputReportLength]);
         }
@@ -74,7 +74,7 @@ namespace UsbLibrary
         /// Construction. Do nothing
         /// </summary>
         /// <param name="oDev">Creating device</param>
-        public InputReport(HIDDevice oDev) : base(oDev)
+        public InputReport(HidDevice oDev) : base(oDev)
         {
         }
         /// <summary>

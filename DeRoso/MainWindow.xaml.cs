@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using DeRoso.Core;
 using DeRoso.Core.Data;
 using DeRoso.Core.Device;
@@ -126,9 +115,9 @@ namespace DeRoso
             var processor = ((App)App.Current).TestProcessor;
             var report    = ((App)App.Current).TestProcessor.Report;
 
-            if (processor.CurrentPatient == null)
+            if (report.Patient == null)
             {
-                MessageBoxResult res = MessageBox.Show("Выберите пациента для тестирования либо добавьте нового." , "Тестирование", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                MessageBoxResult res = MessageBox.Show("Выберите пациента для тестирования, либо добавьте нового." , "Тестирование", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                 return;
             }
 

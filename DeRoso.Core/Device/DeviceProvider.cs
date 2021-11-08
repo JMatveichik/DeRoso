@@ -1,9 +1,7 @@
-﻿using DeRoso.Core.Health;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UsbLibrary;
@@ -187,11 +185,11 @@ namespace DeRoso.Core.Device
 
             for (int i = 0; i < 16; i++)        //проверка на наличие 0 в данных
             {
-                if (args.data[i + 1] == 0)
+                if (args.Data[i + 1] == 0)
                     return;
             }
             
-            DataConversion?.Invoke(args.data);
+            DataConversion?.Invoke(args.Data);
         }        
         #endregion
 

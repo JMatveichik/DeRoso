@@ -2,23 +2,23 @@ namespace UsbLibrary
 {
     public class SpecifiedInputReport : InputReport
     {
-        private byte[] arrData;
+        private byte[] _arrData;
 
-        public SpecifiedInputReport(HIDDevice oDev) : base(oDev)
+        public SpecifiedInputReport(HidDevice oDev) : base(oDev)
         {
 
         }
 
         public override void ProcessData()
         {
-            this.arrData = Buffer;
+            this._arrData = Buffer;
         }
 
         public byte[] Data
         {
             get
             {
-                return arrData;
+                return _arrData;
             }
         }
     }

@@ -85,45 +85,45 @@ namespace UsbLibrary
 
         #region Constants
         /// <summary>Windows message sent when a device is inserted or removed</summary>
-        public const int WM_DEVICECHANGE = 0x0219;
+        public const int WmDevicechange = 0x0219;
         /// <summary>WParam for above : A device was inserted</summary>
-        public const int DEVICE_ARRIVAL = 0x8000;
+        public const int DeviceArrival = 0x8000;
         /// <summary>WParam for above : A device was removed</summary>
-        public const int DEVICE_REMOVECOMPLETE = 0x8004;
+        public const int DeviceRemovecomplete = 0x8004;
         /// <summary>Used in SetupDiClassDevs to get devices present in the system</summary>
-        protected const int DIGCF_PRESENT = 0x02;
+        protected const int DigcfPresent = 0x02;
         /// <summary>Used in SetupDiClassDevs to get device interface details</summary>
-        protected const int DIGCF_DEVICEINTERFACE = 0x10;
+        protected const int DigcfDeviceinterface = 0x10;
         /// <summary>Used when registering for device insert/remove messages : specifies the type of device</summary>
-        protected const int DEVTYP_DEVICEINTERFACE = 0x05;
+        protected const int DevtypDeviceinterface = 0x05;
         /// <summary>Used when registering for device insert/remove messages : we're giving the API call a window handle</summary>
-        protected const int DEVICE_NOTIFY_WINDOW_HANDLE = 0;
+        protected const int DeviceNotifyWindowHandle = 0;
         /// <summary>Purges Win32 transmit buffer by aborting the current transmission.</summary>
-        protected const uint PURGE_TXABORT = 0x01;
+        protected const uint PurgeTxabort = 0x01;
         /// <summary>Purges Win32 receive buffer by aborting the current receive.</summary>
-        protected const uint PURGE_RXABORT = 0x02;
+        protected const uint PurgeRxabort = 0x02;
         /// <summary>Purges Win32 transmit buffer by clearing it.</summary>
-        protected const uint PURGE_TXCLEAR = 0x04;
+        protected const uint PurgeTxclear = 0x04;
         /// <summary>Purges Win32 receive buffer by clearing it.</summary>
-        protected const uint PURGE_RXCLEAR = 0x08;
+        protected const uint PurgeRxclear = 0x08;
         /// <summary>CreateFile : Open file for read</summary>
-        protected const uint GENERIC_READ = 0x80000000;
+        protected const uint GenericRead = 0x80000000;
         /// <summary>CreateFile : Open file for write</summary>
-        protected const uint GENERIC_WRITE = 0x40000000;
+        protected const uint GenericWrite = 0x40000000;
         /// <summary>CreateFile : file share for write</summary>
-        protected const uint FILE_SHARE_WRITE = 0x2;
+        protected const uint FileShareWrite = 0x2;
         /// <summary>CreateFile : file share for read</summary>
-        protected const uint FILE_SHARE_READ = 0x1;
+        protected const uint FileShareRead = 0x1;
         /// <summary>CreateFile : Open handle for overlapped operations</summary>
-        protected const uint FILE_FLAG_OVERLAPPED = 0x40000000;
+        protected const uint FileFlagOverlapped = 0x40000000;
         /// <summary>CreateFile : Resource to be "created" must exist</summary>
-        protected const uint OPEN_EXISTING = 3;
+        protected const uint OpenExisting = 3;
         /// <summary>CreateFile : Resource will be "created" or existing will be used</summary>
-        protected const uint OPEN_ALWAYS = 4;
+        protected const uint OpenAlways = 4;
         /// <summary>ReadFile/WriteFile : Overlapped operation is incomplete.</summary>
-        protected const uint ERROR_IO_PENDING = 997;
+        protected const uint ErrorIoPending = 997;
         /// <summary>Infinite timeout</summary>
-        protected const uint INFINITE = 0xFFFFFFFF;
+        protected const uint Infinite = 0xFFFFFFFF;
         /// <summary>Simple representation of a null handle : a closed stream will get this handle. Note it is public for comparison by higher level classes.</summary>
         public static IntPtr NullHandle = IntPtr.Zero;
         /// <summary>Simple representation of the handle returned when CreateFile fails.</summary>
@@ -256,9 +256,9 @@ namespace UsbLibrary
             DeviceBroadcastInterface oInterfaceIn = new DeviceBroadcastInterface();
             oInterfaceIn.Size = Marshal.SizeOf(oInterfaceIn);
             oInterfaceIn.ClassGuid = gClass;
-            oInterfaceIn.DeviceType = DEVTYP_DEVICEINTERFACE;
+            oInterfaceIn.DeviceType = DevtypDeviceinterface;
             oInterfaceIn.Reserved = 0;
-            return RegisterDeviceNotification(hWnd, oInterfaceIn, DEVICE_NOTIFY_WINDOW_HANDLE);
+            return RegisterDeviceNotification(hWnd, oInterfaceIn, DeviceNotifyWindowHandle);
         }
         /// <summary>
         /// Unregisters notifications. Can be used in form dispose
@@ -272,7 +272,7 @@ namespace UsbLibrary
         /// <summary>
         /// Helper to get the HID guid.
         /// </summary>
-        public static Guid HIDGuid
+        public static Guid HidGuid
         {
             get
             {

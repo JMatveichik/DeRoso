@@ -2,7 +2,7 @@ namespace UsbLibrary
 {
     public class SpecifiedOutputReport : OutputReport
     {
-        public SpecifiedOutputReport(HIDDevice oDev) : base(oDev)
+        public SpecifiedOutputReport(HidDevice oDev) : base(oDev)
         {
 
         }

@@ -12,12 +12,12 @@ namespace UsbLibrary
     public partial class UsbHidPort : Component
     {
         //private memebers
-        private int product_id;
-        private int vendor_id;
-        private Guid device_class;
-        private IntPtr usb_event_handle;
-        private SpecifiedDevice specified_device;
-        private IntPtr handle;
+        private int _productId;
+        private int _vendorId;
+        private Guid _deviceClass;
+        private IntPtr _usbEventHandle;
+        private SpecifiedDevice _specifiedDevice;
+        private IntPtr _handle;
         //events
         /// <summary>
         /// This event will be triggered when the device you specified is pluged into your usb port on
@@ -73,10 +73,10 @@ namespace UsbLibrary
         public UsbHidPort()
         {
             //initializing in initial state
-            product_id = 0;
-            vendor_id = 0;
-            specified_device = null;
-            device_class = Win32Usb.HIDGuid;
+            _productId = 0;
+            _vendorId = 0;
+            _specifiedDevice = null;
+            _deviceClass = Win32Usb.HidGuid;
 
             InitializeComponent();
         }
@@ -84,10 +84,10 @@ namespace UsbLibrary
         public UsbHidPort(IContainer container)
         {
             //initializing in initial state
-            product_id = 0;
-            vendor_id = 0;
-            specified_device = null;
-            device_class = Win32Usb.HIDGuid;
+            _productId = 0;
+            _vendorId = 0;
+            _specifiedDevice = null;
+            _deviceClass = Win32Usb.HidGuid;
 
             container.Add(this);
             InitializeComponent();
@@ -98,8 +98,8 @@ namespace UsbLibrary
         [Category("Embedded Details")]
         public int ProductId
         {
-            get { return this.product_id; }
-            set { this.product_id = value; }
+            get { return this._productId; }
+            set { this._productId = value; }
         }
 
         [Description("The vendor id from the USB device you want to use")]
@@ -107,8 +107,8 @@ namespace UsbLibrary
         [Category("Embedded Details")]
         public int VendorId
         {
-            get { return this.vendor_id; }
-            set { this.vendor_id = value; }
+            get { return this._vendorId; }
+            set { this._vendorId = value; }
         }
 
         [Description("The Device Class the USB device belongs to")]
@@ -116,7 +116,7 @@ namespace UsbLibrary
         [Category("Embedded Details")]
         public Guid DeviceClass
         {
-            get { return device_class; }
+            get { return _deviceClass; }
         }
 
         [Description("The Device witch applies to the specifications you set")]
@@ -124,13 +124,13 @@ namespace UsbLibrary
         [Category("Embedded Details")]
         public SpecifiedDevice SpecifiedDevice
         {
-            get { return this.specified_device; }
+            get { return this._specifiedDevice; }
         }
 
         /// <summary>
         /// Registers this application, so it will be notified for usb events.  
         /// </summary>
-        /// <param name="Handle">a IntPtr, that is a handle to the application.</param>
+        /// <param name="handle">a IntPtr, that is a handle to the application.</param>
         /// <example> This sample shows how to implement this method in your form.
         /// <code> 
         ///protected override void OnHandleCreated(EventArgs e)
@@ -140,10 +140,10 @@ namespace UsbLibrary
         ///}
         ///</code>
         ///</example>
-        public void RegisterHandle(IntPtr Handle)
+        public void RegisterHandle(IntPtr handle)
         {
-            usb_event_handle = Win32Usb.RegisterForUsbEvents(Handle, device_class);
-            this.handle = Handle;
+            _usbEventHandle = Win32Usb.RegisterForUsbEvents(handle, _deviceClass);
+            this._handle = handle;
             //Check if the device is already present.
             CheckDevicePresent();
         }
@@ -154,9 +154,9 @@ namespace UsbLibrary
         /// <returns>Returns if it wass succesfull to unregister.</returns>
         public bool UnregisterHandle()
         {
-            if (this.handle != null)
+            if (this._handle != null)
             {
-                return Win32Usb.UnregisterForUsbEvents(this.handle);
+                return Win32Usb.UnregisterForUsbEvents(this._handle);
             }
 
             return false;
@@ -178,18 +178,18 @@ namespace UsbLibrary
         ///</example>
         public void ParseMessages(ref Message m)
         {
-            if (m.Msg == Win32Usb.WM_DEVICECHANGE)	// we got a device change message! A USB device was inserted or removed
+            if (m.Msg == Win32Usb.WmDevicechange)	// we got a device change message! A USB device was inserted or removed
             {
                 switch (m.WParam.ToInt32())	// Check the W parameter to see if a device was inserted or removed
                 {
-                    case Win32Usb.DEVICE_ARRIVAL:	// inserted
+                    case Win32Usb.DeviceArrival:	// inserted
                         if (OnDeviceArrived != null)
                         {
                             OnDeviceArrived(this, new EventArgs());
                             CheckDevicePresent();
                         }
                         break;
-                    case Win32Usb.DEVICE_REMOVECOMPLETE:	// removed
+                    case Win32Usb.DeviceRemovecomplete:	// removed
                         if (OnDeviceRemoved != null)
                         {
                             OnDeviceRemoved(this, new EventArgs());
@@ -210,19 +210,19 @@ namespace UsbLibrary
             {
                 //Mind if the specified device existed before.
                 bool history = false;
-                if (specified_device != null)
+                if (_specifiedDevice != null)
                 {
                     history = true;
                 }
 
-                specified_device = SpecifiedDevice.FindSpecifiedDevice(this.vendor_id, this.product_id);	// look for the device on the USB bus
-                if (specified_device != null)	// did we find it?
+                _specifiedDevice = SpecifiedDevice.FindSpecifiedDevice(this._vendorId, this._productId);	// look for the device on the USB bus
+                if (_specifiedDevice != null)	// did we find it?
                 {
                     if (OnSpecifiedDeviceArrived != null)
                     {
                         this.OnSpecifiedDeviceArrived(this, new EventArgs());
-                        specified_device.DataRecieved += new DataRecievedEventHandler(OnDataRecieved);
-                        specified_device.DataSend += new DataSendEventHandler(OnDataSend);
+                        _specifiedDevice.DataRecieved += new DataRecievedEventHandler(OnDataRecieved);
+                        _specifiedDevice.DataSend += new DataSendEventHandler(OnDataSend);
                     }
                 }
                 else

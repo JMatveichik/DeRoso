@@ -1,21 +1,10 @@
 ﻿using DeRoso.Core.Data;
 using DeRoso.Core.Health;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DeRoso.Views
 {
@@ -76,7 +65,7 @@ namespace DeRoso.Views
 
         private void OnTestingViewIsVisible(object sender, DependencyPropertyChangedEventArgs e)
         {
-            HealthTestsProcessor pr = (HealthTestsProcessor)this.DataContext;
+            var pr = (HealthTestsProcessor)this.DataContext;
             pr.Update();
         }
     }
