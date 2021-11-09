@@ -68,5 +68,11 @@ namespace DeRoso.Views
             var pr = (HealthTestsProcessor)this.DataContext;
             pr.Update();
         }
+
+        private void OnViewTestingLoaded(object sender, RoutedEventArgs e)
+        {
+            var pr = (HealthTestsProcessor)this.DataContext;
+            pr.Report.Clear();
+        }
     }
 }

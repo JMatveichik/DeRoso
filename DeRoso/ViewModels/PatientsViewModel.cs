@@ -37,7 +37,7 @@ namespace DeRoso.ViewModels
         /// </summary>
         public Patient SelectedPatient
         {
-            get { return _selectedPatient; }
+            get => _selectedPatient;
             set
             {
                 if (_selectedPatient == value)

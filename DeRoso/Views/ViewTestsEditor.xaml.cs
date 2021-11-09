@@ -49,29 +49,28 @@ namespace DeRoso.Views
 
         private static object GetDataFromListBox(ListBox source, Point point)
         {
-            UIElement element = source.InputHitTest(point) as UIElement;
-            if (element != null)
+            if (source.InputHitTest(point) is UIElement element)
             {
                 object data = DependencyProperty.UnsetValue;
+
                 while (data == DependencyProperty.UnsetValue)
                 {
+                    
                     data = source.ItemContainerGenerator.ItemFromContainer(element);
 
                     if (data == DependencyProperty.UnsetValue)
-                    {
                         element = VisualTreeHelper.GetParent(element) as UIElement;
-                    }
 
-                    if (element == source)
-                    {
+                    if (element == null)
                         return null;
-                    }
+
+                    if (element.Equals(source))
+                        return null;
+
                 }
 
                 if (data != DependencyProperty.UnsetValue)
-                {
                     return data;
-                }
             }
 
             return null;

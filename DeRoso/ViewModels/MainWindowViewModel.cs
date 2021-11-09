@@ -16,7 +16,7 @@ namespace DeRoso.ViewModels
 
         public UserControl CurrentContent
         {
-            get { return _currentContent; }
+            get => _currentContent;
             set
             {
                 if (_currentContent == value)

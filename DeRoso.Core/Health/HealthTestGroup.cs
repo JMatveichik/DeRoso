@@ -12,10 +12,7 @@ namespace DeRoso.Core.Health
 
         public ObservableCollection<HealthTest> Tests
         {
-            get
-            {
-                return _tests;
-            }
+            get => _tests;
             set
             {
                 if (value == _tests)

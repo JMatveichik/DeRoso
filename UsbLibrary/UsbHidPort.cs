@@ -98,7 +98,7 @@ namespace UsbLibrary
         [Category("Embedded Details")]
         public int ProductId
         {
-            get { return this._productId; }
+            get => this._productId;
             set { this._productId = value; }
         }
 
@@ -107,25 +107,19 @@ namespace UsbLibrary
         [Category("Embedded Details")]
         public int VendorId
         {
-            get { return this._vendorId; }
+            get => this._vendorId;
             set { this._vendorId = value; }
         }
 
         [Description("The Device Class the USB device belongs to")]
         [DefaultValue("(none)")]
         [Category("Embedded Details")]
-        public Guid DeviceClass
-        {
-            get { return _deviceClass; }
-        }
+        public Guid DeviceClass => _deviceClass;
 
         [Description("The Device witch applies to the specifications you set")]
         [DefaultValue("(none)")]
         [Category("Embedded Details")]
-        public SpecifiedDevice SpecifiedDevice
-        {
-            get { return this._specifiedDevice; }
-        }
+        public SpecifiedDevice SpecifiedDevice => this._specifiedDevice;
 
         /// <summary>
         /// Registers this application, so it will be notified for usb events.  

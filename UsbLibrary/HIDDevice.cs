@@ -298,23 +298,13 @@ namespace UsbLibrary
         /// <summary>
         /// Accessor for output report length
         /// </summary>
-        public int OutputReportLength
-        {
-            get
-            {
-                return _mNOutputReportLength;
-            }
-        }
+        public int OutputReportLength => _mNOutputReportLength;
+
         /// <summary>
         /// Accessor for input report length
         /// </summary>
-        public int InputReportLength
-        {
-            get
-            {
-                return _mNInputReportLength;
-            }
-        }
+        public int InputReportLength => _mNInputReportLength;
+
         /// <summary>
         /// Virtual method to create an input report for this device. Override to use.
         /// </summary>

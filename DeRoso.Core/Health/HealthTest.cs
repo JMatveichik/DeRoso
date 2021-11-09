@@ -34,10 +34,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public ObservableCollection<HealthTestReciept> Reciepts
         {
-            get
-            {
-                return _reciepts;
-            }
+            get => _reciepts;
             set
             {
                 if (value == _reciepts)
@@ -204,7 +201,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public double LowLimit
         {
-            get { return _lowLimit; }
+            get => _lowLimit;
             set
             {
                 if (Math.Abs(value - _lowLimit) < 0.000001)
@@ -221,7 +218,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public double HighLimit
         {
-            get { return _highLimit; }
+            get => _highLimit;
             set
             {
                 if (Math.Abs(value - _highLimit) < 0.000001)
@@ -238,7 +235,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public EnumCalculationType CalculationType
         {
-            get { return _calcType; }
+            get => _calcType;
             set
             {
                 if (value == _calcType)

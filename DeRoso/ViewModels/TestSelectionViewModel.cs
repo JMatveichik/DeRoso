@@ -32,10 +32,7 @@ namespace DeRoso.ViewModels
         /// </summary>
         public HealthTestSection SelectedSection
         {
-            get
-            {
-                return _selectedSection;
-            }
+            get => _selectedSection;
             set
             {
                 if (value == _selectedSection)
@@ -52,10 +49,7 @@ namespace DeRoso.ViewModels
         /// </summary>
         public HealthTestGroup SelectedGroup
         {
-            get
-            {
-                return _selectedGroup;
-            }
+            get => _selectedGroup;
             set
             {
                 if (value == _selectedGroup)
@@ -71,46 +65,25 @@ namespace DeRoso.ViewModels
         /// <summary>
         /// Таблица разделов тестов
         /// </summary>
-        public List<HealthTestSection> Sections
-        {
-            get
-            {
-                return DeRossoData.Sections.ToList();
-            }
-        }
+        public List<HealthTestSection> Sections => DeRossoData.Sections.ToList();
 
         /// <summary>
         /// Таблица групп тестов
         /// </summary>
-        public List<HealthTestGroup> Groups
-        {
-            get
-            {
-                return DeRossoData.Groups.ToList();
-            }
-        }
-       
+        public List<HealthTestGroup> Groups => DeRossoData.Groups.ToList();
+
 
         /// <summary>
         /// Таблица тестов
         /// </summary>
-        public List<HealthTest> Tests
-        {
-            get
-            {
-                return DeRossoData.Tests.ToList();
-            }
-        }
+        public List<HealthTest> Tests => DeRossoData.Tests.ToList();
 
         /// <summary>
         /// Выбранные тесты
         /// </summary>
         public List<HealthTest> SelectedTargetTests
         {
-            get
-            {
-                return _selectedTargetTests;
-            }
+            get => _selectedTargetTests;
             private set
             {
                 if (value == _selectedTargetTests)
@@ -127,10 +100,7 @@ namespace DeRoso.ViewModels
         /// </summary>
         public HealthTest SelectedTargetTest
         {
-            get
-            {
-                return _selectedTargetTest;
-            }
+            get => _selectedTargetTest;
             set
             {
                 if (value == _selectedTargetTest)
@@ -147,10 +117,7 @@ namespace DeRoso.ViewModels
         /// </summary>
         public HealthTest SelectedSourceTest
         {
-            get
-            {
-                return _selectedSourceTest;
-            }
+            get => _selectedSourceTest;
             set
             {
                 if (value == _selectedSourceTest)

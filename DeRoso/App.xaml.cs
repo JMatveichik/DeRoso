@@ -40,8 +40,10 @@ namespace DeRoso
 
             Device = new DeviceProvider();
             TestProcessor = new HealthTestsProcessor(Device);
+            TestProcessor.Report.Clear();
 
-            
+
+
             if (init)
             {
                 DeRossoDBTools.Instance.InitDB(DeRossoData, "db.xml", "ProfLeng.txt");

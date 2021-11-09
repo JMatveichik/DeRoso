@@ -92,10 +92,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="DeRosso.UI.Dictionary.xaml">
+    <Resource Include="DeRosso.UI.Dictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
+    </Resource>
     <Page Include="Icons\Icons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

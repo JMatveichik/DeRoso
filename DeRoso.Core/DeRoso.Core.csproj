@@ -102,9 +102,6 @@
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.37\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Remotion.Linq, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
@@ -150,6 +147,7 @@
     <Compile Include="Data\DeRossoDBTools.cs" />
     <Compile Include="Data\DeRosoContext.cs" />
     <Compile Include="Data\ExcelDataSaver.cs" />
+    <Compile Include="Data\ExcelMultiSheetResultSaver.cs" />
     <Compile Include="Data\FileOutputResultSaver.cs" />
     <Compile Include="Data\IResultsSaver.cs" />
     <Compile Include="Data\JSONResultSaver.cs" />

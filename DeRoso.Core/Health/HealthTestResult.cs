@@ -34,10 +34,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public float Scale
         {
-            get
-            {
-                return _scale;
-            }
+            get => _scale;
             private set
             {
                 if (value == _scale)
@@ -54,7 +51,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public float MeassurmentBefore
         {
-            get { return _meassurmentBefore; }
+            get => _meassurmentBefore;
             set
             {
                 if (Math.Abs(value - _meassurmentBefore) < 0.000001)
@@ -71,7 +68,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public float MeassurmentAfter
         {
-            get { return _meassurmentAfter; }
+            get => _meassurmentAfter;
             set
             {
                 if (Math.Abs(value - _meassurmentAfter) < 0.000001)
@@ -97,12 +94,7 @@ namespace DeRoso.Core.Health
         /// <summary>
         /// Данный тест простой т.е. содержащит один рецепт
         /// </summary>
-        public bool IsSingle
-        {
-            get {
-                return Test.Reciepts.Count == 1;
-            }
-        }
+        public bool IsSingle => Test.Reciepts.Count == 1;
 
         /// <summary>
         /// Выбор оптимального препарата послепроведения теста

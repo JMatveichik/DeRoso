@@ -14,12 +14,6 @@ namespace UsbLibrary
             this._arrData = Buffer;
         }
 
-        public byte[] Data
-        {
-            get
-            {
-                return _arrData;
-            }
-        }
+        public byte[] Data => _arrData;
     }
 }

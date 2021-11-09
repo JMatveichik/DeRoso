@@ -36,19 +36,13 @@ namespace UsbLibrary
         /// </summary>
         public byte[] Buffer
         {
-            get { return _mArrBuffer; }
+            get => _mArrBuffer;
             set { this._mArrBuffer = value; }
         }
         /// <summary>
         /// Accessor for the buffer length
         /// </summary>
-        public int BufferLength
-        {
-            get
-            {
-                return _mNLength;
-            }
-        }
+        public int BufferLength => _mNLength;
     }
     /// <summary>
     /// Defines a base class for output reports. To use output reports, just put the bytes into the raw buffer.

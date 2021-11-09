@@ -37,23 +37,12 @@ namespace DeRoso.Core.Health
         } = new HealthTestReport();
 
 
-        public ObservableCollection<HealthTestResult> Results
-        {
-            get;
-            private set;
-        } = new ObservableCollection<HealthTestResult>();
-
-
-
         /// <summary>
         /// Использовать случайные знаения вместо реальных измерений
         /// </summary>
         public bool IsUsedMeassureAsRandom
         {
-            get
-            {
-                return _isUsedMeassureAsRandom;
-            }
+            get => _isUsedMeassureAsRandom;
             set
             {
                 if (value == _isUsedMeassureAsRandom)
@@ -71,7 +60,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public bool IsAutoSave
         {
-            get { return _isAutoSave; }
+            get => _isAutoSave;
             set
             {
                 if (_isAutoSave == value)
@@ -90,7 +79,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public bool IsShowSaveResults
         {
-            get { return _isShowSaveResults; }
+            get => _isShowSaveResults;
             set
             {
                 if (_isShowSaveResults == value)
@@ -127,7 +116,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public bool IsStarted
         {
-            get { return _isStarted; }
+            get => _isStarted;
             private set
             {
                 if (_isStarted == value)
@@ -145,7 +134,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public bool IsPaused
         {
-            get { return _isPaused; }
+            get => _isPaused;
             private set
             {
                 if (_isPaused == value)
@@ -163,7 +152,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public bool IsStoped
         {
-            get { return _isStoped; }
+            get => _isStoped;
             private set
             {
                 if (_isStoped == value)
@@ -196,16 +185,16 @@ namespace DeRoso.Core.Health
         /// </summary>
         public double TimeLeft
         {
-            get
-            {
-                return _timeLeft;
-            }
+            get => _timeLeft;
             private set
             {
                 if (value == _timeLeft)
                     return;
 
                 _timeLeft = value;
+                if (_timeLeft < 0.0)
+                    _timeLeft = 0.0;
+
                 OnPropertyChanged();
             }
         }
@@ -216,10 +205,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public string CurrentOperation
         {
-            get
-            {
-                return _currentOperation;
-            }
+            get => _currentOperation;
             private set
             {
                 if (value == _currentOperation)
@@ -237,10 +223,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public HealthTest CurrentTest
         {
-            get
-            {
-                return _currentTest;
-            }
+            get => _currentTest;
             set
             {
                 if (value == _currentTest)
@@ -258,7 +241,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public Patient CurrentPatient
         {
-            get { return _currentPatient; }
+            get => _currentPatient;
             set
             {
                 if (_currentPatient == value)
@@ -276,10 +259,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public List<Patient> Patients
         {
-            get
-            {
-                return _patients;
-            }
+            get => _patients;
             private set
             {
                 if (value == _patients)
@@ -301,10 +281,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public List<HealthTest> Tests
         {
-            get
-            {
-                return _tests;
-            }
+            get => _tests;
             private set
             {
                 if (value == _tests)
@@ -511,6 +488,7 @@ namespace DeRoso.Core.Health
             if (IsAutoSave)
             {
                 CurrentOperation = "Сохранение результатов...";
+
                 Report.Save(IsShowSaveResults);
             }
             

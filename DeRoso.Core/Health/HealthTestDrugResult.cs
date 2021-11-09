@@ -30,9 +30,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public bool IsOptimal
         {
-            get {
-                return _isOptimal;
-            }
+            get => _isOptimal;
             set
             {
                 if (value == _isOptimal)
@@ -52,7 +50,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public float MeassurmentBefore
         {
-            get { return _meassurmentBefore; }
+            get => _meassurmentBefore;
             set
             {
                 if (Math.Abs(value - _meassurmentBefore) < 0.000001)
@@ -70,7 +68,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public float MeassurmentAfter
         {
-            get { return _meassurmentAfter; }
+            get => _meassurmentAfter;
             set
             {
                 if (Math.Abs(value - _meassurmentAfter) < 0.000001)

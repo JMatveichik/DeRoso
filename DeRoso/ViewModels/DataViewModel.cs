@@ -77,10 +77,7 @@ namespace DeRoso.ViewModels
         /// </summary>
         public HealthTestSection SelectedSection
         {
-            get
-            {
-                return _selectedSection;
-            }
+            get => _selectedSection;
             set
             {
                 if (value == _selectedSection)
@@ -99,10 +96,7 @@ namespace DeRoso.ViewModels
         /// </summary>
         public HealthTestGroup SelectedGroup
         {
-            get
-            {
-                return _selectedGroup;
-            }
+            get => _selectedGroup;
             set
             {
                 _selectedGroup = value;
@@ -121,10 +115,7 @@ namespace DeRoso.ViewModels
         /// </summary>
         public HealthTest SelectedTest
         {
-            get
-            {
-                return _selectedTest;
-            }
+            get => _selectedTest;
             set
             {
                 if (value == _selectedTest)
@@ -143,10 +134,7 @@ namespace DeRoso.ViewModels
         /// </summary>
         public HealthTestDrug SelectedDrug
         {
-            get
-            {
-                return _selectedDrug;
-            }
+            get => _selectedDrug;
             set
             {
                 if (value == _selectedDrug)
@@ -161,10 +149,7 @@ namespace DeRoso.ViewModels
 
         public string CurrentTestPath
         {
-            get
-            {
-                return _currentTestPath;
-            }
+            get => _currentTestPath;
             private set
             {
                 if (value == _currentTestPath)
@@ -186,10 +171,7 @@ namespace DeRoso.ViewModels
 
         public int DrugMinimalAddress
         {
-            get
-            {
-                return _drugMinimalAddress;
-            }
+            get => _drugMinimalAddress;
             set
             {
                 if (value == _drugMinimalAddress)
@@ -208,10 +190,7 @@ namespace DeRoso.ViewModels
         /// </summary>
         public ObservableCollection<HealthTest> GroupTests
         {
-            get
-            {
-                return _groupTest;
-            }
+            get => _groupTest;
             private set
             {                
                 _groupTest = value;
@@ -233,58 +212,26 @@ namespace DeRoso.ViewModels
         /// <summary>
         /// Таблица разделов тестов
         /// </summary>
-        public ObservableCollection<HealthTestSection> Sections
-        {
-            get
-            {
-                return new ObservableCollection<HealthTestSection>(DeRossoData.Sections.ToList()); 
-            }
-        }
+        public ObservableCollection<HealthTestSection> Sections => new ObservableCollection<HealthTestSection>(DeRossoData.Sections.ToList());
 
         /// <summary>
         /// Таблица групп тестов
         /// </summary>
-        public ObservableCollection<HealthTestGroup> Groups
-        {
-            get
-            {
-                return new ObservableCollection<HealthTestGroup>(DeRossoData.Groups.ToList());
-            }
-        }
+        public ObservableCollection<HealthTestGroup> Groups => new ObservableCollection<HealthTestGroup>(DeRossoData.Groups.ToList());
 
         /// <summary>
         /// Таблица препаратов
         /// </summary>
-        public ObservableCollection<HealthTestDrug> Drugs
-        {
-            get
-            {
-                return new ObservableCollection<HealthTestDrug>(DeRossoData.Drugs.ToList()); 
-            }
-        }
+        public ObservableCollection<HealthTestDrug> Drugs => new ObservableCollection<HealthTestDrug>(DeRossoData.Drugs.ToList());
 
         /// <summary>
         /// Таблица препаратов
         /// </summary>
-        public ObservableCollection<HealthTestReciept> Reciepts
-        {
-            get
-            {
-                return new ObservableCollection<HealthTestReciept>(DeRossoData.Reciepts.ToList());
-            }
-        }
+        public ObservableCollection<HealthTestReciept> Reciepts => new ObservableCollection<HealthTestReciept>(DeRossoData.Reciepts.ToList());
 
         /// <summary>
         /// Таблица тестов
         /// </summary>
-        public ObservableCollection<HealthTest> Tests
-        {
-            get
-            {                
-                return new ObservableCollection<HealthTest>(DeRossoData.Tests.ToList());
-            }
-        }
-
-
+        public ObservableCollection<HealthTest> Tests => new ObservableCollection<HealthTest>(DeRossoData.Tests.ToList());
     }
 }

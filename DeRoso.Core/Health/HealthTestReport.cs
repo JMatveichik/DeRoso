@@ -12,7 +12,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public Patient Patient
         {
-            get { return _pacient; }
+            get => _pacient;
             set
             {
                 if (_pacient == value)
@@ -21,7 +21,7 @@ namespace DeRoso.Core.Health
                 _pacient = value;
 
                 //Отчет изменен
-                IsModified = true;
+                //IsModified = true;
                 OnPropertyChanged();
             }
         }
@@ -42,16 +42,13 @@ namespace DeRoso.Core.Health
         public void Clear()
         {
             Results.Clear();
+            IsModified = false;
         }
         
         /// <summary>
         /// Флаг наполнения результатов
         /// </summary>
-        public bool IsEmpty
-        {
-            get { return Results.Count > 0; }
-            
-        }
+        public bool IsEmpty => Results.Count > 0;
 
 
         /// <summary>
@@ -59,7 +56,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public DateTime ReportDate
         {
-            get { return _reportDate; }
+            get => _reportDate;
             set
             {
                 if (_reportDate == value)
@@ -79,7 +76,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public bool IsModified
         {
-            get { return _isModified; }
+            get => _isModified;
             set
             {
                 if (_isModified == value)
@@ -122,8 +119,11 @@ namespace DeRoso.Core.Health
             }
             
             Directory.CreateDirectory(patientDir);
+            ReportDate = DateTime.Now;
 
-            string fileName = string.Format("{0}_{1}_{2}_{3}{4}", patientName, ReportDate.ToShortDateString(), ReportDate.Hour, ReportDate.Minute, ".xlsx");
+            string fileName =
+                $"{patientName}_{ReportDate.ToShortDateString()}_{ReportDate.Hour}_{ReportDate.Minute}{".xlsx"}";
+
             string path = patientDir + "\\" + fileName;
             
             if (Save(new ExcelResultsSaver(path), showResults))
@@ -139,6 +139,7 @@ namespace DeRoso.Core.Health
         /// Сохранением с использованием конкретного интерфейса
         /// </summary>
         /// <param name="sp"></param>
+        /// <param name="showResults">Отобразить результаты после сохранения</param>
         public bool Save(IResultsSaver sp, bool showResults)
         {
             return sp.Save(this, showResults);

@@ -20,7 +20,7 @@ namespace DeRoso.Views
 
         public Patient NewPatient
         {
-            get { return _newPatient; }
+            get => _newPatient;
             private set
             {
                 if (_newPatient == value)

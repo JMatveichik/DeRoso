@@ -19,7 +19,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public string FirstName
         {
-            get { return _firstName; }
+            get => _firstName;
             set
             {
                 if (_firstName == value)
@@ -39,7 +39,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public string SecondName
         {
-            get { return _secondName; }
+            get => _secondName;
             set
             {
                 if (_secondName == value)
@@ -59,7 +59,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public string FamilyName
         {
-            get { return _familyName; }
+            get => _familyName;
             set
             {
                 if (_familyName == value)
@@ -80,7 +80,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public EnumPatientGender Gender
         {
-            get { return _gender; }
+            get => _gender;
             set
             {
                 if (_gender == value)
@@ -98,7 +98,7 @@ namespace DeRoso.Core.Health
         /// </summary>
         public DateTime BirthDay
         {
-            get { return _birthDay; }
+            get => _birthDay;
             set
             {
                 if (_birthDay == value)
@@ -115,13 +115,7 @@ namespace DeRoso.Core.Health
         /// <summary>
         /// Полное имя пациента Фамилия Имя Отчество
         /// </summary>
-        public string FullName
-        {
-            get
-            {
-                return string.Format("{0} {1} {2}", FamilyName, FirstName, SecondName);
-            }
-        }
+        public string FullName => string.Format("{0} {1} {2}", FamilyName, FirstName, SecondName);
 
         [NotMapped]
         /// <summary>
@@ -140,7 +134,16 @@ namespace DeRoso.Core.Health
                 if (SecondName != null)
                     s = SecondName.Length == 0 ? ' ' : SecondName[0];
 
-                return string.Format("{0} {1}. {2}.", FamilyName, f, s);
+                string fname = "";
+                string sname = "";
+
+                if (f != ' ')
+                    fname = $"{f}.";
+
+                if (s != ' ')
+                    sname = $"{s}.";
+
+                return $"{FamilyName} {fname}{sname}";
             }
         }
 
