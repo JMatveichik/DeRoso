@@ -163,8 +163,17 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\PatientsViewModel.cs" />
     <Compile Include="ViewModels\TestSelectionViewModel.cs" />
+    <Compile Include="Views\AddNewGroupWindow.xaml.cs">
+      <DependentUpon>AddNewGroupWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddNewPacientWindow.xaml.cs">
       <DependentUpon>AddNewPacientWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddNewTestWindow.xaml.cs">
+      <DependentUpon>AddNewTestWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddNewSectionWindow.xaml.cs">
+      <DependentUpon>AddNewSectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreatorViewArchive.cs" />
     <Compile Include="Views\CreatorViewHelp.cs" />
@@ -222,7 +231,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\AddNewGroupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddNewPacientWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewTestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewSectionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

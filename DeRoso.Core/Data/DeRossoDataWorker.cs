@@ -32,7 +32,153 @@ namespace DeRoso.Core.Data
             DB.SaveChanges();
         }
 
-        #region РАБОТА С ТАБЛИЦЕЙ ПОСЛЕДНИХ ВЫБРАННВХ ТЕСТОВ
+        /// <summary>
+        /// Получаем список секций из базы данных
+        /// </summary>
+        /// <returns></returns>
+        public static List<HealthTestSection> GetAllSections()
+        {
+            return DB.Sections.ToList();
+        }
+
+        public static HealthTestSection GetSection(string name)
+        {
+            return DB.Sections.Select(s => s).FirstOrDefault(s => s.Title == name);
+        }
+
+        /// <summary>
+        /// Добавление новой секции в базу данных
+        /// </summary>
+        /// <param name="newSection">Новая секция</param>
+        public static void AddSection(HealthTestSection newSection)
+        {
+            DB.Sections.Add(newSection);
+            DB.SaveChanges();
+        }
+
+        /// <summary>
+        /// Удаляет секцию из базы данных
+        /// </summary>
+        /// <param name="section"></param>
+        public static void RemoveSection(HealthTestSection section)
+        {
+            var result = DB.Sections.Select(l => l).Where(l => l.Id == section.Id).ToList();
+            DB.Sections.RemoveRange(result);
+            DB.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Получаем список групп в выбранной секции из базы данных
+        /// </summary>
+        /// <returns></returns>
+        public static List<HealthTestGroup> GetAllGroups(HealthTestSection section)
+        {
+           return DB.Groups.Select(g => g).Where(g => g.HealthTestSectionId == section.Id).ToList(); ;
+        }
+
+        public static HealthTestGroup GetGroup(string name)
+        {
+            return DB.Groups.Select(s => s).FirstOrDefault(s => s.Title == name);
+        }
+
+        /// <summary>
+        /// Получаем список всех групп из базы данных
+        /// </summary>
+        /// <returns></returns>
+        public static List<HealthTestGroup> GetAllGroups()
+        {
+            return DB.Groups.ToList(); ;
+        }
+
+
+        /// <summary>
+        /// Добавитьт новую группу
+        /// </summary>
+        /// <param name="newGroup"></param>
+        public static void AddGroup(HealthTestGroup newGroup)
+        {
+            DB.Groups.Add(newGroup);
+            DB.SaveChanges();
+        }
+
+        /// <summary>
+        /// Удаляет группу из базы данных
+        /// </summary>
+        /// <param name="group"></param>
+        public static void RemoveGroup(HealthTestGroup group)
+        {
+            var result = DB.Groups.Select(l => l).Where(l => l.Id == group.Id).ToList();
+            DB.Groups.RemoveRange(result);
+            DB.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Получаем список тестов в выбранной группе из базы данных
+        /// </summary>
+        /// <returns></returns>
+        public static List<HealthTest> GetAllTests(HealthTestGroup group)
+        {
+            return DB.Tests.Select(g => g).Where(g => g.HealthTestGroupId == group.Id).ToList(); ;
+        }
+
+        /// <summary>
+        /// Получаем список всех тестов из базы данных
+        /// </summary>
+        /// <returns></returns>
+        public static List<HealthTest> GetAllTests()
+        {
+            return DB.Tests.ToList(); ;
+        }
+
+
+        public static HealthTest GetTest(string name)
+        {
+            return DB.Tests.Select(s => s).FirstOrDefault(s => s.Title == name);
+        }
+
+        /// <summary>
+        /// Добавить тест в базу данных
+        /// </summary>
+        /// <param name="newTest">Новый тест</param>
+        public static void AddTest(HealthTest newTest)
+        {
+            DB.Tests.Add(newTest);
+            DB.SaveChanges();
+        }
+
+        /// <summary>
+        /// Удаляет тест из базы данных
+        /// </summary>
+        /// <param name="test">Тест для удаления</param>
+        public static void RemoveTest(HealthTest test)
+        {
+            var result = DB.Tests.Select(l => l).Where(l => l.Id == test.Id).ToList();
+            DB.Tests.RemoveRange(result);
+            DB.SaveChanges();
+        }
+
+        
+        /// <summary>
+        /// Получить список всех препаратов из базы данных
+        /// </summary>
+        /// <returns></returns>
+        public static List<HealthTestDrug> GetAllDrugs()
+        {
+            return DB.Drugs.ToList();
+        }
+
+        /// <summary>
+        /// Получаем список всех рецептов из базы данных
+        /// </summary>
+        /// <returns></returns>
+        public static List<HealthTestReciept> GetAllReciepts()
+        {
+            return DB.Reciepts.ToList(); ;
+        }
+
+        #region РАБОТА С ТАБЛИЦЕЙ ПОСЛЕДНИХ ВЫБРАННЫХ ТЕСТОВ
 
         /// <summary>
         /// Получение всего списка последних выбранных тестов 
@@ -121,14 +267,7 @@ namespace DeRoso.Core.Data
             
         }
 
-        /// <summary>
-        /// Таблица выбранных тестов пустая
-        /// </summary>
-        /// <returns></returns>
-        public static bool IsEmptySelectedTests()
-        {            
-            return DB.LastSelected.Count() == 0;           
-        }
+        
 
         #endregion
     }

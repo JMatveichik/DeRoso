@@ -7,9 +7,10 @@
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:ctrl="clr-namespace:DeRoso.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="{StaticResource BackgroundBrush}">
     
-    <Grid Margin="50" MaxWidth="600" MaxHeight="500">
+    <Grid Margin="50" MaxWidth="400" MaxHeight="500">
         <Grid.Resources>
             <Style TargetType="Button">
                 <Setter Property="Margin" Value="10"></Setter>
@@ -27,69 +28,143 @@
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <Button Grid.Row="0" 
                 Grid.Column="0"
+                HorizontalContentAlignment="Stretch"
                 Command="{Binding SelectTestsPage}">
             
-            <StackPanel>
-                <ContentPresenter Width="48" Height="48"  
-                                  HorizontalAlignment="Center"
-                                  Content="{StaticResource IconLaunch}"/>
-                <TextBlock HorizontalAlignment="Center">ТЕСТИРОВАНИЕ</TextBlock>
-                <TextBlock HorizontalAlignment="Center" FontSize="12">Выбор и запуск тестов</TextBlock>
+            <Grid HorizontalAlignment="Stretch">
 
-            </StackPanel>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <ContentPresenter Grid.Row="0"
+                                  Grid.RowSpan="2"
+                                  Grid.Column="0"
+                                  Width="64" Height="64"  
+                                  HorizontalAlignment="Center"
+                                  Content="{StaticResource IconTestTube}"/>
+               
+                <TextBlock 
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    Text="ТЕСТИРОВАНИЕ"
+                    Style="{StaticResource PageTitleStyle}">
+                </TextBlock>
+
+                <TextBlock 
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left" 
+                    Text = "Выбор и запуск тестов"
+                    Style="{StaticResource ItemDescriptionStyle}">
+
+                </TextBlock>
+
+            </Grid>
+         
         </Button>
 
         <Button Grid.Row="1"
                 Grid.Column="0"
+                HorizontalContentAlignment="Stretch"
                 Command="{Binding EditDBPage}">
-            
-            <StackPanel>
-                <ContentPresenter Width="48"
-                                  Height="48"
+
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <ContentPresenter Grid.Row="0"
+                                  Grid.RowSpan="2"
+                                  Grid.Column="0"
+                                  Width="64" Height="64"  
                                   HorizontalAlignment="Center"
-                                  Content="{StaticResource IconSettings}" />
-                <TextBlock HorizontalAlignment="Center" >НАСТРОЙКА</TextBlock>
-                <TextBlock HorizontalAlignment="Center" FontSize="12">Редактирование базы данных</TextBlock>
-            </StackPanel>
+                                  Content="{StaticResource IconEditDataBase}"/>
+
+                <TextBlock 
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    Text="БАЗА ДАННЫХ"
+                    Style="{StaticResource PageTitleStyle}">
+                </TextBlock>
+
+                <TextBlock 
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left" 
+                    TextWrapping="WrapWithOverflow"
+                    Text = "Редактирование базы данных (секции, группы, тесты, препараты)"
+                    Style="{StaticResource ItemDescriptionStyle}">
+
+                </TextBlock>
+
+            </Grid>
 
         </Button>
 
-        <Button Grid.Row="0"
-                Grid.Column="1"
-                Command="{Binding ArchivePage}">
-
-            <StackPanel>
-                <ContentPresenter Width="48"
-                                  Height="48"
-                                  HorizontalAlignment="Center"
-                                  Content="{StaticResource IconCalendar}" />
-                <TextBlock HorizontalAlignment="Center">АРХИВ</TextBlock>
-                <TextBlock FontSize="12">Просмотр архива тестов</TextBlock>
-            </StackPanel>
-
-        </Button>
-
-        <Button Grid.Row="1"
-                Grid.Column="1"
+        
+        <Button Grid.Row="2"
+                Grid.Column="0"
+                HorizontalContentAlignment="Stretch"
                 Command="{Binding PatientEditPage}">
 
-            <StackPanel >
-                <ContentPresenter Width="48"
-                                  Height="48"
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <ContentPresenter Grid.Row="0"
+                                  Grid.RowSpan="2"
+                                  Grid.Column="0"
+                                  Width="64" Height="64"  
                                   HorizontalAlignment="Center"
-                                  Content="{StaticResource IconUsers}" />
-                <TextBlock HorizontalAlignment="Center">ПАЦИЕНТЫ</TextBlock>
-                <TextBlock HorizontalAlignment="Center" FontSize="12">Редактирование базы данных пациентов</TextBlock>
-            </StackPanel>
-            
-        </Button>
+                                  Content="{StaticResource IconUsers}"/>
+
+                <TextBlock 
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    Text="КЛИЕНТЫ"
+                    Style="{StaticResource PageTitleStyle}">
+                </TextBlock>
+
+                <TextBlock 
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left" 
+                    Text = "Редактирование базы клиентов"
+                    Style="{StaticResource ItemDescriptionStyle}">
+
+                </TextBlock>
+
+            </Grid>
+
+</Button>
     </Grid>
 </UserControl>

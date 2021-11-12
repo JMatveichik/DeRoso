@@ -7,9 +7,10 @@
         xmlns:conv="clr-namespace:DeRoso.Core.Converters;assembly=DeRoso.Core"
         xmlns:local="clr-namespace:DeRoso.Views"
         mc:Ignorable="d"
-        Title="Добавить нового пациента" 
-        Height="350" Width="600" ResizeMode="NoResize" 
-        ShowInTaskbar="False" WindowStartupLocation="CenterScreen">
+        Title="Добавить нового клиента" 
+        Height="400" Width="600" ResizeMode="NoResize" 
+        ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
+        >
    
     <Grid>
         <Grid.Resources>
@@ -22,12 +23,18 @@
             </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
-            
+
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Margin="30">
+        <TextBlock
+            Grid.Row="0"
+            Style="{StaticResource PageTitleStyle}"
+            Text="НОВЫЙ КЛИЕНТ" />
+
+        <Grid Grid.Row="1" Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -94,12 +101,13 @@
                         Text="День рождения" />
 
             <mah:DateTimePicker 
+                        
                         Grid.Row="4"
                         Grid.Column="1"
                         DisplayDate=""
                         SelectedDateFormat="Short"
                         FontFamily="Roboto Condensed Light"
-                        FontSize="16"
+                        FontSize="16" Margin="5"
                         SelectedDateTime="{Binding BirthDay, Mode=TwoWay}"
                         >
 
@@ -107,7 +115,7 @@
 
         </Grid>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Width="100" Click="OnAddNewPatientButtonClick">Добавить</Button>
             <Button Width="100" Click="OnCancelButtonClick">Отмена</Button>
         </StackPanel>

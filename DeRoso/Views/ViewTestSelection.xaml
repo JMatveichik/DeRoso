@@ -78,6 +78,22 @@
                             <ContentPresenter Width="32" 
                                   Height="32"                                   
                                   Content="{StaticResource IconRigthDoubleChevrone}"/>
+                            <Button.ToolTip>
+                                <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                                    <StackPanel Margin="3">
+                                        <TextBlock FontWeight="Bold" 
+                                                   Style="{StaticResource ValueTitleStyle}"
+                                                   Text="Добавить тесты секции"/>
+                                        <Border Style="{StaticResource BorderUnderline}" />
+                                        <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                            Добавляет все тесты из текущей секции
+                                            <LineBreak />
+                                            
+                                        </TextBlock>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+
                         </Button>
 
                     </Grid>
@@ -115,6 +131,23 @@
                             <ContentPresenter Width="32" 
                                   Height="32"                                   
                                   Content="{StaticResource IconRigthDoubleChevrone}"/>
+
+                            <Button.ToolTip>
+                                <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                                    <StackPanel Margin="3">
+                                        <TextBlock FontWeight="Bold" 
+                                                   Style="{StaticResource ValueTitleStyle}"
+                                                   Text="Добавить тесты раздела"/>
+                                        <Border Style="{StaticResource BorderUnderline}" />
+                                        <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                            Добавляет все тесты из текущего раздела
+                                            <LineBreak />
+
+                                        </TextBlock>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+
                         </Button>
 
                     </Grid>
@@ -167,7 +200,25 @@
                             <ContentPresenter Width="32" 
                                   Height="32"                                   
                                   Content="{StaticResource IconRigthDoubleChevrone}"/>
+                           
+                            <Button.ToolTip>
+                                <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                                    <StackPanel Margin="3">
+                                        <TextBlock FontWeight="Bold" 
+                                                   Style="{StaticResource ValueTitleStyle}"
+                                                   Text="Добавить выбранное"/>
+                                        <Border Style="{StaticResource BorderUnderline}" />
+                                        <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                            Добавляет все выбранные тесты из текущего раздела
+                                            <LineBreak />
+
+                                        </TextBlock>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+
                            </Button>
+
 
                     </Grid>
                 </Border>
@@ -215,7 +266,26 @@
                         <ContentPresenter Width="32" 
                                   Height="32"                                   
                                   Content="{StaticResource IconDeleteAll}"/>
-                    </Button>
+
+                        <Button.ToolTip>
+                            <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                                <StackPanel Margin="3">
+                                    <TextBlock FontWeight="Bold" 
+                                               Style="{StaticResource ValueTitleStyle}"
+                                               Text="Удалить тесты"/>
+                                    <Border Style="{StaticResource BorderUnderline}" />
+                                    <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                        Удаляет все тесты из выбранных.
+                                        <LineBreak />
+                                        Для удаления конкретного теста из списка
+                                        <LineBreak />
+                                        выбранных нажмите кнопку удалить в нужном тесте
+                                    </TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+
+                        </Button>
 
                 </Grid>
                 </Border>

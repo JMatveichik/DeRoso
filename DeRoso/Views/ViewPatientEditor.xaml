@@ -37,7 +37,7 @@
 
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="РЕДАКТИРОВАНИЕ ПАЦИЕНТОВ"
+        <TextBlock Text="РЕДАКТИРОВАНИЕ КЛИЕНТОВ"
                     Grid.ColumnSpan="2"
                    Grid.Column="0"
                    Style="{StaticResource PageTitleStyle}">
@@ -65,7 +65,7 @@
                         <TextBlock Grid.Column="0"                                   
                             Style="{StaticResource HeaderStyle}"
                                    VerticalAlignment="Center"
-                                Text="ВСЕ ПАЦИЕНТЫ"
+                                Text="ВСЕ КЛИЕНТЫ"
                                 Margin="5, 5">
 
                         </TextBlock>
@@ -113,7 +113,7 @@
                     <TextBlock                                   
                             Style="{StaticResource HeaderStyle}"
                             VerticalAlignment="Center"
-                            Text="ДАННЫЕ ПАЦИЕНТА"
+                            Text="ДАННЫЕ КЛИЕНТА"
                             Margin="5, 5">
                     </TextBlock>
                     

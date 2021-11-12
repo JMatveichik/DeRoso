@@ -32,6 +32,22 @@
                     Width="48"
                     Height="48"
                     Content="{StaticResource IconHome}" />
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                        <StackPanel Margin="3">
+                            <TextBlock FontWeight="Bold" 
+                                       Style="{StaticResource ValueTitleStyle}"
+                                       Text="Главная страница"/>
+                            <Border Style="{StaticResource BorderUnderline}" />
+                            <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                Перейти на начальную страницу приложения 
+                                <LineBreak />
+
+                            </TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+
             </Button>
 
             <Button Command="{x:Static models:MainWindowViewModel.EditDBPage}">
@@ -39,15 +55,50 @@
                 <ContentPresenter
                     Width="48"
                     Height="48"
-                    Content="{StaticResource IconSettings}" />
+                    Content="{StaticResource IconEditDataBase}" />
+
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                        <StackPanel Margin="3">
+                            <TextBlock FontWeight="Bold" 
+                                       Style="{StaticResource ValueTitleStyle}"
+                                       Text="База данных"/>
+                            <Border Style="{StaticResource BorderUnderline}" />
+                            <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                Перейти на страницу редактирования базы данных 
+                                <LineBreak />
+
+                            </TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+
             </Button>
 
-            <Button Command="{x:Static models:MainWindowViewModel.ArchivePage}">
+            <Button
+                
+                Command="{x:Static models:MainWindowViewModel.SelectTestsPage}">
 
                 <ContentPresenter
                     Width="48"
                     Height="48"
-                    Content="{StaticResource IconCalendar}" />
+                    Content="{StaticResource IconTestTube}" />
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                        <StackPanel Margin="3">
+                            <TextBlock FontWeight="Bold" 
+                                       Style="{StaticResource ValueTitleStyle}"
+                                       Text="Тестирование"/>
+                            <Border Style="{StaticResource BorderUnderline}" />
+                            <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                Перейти на страницу выбора тестов
+                                <LineBreak />
+
+                            </TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+
             </Button>
 
             <Button Command="{x:Static models:MainWindowViewModel.PatientEditPage}">
@@ -56,6 +107,23 @@
                     Width="48"
                     Height="48"
                     Content="{StaticResource IconUsers}" />
+                
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                        <StackPanel Margin="3">
+                            <TextBlock FontWeight="Bold" 
+                                       Style="{StaticResource ValueTitleStyle}"
+                                       Text="Клиенты"/>
+                            <Border Style="{StaticResource BorderUnderline}" />
+                            <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                Перейти на страницу редактирования клиентов 
+                                <LineBreak />
+
+                            </TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+
             </Button>
 
 

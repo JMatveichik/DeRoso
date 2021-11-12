@@ -17,6 +17,8 @@
             NonValidTestDrugsDataTemplate="{StaticResource NonValidTestListBoxItemTemplate}"
             ValidTestDrugsDataTemplate="{StaticResource NormalTestListBoxItemTemplate}" />
         
+        
+        
     </UserControl.Resources>
 
     <Grid>
@@ -76,26 +78,57 @@
                             Style="{StaticResource HeaderStyle}"
                             Text="СЕКЦИЯ" />
 
-                        <!--
-                        <Button  Grid.Column="1" Margin="2">
-                            <ContentPresenter Width="32"
-                                  Height="32"
-                                  Content="{StaticResource IconRigthDoubleChevrone}"/>
-                        </Button>
-
-                        <Button  Grid.Column="1" Margin="2"
+                        <!---->
+                       <Button  Grid.Column="1" Margin="2"
                                  Click="OnDeleteCurrentSectionButtonClick">
                             <ContentPresenter Width="32"
                                   Height="32"
                                   Content="{StaticResource IconDelete}"/>
+
+                           <Button.ToolTip>
+                               <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                               <StackPanel Margin="3">
+                                   <TextBlock FontWeight="Bold" 
+                                              Style="{StaticResource ValueTitleStyle}"
+                                              Text="Удалить выбранную секцию"/>
+                                   <Border Style="{StaticResource BorderUnderline}" />
+                                   <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                       Удаляет текущую выбранную секцию.
+                                       <LineBreak />
+                                       Внимание! Все разделы включенные в данную секцию
+                                       <LineBreak />
+                                       а так же все тесты входящие в данные разделы...
+                                   </TextBlock>
+                               </StackPanel>
+                               </ToolTip>
+                           </Button.ToolTip>
+
                         </Button>
+
                         <Button  Grid.Column="2" Margin="2"
                                  Click="OnAddNewSectionButtonClick">
                             <ContentPresenter Width="32"
                                   Height="32"
                                   Content="{StaticResource IconAddSection}"/>
+                            
+                            <Button.ToolTip >
+                                <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                                <StackPanel Margin="3">
+                                    <TextBlock FontWeight="Bold" 
+                                               Style="{StaticResource ValueTitleStyle}"
+                                               Text="Добавить новую секцию"/>
+                                    <Border Style="{StaticResource BorderUnderline}" />
+                                    <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                        Вызывает диалог добавления новой секции
+                                        <LineBreak />
+                                        в базу данных.
+                                    </TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                            </Button.ToolTip>
+
                         </Button>
-                        -->
+                        <!---->
 
                     </Grid>
                 </Border>
@@ -130,7 +163,54 @@
                             Style="{StaticResource HeaderStyle}"
                             Text="РАЗДЕЛ" />
 
-                        
+                        <!---->
+                        <Button  Grid.Column="1" Margin="2"
+                                 Click="OnDeleteCurrentGroupButtonClick">
+                            <ContentPresenter Width="32"
+                                              Height="32"
+                                              Content="{StaticResource IconDelete}"/>
+                            <Button.ToolTip >
+                                <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                                <StackPanel Margin="3">
+                                    <TextBlock FontWeight="Bold" 
+                                               Style="{StaticResource ValueTitleStyle}"
+                                               Text="Удалить выбранный раздел"/>
+                                    <Border Style="{StaticResource BorderUnderline}" />
+                                    <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                        Удаляет текущий раздел.
+                                        <LineBreak />
+                                        Внимание! Все тесты включенные в данный раздел также
+                                        <LineBreak />
+                                        будут удалены из базы данных...
+                                    </TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                            </Button.ToolTip>
+
+                        </Button>
+
+                        <Button  Grid.Column="2" Margin="2"
+                                 Click="OnAddNewGroupButtonClick">
+                            <ContentPresenter Width="32"
+                                              Height="32"
+                                              Content="{StaticResource IconAddSection}"/>
+                            <Button.ToolTip >
+                                <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                                <StackPanel Margin="3">
+                                    <TextBlock FontWeight="Bold" 
+                                               Style="{StaticResource ValueTitleStyle}"
+                                               Text="Добавить новый раздел"/>
+                                    <Border Style="{StaticResource BorderUnderline}" />
+                                    <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                        Вызывает диалог добавления нового 
+                                        <LineBreak />
+                                        раздела в текущую секцию.
+                                    </TextBlock>
+                                </StackPanel>
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+                        <!---->
 
                     </Grid>
                 </Border>
@@ -142,7 +222,7 @@
                     Margin="10"
                     IsSynchronizedWithCurrentItem="True"
                     ItemTemplate="{StaticResource DescribedListBoxItemTemplate}"
-                    ItemsSource="{Binding SelectedSection.Groups}"
+                    ItemsSource="{Binding Groups}"
                     SelectedItem="{Binding SelectedGroup, Mode=TwoWay}" />
 
                 
@@ -163,6 +243,54 @@
                             VerticalAlignment="Center"
                             Style="{StaticResource HeaderStyle}"
                             Text="ТЕСТЫ" />
+
+                        <!---->
+                        <Button  Grid.Column="1" Margin="2"
+                                 Click="OnDeleteCurrentTestButtonClick">
+                            <ContentPresenter Width="32"
+                                              Height="32"
+                                              Content="{StaticResource IconDelete}"/>
+                            <Button.ToolTip >
+                                <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                                <StackPanel Margin="3">
+                                    <TextBlock FontWeight="Bold" 
+                                               Style="{StaticResource ValueTitleStyle}"
+                                               Text="Удалить выбранный тест"/>
+                                    <Border Style="{StaticResource BorderUnderline}" />
+                                    <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                        Удаляет текущий выбранный тест из текущего раздела.
+                                        <LineBreak />
+                                    </TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                            </Button.ToolTip>
+
+                        </Button>
+
+                        <Button  Grid.Column="2" Margin="2"
+                                 Click="OnAddNewTestButtonClick">
+                            <ContentPresenter Width="32"
+                                              Height="32"
+                                              Content="{StaticResource IconAddSection}"/>
+                            
+                            <Button.ToolTip >
+                                <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                                <StackPanel Margin="3">
+                                    <TextBlock FontWeight="Bold" 
+                                               Style="{StaticResource ValueTitleStyle}"
+                                               Text="Добавить новый тест"/>
+                                    <Border Style="{StaticResource BorderUnderline}" />
+                                    <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                        Вызывает диалог добавления нового 
+                                        <LineBreak />
+                                        теста в текущий раздел.
+                                    </TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                            </Button.ToolTip>
+
+                        </Button>
+                        <!---->
 
                     </Grid>
                 </Border>
@@ -221,7 +349,7 @@
                             Grid.Column="2"
                             Width="50"
                             Style="{StaticResource ValueInputTextBoxStyle}"
-                            Text="{Binding DrugMinimalAddress, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding DrugFilterString, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" />
 
                     </Grid>
                 </Border>

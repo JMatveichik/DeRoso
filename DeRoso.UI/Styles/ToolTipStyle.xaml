@@ -5,14 +5,10 @@
 
     <SolidColorBrush x:Key="BordersBrush" Color="{StaticResource MahApps.Colors.Accent2}" />
 
-    <Style x:Key="CustomTooltip" TargetType="ToolTip">
-
-        <Setter Property="BorderThickness" Value="0,0,0,1" />
-
-        <Setter Property="BorderBrush" Value="{StaticResource BordersBrush}" />
-
-        <Setter Property="Margin" Value="10,10,20,0" />
-
+    <Style x:Key="DeRossoToolTipStyle" TargetType="ToolTip">
+        <Setter Property="Background" Value="WhiteSmoke"/>
+        <Setter Property="HasDropShadow" Value="True"/>
+        <Setter Property="Margin" Value="5"/>
     </Style>
 
 

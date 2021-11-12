@@ -14,22 +14,24 @@ namespace DeRoso.Views
         public AddNewPacientWindow()
         {
             InitializeComponent();
-            NewPatient = new Patient() { FamilyName = "Новый", FirstName="Пациент", BirthDay = DateTime.Now, Gender = EnumPatientGender.Female };
+
+            NewPatient = new Patient()
+            {
+                FamilyName = "Новый",
+                FirstName ="Пациент",
+                BirthDay = DateTime.Now,
+                Gender = EnumPatientGender.Female
+            };
+
             this.DataContext = NewPatient;
         }        
 
         public Patient NewPatient
         {
-            get => _newPatient;
-            private set
-            {
-                if (_newPatient == value)
-                    return;
-
-                _newPatient = value;
-            }
+            get; 
+            private set;
+            
         }
-        private Patient _newPatient;
 
         private void OnAddNewPatientButtonClick(object sender, RoutedEventArgs e)
         {

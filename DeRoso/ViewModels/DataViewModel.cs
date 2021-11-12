@@ -1,6 +1,7 @@
 ﻿using DeRoso.Core;
 using DeRoso.Core.Data;
 using DeRoso.Core.Health;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -10,33 +11,35 @@ namespace DeRoso.ViewModels
 {
     public class DataViewModel : ViewModelBase
     {
-        public DataViewModel(DeRosoContext data)
+        public DataViewModel()
         {
-            DeRossoData = data;
-
+            //Drugs
             FilteredDrugs = (CollectionView)CollectionViewSource.GetDefaultView(Drugs);
             FilteredDrugs.Filter = DrugFilter;
 
-            SelectedSection = Sections.FirstOrDefault();
-            SelectedGroup = SelectedSection?.Groups.FirstOrDefault();
-
-            PropertyChanged += DataViewModel_PropertyChanged;
+            Update();
         }
 
-        private void DataViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        /// <summary>
+        /// Обновляем данные из базы
+        /// </summary>
+        public void Update(HealthTestSection selSection = null, HealthTestGroup selGroup = null, HealthTest selTest = null)
         {
-            if (e.PropertyName == " ")
-            {
+            //обновляем список разделов
+            Sections = DeRossoDataWorker.GetAllSections();
 
-            }
+            //выбираем первый раздел если не задана выбранная секция
+            SelectedSection = selSection ?? Sections.FirstOrDefault();
+
+            //получаем 
+            Groups = DeRossoDataWorker.GetAllGroups(SelectedSection);
+
+            //выбираем первую группу в разделе если не задан выбранный раздел
+            SelectedGroup = selGroup ?? Groups.FirstOrDefault();
+
+            //Выбираем тест 
+            SelectedTest = selTest ?? SelectedGroup?.Tests?.FirstOrDefault();
         }
-
-        public DeRosoContext DeRossoData
-        {
-            get;
-            set;
-        }
-
 
         private string buildTetsPath()
         {
@@ -73,6 +76,42 @@ namespace DeRoso.ViewModels
         }
 
         /// <summary>
+        /// Таблица разделов
+        /// </summary>
+        public List<HealthTestGroup> Groups
+        {
+            get => _groups;
+            private set
+            {
+                if (value == _groups)
+                    return;
+
+                _groups = value;
+                OnPropertyChanged();
+            }
+        }
+        private List<HealthTestGroup> _groups = null;
+
+        /// <summary>
+        /// Таблица разделов
+        /// </summary>
+        public List<HealthTestSection> Sections
+        {
+            get => _sections;
+            private set
+            {
+                if (value == _sections)
+                    return;
+
+
+                _sections = value;
+                OnPropertyChanged();
+            }
+        }
+        private List<HealthTestSection> _sections = null;
+
+
+        /// <summary>
         /// Текущий разделов тестов
         /// </summary>
         public HealthTestSection SelectedSection
@@ -86,10 +125,14 @@ namespace DeRoso.ViewModels
                 _selectedSection = value;
                 OnPropertyChanged();
 
+                //получаем 
+                Groups = DeRossoDataWorker.GetAllGroups(SelectedSection);
+
                 CurrentTestPath = buildTetsPath();
             }
         }
         private HealthTestSection _selectedSection = null;
+
 
         /// <summary>
         /// Текущая группа тестов
@@ -99,9 +142,11 @@ namespace DeRoso.ViewModels
             get => _selectedGroup;
             set
             {
+                if (value == _selectedGroup)
+                    return;
+
                 _selectedGroup = value;
-                if (value != null)
-                    GroupTests = SelectedGroup.Tests;
+                GroupTests = _selectedGroup?.Tests;
 
                 OnPropertyChanged();
                 CurrentTestPath = buildTetsPath();
@@ -161,29 +206,27 @@ namespace DeRoso.ViewModels
         }
         private string _currentTestPath = null;
 
-
-
         public ICollectionView FilteredDrugs
         {
             get;
             private set;
         }
 
-        public int DrugMinimalAddress
+        public string DrugFilterString
         {
-            get => _drugMinimalAddress;
+            get => _drugFilterString;
             set
             {
-                if (value == _drugMinimalAddress)
+                if (value == _drugFilterString)
                     return;
 
-                _drugMinimalAddress = value;
+                _drugFilterString = value;
                 CollectionViewSource.GetDefaultView(FilteredDrugs).Refresh();
                 OnPropertyChanged();
             }
 
         }
-        private int _drugMinimalAddress = 0;
+        private string _drugFilterString = "";
 
         /// <summary>
         /// Таблица тестов
@@ -200,38 +243,76 @@ namespace DeRoso.ViewModels
         private ObservableCollection<HealthTest> _groupTest = null;
 
 
-
+        /// <summary>
+        /// Фильтр препаратов
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         private bool DrugFilter(object item)
         {
             HealthTestDrug d = (HealthTestDrug)item;
-            if (d.Address >= DrugMinimalAddress)
+
+            if (string.IsNullOrEmpty(DrugFilterString))
                 return true;
+
+            string[] filter = DrugFilterString.Split(new char[] { ' ', ',', ':', '-'});
+
+            int address = 0;
+            int cell = 0;
+
+            if (filter.Length == 1 && int.TryParse(filter[0], out address))
+            {
+                if (d.Address ==  address)
+                    return true;
+            }
+            else if (filter.Length == 2)
+            {
+                //если ячейка пустая проверяем адресс
+                if (string.IsNullOrEmpty(filter[1]))
+                {
+                    if (int.TryParse(filter[0], out address) && d.Address == address)
+                        return true;
+                }
+                else if(int.TryParse(filter[0], out address) && int.TryParse(filter[1], out cell))
+                {
+                    if (d.Address == address && d.Cell == cell)
+                        return true;
+                }
+            }
+           
 
             return false;
         }
+
+
+        /// <summary>
+        /// Таблица препаратов
+        /// </summary>
+        public List<HealthTestDrug> Drugs => DeRossoDataWorker.GetAllDrugs();
+
+
+        /*
         /// <summary>
         /// Таблица разделов тестов
         /// </summary>
-        public ObservableCollection<HealthTestSection> Sections => new ObservableCollection<HealthTestSection>(DeRossoData.Sections.ToList());
+        public List<HealthTestSection> Sections => DeRossoDataWorker.GetAllSections();
 
         /// <summary>
         /// Таблица групп тестов
         /// </summary>
-        public ObservableCollection<HealthTestGroup> Groups => new ObservableCollection<HealthTestGroup>(DeRossoData.Groups.ToList());
+        public List<HealthTestGroup> Groups => DeRossoDataWorker.GetAllGroups();
+
+        
 
         /// <summary>
-        /// Таблица препаратов
+        /// Таблица всех препаратов
         /// </summary>
-        public ObservableCollection<HealthTestDrug> Drugs => new ObservableCollection<HealthTestDrug>(DeRossoData.Drugs.ToList());
-
-        /// <summary>
-        /// Таблица препаратов
-        /// </summary>
-        public ObservableCollection<HealthTestReciept> Reciepts => new ObservableCollection<HealthTestReciept>(DeRossoData.Reciepts.ToList());
+        public List<HealthTestReciept> Reciepts => DeRossoDataWorker.GetAllReciepts();
 
         /// <summary>
         /// Таблица тестов
         /// </summary>
-        public ObservableCollection<HealthTest> Tests => new ObservableCollection<HealthTest>(DeRossoData.Tests.ToList());
+        public List<HealthTest> Tests => DeRossoDataWorker.GetAllTests();
+        */
     }
 }

@@ -33,7 +33,7 @@ namespace DeRoso.Views
                     DeRossoDataWorker.AddPatient(wnd.NewPatient);
                     HealthTestsProcessor pr = (HealthTestsProcessor)this.DataContext;
                     pr.Update();
-                    pr.CurrentPatient = pr.Patients.Select(p => p).Where(p => p.FullName == wnd.NewPatient.FullName).FirstOrDefault(); 
+                    pr.CurrentPatient = pr.Patients.Select(p => p).FirstOrDefault(p => p.FullName == wnd.NewPatient.FullName); 
                 }                    
                 
             }
@@ -41,11 +41,9 @@ namespace DeRoso.Views
 
         private void OnPacientFolderButtonClick(object sender, RoutedEventArgs e)
         {
-            Process PrFolder = new Process();
+            Process prFolder = new Process();
             ProcessStartInfo psi = new ProcessStartInfo();
             HealthTestsProcessor pr = (HealthTestsProcessor)this.DataContext;
-
-            //string file = @"C:\sample.txt";
 
             string patientDir = Directory.GetCurrentDirectory() + "\\";
 
@@ -59,8 +57,8 @@ namespace DeRoso.Views
             psi.WindowStyle = ProcessWindowStyle.Normal;
             psi.FileName = "explorer";
             psi.Arguments = patientDir;
-            PrFolder.StartInfo = psi;
-            PrFolder.Start();
+            prFolder.StartInfo = psi;
+            prFolder.Start();
         }
 
         private void OnTestingViewIsVisible(object sender, DependencyPropertyChangedEventArgs e)
