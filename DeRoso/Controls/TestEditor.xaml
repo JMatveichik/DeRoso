@@ -38,6 +38,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
@@ -216,10 +217,23 @@
                 ItemsSource="{x:Static conv:EnumItemSourceProvider.EnumCalculationTypeTemplateValues}"
                 SelectedItem="{Binding CalculationType}"
                 Style="{StaticResource ValueComboInputStyle}" />
-                
+
+                <TextBlock
+                    Grid.Row="14"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"                    
+                    Style="{StaticResource ValueTitleStyle}"
+                    Text="Обратный метод расчета" />
+
+                <CheckBox
+                    Grid.Row="14"
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    IsChecked="{Binding IsReversedResult}"/>
+
                 <Border
                     Grid.Column="0"
-                    Grid.Row="14"
+                    Grid.Row="15"
                     Grid.ColumnSpan="2"
                     Style="{StaticResource BorderUnderline}">   
                     
@@ -266,7 +280,7 @@
                 </Border>
 
                 <ListBox x:Name="lbxReciepts"
-                    Grid.Row="15"
+                    Grid.Row="16"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Margin="10"

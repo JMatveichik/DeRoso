@@ -20,16 +20,7 @@ namespace DeRoso.Views
         }
 
 
-        private void OnTestsListBoxPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ListBox parent = (ListBox)sender;
-            object data = GetDataFromListBox(parent, e.GetPosition(parent));
-
-            if (data != null)
-            {
-                DragDrop.DoDragDrop(parent, data, DragDropEffects.All);
-            }
-        }
+       
 
         private static object GetDataFromListBox(ListBox source, Point point)
         {
@@ -64,11 +55,26 @@ namespace DeRoso.Views
 
         private void SelectedTestsListBoxDrop(object sender, DragEventArgs e)
         {
-            ListBox parent = (ListBox)sender;
             HealthTest test = (HealthTest)e.Data.GetData(typeof(HealthTest));
 
             DeRossoDataWorker.AddToLastSelectedTests(test);
-         }
+            TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;
+            vm.Update();
+        }
+
+        private void TestsListBoxOnPreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                ListBox parent = (ListBox)sender;
+                object data = GetDataFromListBox(parent, e.GetPosition(parent));
+
+                if (data != null)
+                {
+                    DragDrop.DoDragDrop(parent, data, DragDropEffects.All);
+                }
+            }
+        }
 
         private void OnTestsListBoxMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -77,7 +83,10 @@ namespace DeRoso.Views
                 ListBox parent = (ListBox)sender;
                 HealthTest test = (HealthTest)GetDataFromListBox(parent, e.GetPosition(parent));
                 
-                DeRossoDataWorker.AddToLastSelectedTests(test); 
+                DeRossoDataWorker.AddToLastSelectedTests(test);
+
+                TestSelectionViewModel vm = this.DataContext as TestSelectionViewModel;
+                vm.Update();
             }
             e.Handled = false;
         }
@@ -136,5 +145,7 @@ namespace DeRoso.Views
 
             vm.Update();
         }
+
+       
     }
 }

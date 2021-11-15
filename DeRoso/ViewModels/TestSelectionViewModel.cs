@@ -13,7 +13,7 @@ namespace DeRoso.ViewModels
         {
             DeRossoData = data;
             SelectedSection = Sections?.FirstOrDefault();
-            SelectedGroup = SelectedSection.Groups?.FirstOrDefault();
+            SelectedGroup = SelectedSection?.Groups?.FirstOrDefault();
 
         }
 

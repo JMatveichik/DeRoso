@@ -31,7 +31,22 @@
                     <ContentPresenter Width="48" 
                                       Height="48"  
                                   
-                                  Content="{StaticResource IconStart}"/>                    
+                                  Content="{StaticResource IconStart}"/>
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                        <StackPanel Margin="3">
+                            <TextBlock FontWeight="Bold" 
+                                       Style="{StaticResource ValueTitleStyle}"
+                                       Text="Запустить тестирование"/>
+                            <Border Style="{StaticResource BorderUnderline}" />
+                            <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                Запуск всех выбранных тестов.
+                                <LineBreak />
+                            </TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+
             </Button>
 
             <Button 
@@ -39,6 +54,25 @@
 
                 <ContentPresenter Width="48" Height="48"  
                                   Content="{StaticResource IconStop}"/>
+
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                        <StackPanel Margin="3">
+                            <TextBlock FontWeight="Bold" 
+                                       Style="{StaticResource ValueTitleStyle}"
+                                       Text="Остановить тестирование"/>
+                            <Border Style="{StaticResource BorderUnderline}" />
+                            <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                Остановить проведение тестов после окончания текущего.
+                                <LineBreak />
+                                Нажмите стоп еще раз чтобы не прерывать тестирование 
+                                <LineBreak />
+                                после окончания текущего теста.
+                            </TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+
             </Button>
 
             <Button 
@@ -46,6 +80,24 @@
 
                 <ContentPresenter Width="48" Height="48"  
                                   Content="{StaticResource IconPause}"/>
+
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                        <StackPanel Margin="3">
+                            <TextBlock FontWeight="Bold" 
+                                       Style="{StaticResource ValueTitleStyle}"
+                                       Text="Приостановить тестирование"/>
+                            <Border Style="{StaticResource BorderUnderline}" />
+                            <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                Приостановить проведение тестов после окончания текущего.
+                                <LineBreak />
+                                Нажмите паузу еще раз чтобы отменить перерыв в тестировании
+                                <LineBreak />
+                                после окончания текущего теста.
+                            </TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
             </Button>
 
 

@@ -2,8 +2,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cb="clr-namespace:CalcBinding;assembly=CalcBinding"
-    xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
+    xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:conv ="clr-namespace:DeRoso.Core.Converters;assembly=DeRoso.Core">
 
+
+    
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../Styles/TextBlockStyles.xaml" />
@@ -15,6 +18,10 @@
     </ResourceDictionary.MergedDictionaries>
 
     <HierarchicalDataTemplate x:Key="HierarchicalTestResultsDataTemplate" ItemsSource="{Binding Meassurments}">
+        
+        <HierarchicalDataTemplate.Resources>
+            <conv:TestScaleBrushConverter x:Key="ScaleBrush"/>
+        </HierarchicalDataTemplate.Resources>
 
         <Border Style="{StaticResource BorderUnderline}">
 
@@ -39,9 +46,15 @@
                     Minimum="0"
                     Maximum="{cb:Binding Test.Reciepts.Count}"
                     Value="{Binding Scale, Mode=OneWay}"  
-                    Style="{StaticResource ScaleProgressBar}"
-                    Visibility="{cb:Binding !IsSingle, FalseToVisibility=Collapsed}">      
-                    
+                    Visibility="{cb:Binding !IsSingle, FalseToVisibility=Collapsed}">
+
+                    <mah:MetroProgressBar.Foreground>
+                        <MultiBinding Converter="{StaticResource ScaleBrush}">
+                            <Binding RelativeSource="{RelativeSource Self}" Path="DataContext"/>
+                            <Binding Path="Scale"></Binding>
+                        </MultiBinding>
+                        
+                    </mah:MetroProgressBar.Foreground>
                 </mah:MetroProgressBar>
                 
                 <TextBlock

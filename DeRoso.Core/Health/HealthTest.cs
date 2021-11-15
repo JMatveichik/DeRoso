@@ -92,6 +92,23 @@ namespace DeRoso.Core.Health
         private bool _useHV = true;
 
         /// <summary>
+        /// Обратный метод выбора результатов
+        /// </summary>        
+        public bool IsReversedResult
+        {
+            get => _isReversedResult;
+            set
+            {
+                if (value == _isReversedResult)
+                    return;
+
+                _isReversedResult = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _isReversedResult = true;
+
+        /// <summary>
         /// Частота HV
         /// </summary>
         public double FrequencyHV
@@ -247,6 +264,7 @@ namespace DeRoso.Core.Health
         }
         private EnumCalculationType _calcType = EnumCalculationType.Medium;
 
+        
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

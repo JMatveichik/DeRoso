@@ -262,7 +262,7 @@ namespace DeRoso.ViewModels
 
             if (filter.Length == 1 && int.TryParse(filter[0], out address))
             {
-                if (d.Address ==  address)
+                if (d.Address >=  address)
                     return true;
             }
             else if (filter.Length == 2)
@@ -270,12 +270,12 @@ namespace DeRoso.ViewModels
                 //если ячейка пустая проверяем адресс
                 if (string.IsNullOrEmpty(filter[1]))
                 {
-                    if (int.TryParse(filter[0], out address) && d.Address == address)
+                    if (int.TryParse(filter[0], out address) && d.Address >= address)
                         return true;
                 }
                 else if(int.TryParse(filter[0], out address) && int.TryParse(filter[1], out cell))
                 {
-                    if (d.Address == address && d.Cell == cell)
+                    if (d.Address >= address && d.Cell == cell)
                         return true;
                 }
             }

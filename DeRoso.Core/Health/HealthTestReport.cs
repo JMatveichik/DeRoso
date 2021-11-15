@@ -51,6 +51,7 @@ namespace DeRoso.Core.Health
         public bool IsEmpty => Results.Count > 0;
 
 
+
         /// <summary>
         /// Дата и время отчета
         /// </summary>
@@ -97,6 +98,7 @@ namespace DeRoso.Core.Health
             Results.Add(tr);
             IsModified = true;
         }
+
 
 
         /// <summary>

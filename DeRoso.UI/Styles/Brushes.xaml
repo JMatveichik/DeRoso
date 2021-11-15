@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:DeRoso.UI.Styles" >
 
-    <ImageBrush x:Key="BackgroundBrush"  ImageSource="../Images/background.jpg" Stretch="UniformToFill" Opacity="0.1"/>
+    <ImageBrush x:Key="BackgroundBrush"  ImageSource="../Images/background.jpg" Stretch="UniformToFill" Opacity="0.15"/>
 
 
 </ResourceDictionary>
