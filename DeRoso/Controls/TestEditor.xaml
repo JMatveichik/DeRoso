@@ -16,9 +16,18 @@
     <UserControl.Resources>
         <conv:TimeSpanToDoubleConverter x:Key="ToSecondsConverter" ConvertBase="Seconds" />
 
+        <Style TargetType="Expander">
 
+            <Setter Property="BorderBrush" Value="{StaticResource BordersBrush}"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="Transparent"/>
+            <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="5"/>
+            <Setter Property="mah:HeaderedControlHelper.HeaderHorizontalContentAlignment" Value="Stretch"/>
 
+        </Style>
     </UserControl.Resources>
+    
+
     <Border Style="{StaticResource BorderBox}">
         <Grid>
             <Grid Margin="5">
@@ -47,20 +56,87 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
+                <Expander Grid.ColumnSpan="2">
 
-                <local:DescribedItemEditor Grid.ColumnSpan="2"/>
+                    <Expander.Header>
+                        <TextBlock Style="{StaticResource HeaderStyle}"  Text="ИНФОРМАЦИЯ" />
+                    </Expander.Header>
 
-                <Border
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Style="{StaticResource BorderUnderline}">
+                    <Grid Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-                    <TextBlock Style="{StaticResource HeaderStyle}" Text="ПАРАМЕТРЫ HV" />
-                </Border>
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Style="{StaticResource ValueTitleStyle}"
+                            Text="Название" />
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Style="{StaticResource ValueInputTextBoxStyle}"
+                            Text="{Binding Title}" />
 
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Style="{StaticResource ValueTitleStyle}"
+                            Text="Описание" />
+                        <TextBox
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            AcceptsReturn="True"
+                            Style="{StaticResource ValueInputTextBoxStyle}"
+                            Text="{Binding Description}"/>
 
-                <TextBlock
+                    </Grid>
+
+                </Expander>
+
+                <Expander Grid.Row="1"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2">
+
+                    <Expander.Header>
+                        <TextBlock Style="{StaticResource HeaderStyle}" Text="ПАРАМЕТРЫ HV" />
+                    </Expander.Header>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock
                     Grid.Row="3"
                     Grid.Column="0"
                     VerticalAlignment="Center"                    
@@ -121,6 +197,8 @@
                     Style="{StaticResource ValueInputStyle}"
                     Value="{Binding PauseBeforeHV, Converter={StaticResource ToSecondsConverter}}" />
 
+                        </Grid>
+                </Expander>
                 <!--
                 <Border
                     Grid.Row="6"
@@ -156,16 +234,43 @@
                     Value="{Binding HighLimit}" />
                 -->
 
-                <Border
-                    Grid.Row="9"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Style="{StaticResource BorderUnderline}">
 
-                    <TextBlock Style="{StaticResource HeaderStyle}" Text="ВВЕДЕНИЕ ПРЕПАРАТА" />
-                </Border>
+                <Expander Grid.Row="2"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2">
+                   
+                    <Expander.Header >
+                        <TextBlock Style="{StaticResource HeaderStyle}"  Text="ВВЕДЕНИЕ ПРЕПАРАТА" />
+                    </Expander.Header>
+                
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-                <TextBlock
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock
                 Grid.Row="10"
                 Grid.Column="0"
                 Style="{StaticResource ValueTitleStyle}"
@@ -230,67 +335,75 @@
                     Grid.Column="1"
                     HorizontalAlignment="Center"
                     IsChecked="{Binding IsReversedResult}"/>
-
-                <Border
-                    Grid.Column="0"
-                    Grid.Row="15"
-                    Grid.ColumnSpan="2"
-                    Style="{StaticResource BorderUnderline}">   
-                    
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock
-                        Grid.Column="0"
-                        Margin="5,5"
-                        VerticalAlignment="Center"
-                        Style="{StaticResource HeaderStyle}"
-                        Text="ВЫБРАННЫЕ ПРЕПАРАТЫ" />
-
-                        <Button
-                        Grid.Column="1"
-                        Margin="2"
-                        Click="OnButtonClearTetsDrugs">
-                            <ContentPresenter
-                            Width="32"
-                            Height="32"
-                            Content="{StaticResource IconDeleteAll}" />
-                            
-                            <Button.ToolTip>
-                                <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
-                                    <StackPanel Margin="3">
-                                        <TextBlock FontWeight="Bold" 
-                                                   Style="{StaticResource ValueTitleStyle}"
-                                                   Text="Удалить препараты теста"/>
-                                        <Border Style="{StaticResource BorderUnderline}" />
-                                        <TextBlock Style="{StaticResource ItemDescriptionStyle}">
-                                            Удаляет все препараты текущего теста.
-                                            <LineBreak />
-                                        </TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </Button.ToolTip>
-
-                        </Button>
-
                     </Grid>
-                </Border>
 
-                <ListBox x:Name="lbxReciepts"
-                    Grid.Row="16"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Margin="10"
-                    AllowDrop="True"
-                    Button.Click="OnItemDeleteClick"
-                    Drop="TestDrugsListBoxDrop"
-                    ItemTemplate="{StaticResource DeletedTestDrugListBoxItemTemplate}"
-                    ItemsSource="{Binding Reciepts}"
-                    KeyDown="TestDrugsListBoxKeyDown" />
-            
+                </Expander>
+
+                <Expander Grid.Row="3"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2"
+                          x:Name="drugExp">
+
+                    <Expander.Header>
+
+                        <Grid HorizontalAlignment="Stretch"
+                            Width="380">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="5,5"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource HeaderStyle}"
+                                Text="ВЫБРАННЫЕ ПРЕПАРАТЫ" />
+
+                            <Button
+                                Grid.Column="1"
+                                Margin="2"
+                                Click="OnButtonClearTetsDrugs">
+
+                                <ContentPresenter
+                                    Width="32"
+                                    Height="32"
+                                    Content="{StaticResource IconDeleteAll}" />
+
+                                <Button.ToolTip>
+                                    <ToolTip Style="{StaticResource DeRossoToolTipStyle}">
+                                        <StackPanel Margin="3">
+                                            <TextBlock FontWeight="Bold" 
+                                                       Style="{StaticResource ValueTitleStyle}"
+                                                       Text="Удалить препараты теста"/>
+                                            <Border Style="{StaticResource BorderUnderline}" />
+                                            <TextBlock Style="{StaticResource ItemDescriptionStyle}">
+                                                Удаляет все препараты текущего теста.
+                                                <LineBreak />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </ToolTip>
+                                </Button.ToolTip>
+
+                            </Button>
+
+                        </Grid>
+
+                    </Expander.Header>
+
+                    <ListBox x:Name="lbxReciepts"
+                            BorderThickness="1"
+                            BorderBrush="{StaticResource BordersBrush}"
+                            Margin="5"
+                            AllowDrop="True"
+                            Button.Click="OnItemDeleteClick"
+                            Drop="TestDrugsListBoxDrop"
+                            ItemTemplate="{StaticResource DeletedTestDrugListBoxItemTemplate}"
+                            ItemsSource="{Binding Reciepts}"
+                            KeyDown="TestDrugsListBoxKeyDown" />   
+
+                </Expander>
 
             </Grid>
         </Grid>

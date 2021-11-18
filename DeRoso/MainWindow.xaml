@@ -7,8 +7,9 @@
                            xmlns:ctrl="clr-namespace:DeRoso.Controls"
                            xmlns:local="clr-namespace:DeRoso"
                            mc:Ignorable="d"
-                           WindowState="Maximized"
-                           Title="DeVita Diagnostic" Height="450" Width="800" Icon="microscope.ico" >
+                           
+                           Title="DeVita Diagnostic" 
+                            Height="768" Width="1366" Icon="microscope.ico" >
 
     <mah:TransitioningContentControl Content="{Binding CurrentContent}" Transition="RightReplace">
         
